@@ -1,0 +1,8 @@
+/db*
+__pycache__
+/static/
+.emacs.desktop
+.emacs.desktop.lock
+/media/
+/node_modules/
+Makefile
