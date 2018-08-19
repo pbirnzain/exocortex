@@ -26,7 +26,7 @@ router.register('topics', TopicViewSet)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', TopicListView.as_view(), name="topic-list"),
-    path('', include(router.urls)),
+    path('api/', include(router.urls)),
     path('topic/<int:pk>', TopicDetailView.as_view(), name="topic-detail"),
     path('api-auth/', include('rest_framework.urls')),
 ]

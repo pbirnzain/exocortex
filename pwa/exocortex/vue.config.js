@@ -5,5 +5,12 @@ module.exports = {
   runtimeCompiler: undefined,
   productionSourceMap: undefined,
   parallel: undefined,
-  css: undefined
+  css: undefined,
+  devServer: {
+    proxy: {
+      "/api": {
+        target: "http://localhost:8000",
+      }
+    }
+  }
 }
