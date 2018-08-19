@@ -1,3 +1,9 @@
-from django.shortcuts import render
+from rest_framework import viewsets
 
-# Create your views here.
+from store.models import Topic
+from store.serializers import TopicSerializer
+
+
+class TopicViewSet(viewsets.ModelViewSet):
+    serializer_class = TopicSerializer
+    queryset = Topic.objects.all()
