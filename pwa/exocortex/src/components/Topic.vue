@@ -1,11 +1,9 @@
 <template lang="pug">
   .topic(v-if="topic")
-    h3
-      input(:value="topic.title", @change="onTitleChange")
-    p.score-reasons
+    input(:value="topic.title", @change="onTitleChange")
+    .score-reasons
       span(v-for="(value, reason, idx) in topic.score.reasons",:key="idx") {{reason}}: {{value}}
-      textarea(:value="topic.text" @change="onTextChange", cols=60, lines=4)
-
+    textarea(:value="topic.text" @change="onTextChange", cols=60, lines=4)
 </template>
 
 <script>
@@ -25,8 +23,23 @@ export default {
 </script>
 
 <style lang="scss">
-.topic textarea {
-  padding: 0.25rem;
-  min-height: 4rem;
+.score-reasons {
+  font-size: 68%;
+  font-family: monospace;
+  padding: 0.25rem 0;
+
+  span {
+    margin-right: 1rem;
+  }
+}
+
+.topic {
+  input, textarea {
+    width: 100%;
+    padding: 0.25rem;
+  }
+  textarea {
+    min-height: 4rem;
+  }
 }
 </style>

@@ -17,6 +17,8 @@
     "@vue/cli-plugin-eslint": "^3.0.1",
     "@vue/cli-service": "^3.0.1",
     "@vue/eslint-config-standard": "^3.0.1",
+    "bulma": "^0.7.1",
+    "bulma-scss": "^0.6.0",
     "node-sass": "^4.9.3",
     "pug": "^2.0.3",
     "pug-plain-loader": "^1.0.0",

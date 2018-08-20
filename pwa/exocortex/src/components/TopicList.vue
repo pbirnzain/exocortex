@@ -1,9 +1,10 @@
 <template lang="html">
   <div class="topic-list">
     <h1 class="title">{{ title }}</h1>
-    <div v-for="topic in topics" :key="topic.id" class="box"
+    <div v-for="topic in topics" :key="topic.id" class="box has-ribbon"
         @click="onClick(topic)">
-      <h3>{{topic.score.sum}}: {{ topic.title }}</h3>
+      <h3>{{ topic.title }}</h3>
+      <div class="ribbon is-primary is-small">{{topic.score.sum}}</div>
       <p>
         {{ topic.text }}
       </p>
@@ -23,14 +24,4 @@ export default {
 </script>
 
 <style lang="scss">
-.score-reasons {
-  margin-top: -1rem;
-  font-size: 68%;
-  font-family: monospace;
-
-  span {
-    margin-right: 1rem;
-  }
-}
-
 </style>
