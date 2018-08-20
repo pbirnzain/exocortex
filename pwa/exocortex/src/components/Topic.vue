@@ -1,6 +1,7 @@
 <template lang="pug">
   .topic(v-if="topic")
-    h3 {{topic.title}}
+    h3
+      input(:value="topic.title", @change="onTitleChange")
     p.score-reasons
       span(v-for="(value, reason, idx) in topic.score.reasons",:key="idx") {{reason}}: {{value}}
       textarea(:value="topic.text" @change="onTextChange", cols=60, lines=4)
@@ -11,6 +12,10 @@
 export default {
   props: ['topic'],
   methods: {
+    onTitleChange (event) {
+      const topic = Object.assign(this.topic, {title: event.target.value})
+      this.$emit('topic-changed', topic)
+    },
     onTextChange (event) {
       const topic = Object.assign(this.topic, {text: event.target.value})
       this.$emit('topic-changed', topic)
