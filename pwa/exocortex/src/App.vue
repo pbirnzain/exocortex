@@ -12,7 +12,10 @@
         <div class="tile is-ancestor">
           <div class="tile is-parent">
             <div class="tile is-child box">
-              <topic v-if="selectedTopic" :topic="selectedTopic" />
+              <div v-if="selectedTopic">
+                <button @click="onBack">Back</button>
+                <topic :topic="selectedTopic" @topic-changed="onTopicChanged"/>
+              </div>
               <topic-list v-else title="Urgent Topics" :topics="topics"
                 @topic-selected="onSelect" />
             </div>
@@ -24,7 +27,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import TopicList from './components/TopicList'
 import Topic from './components/Topic'
 
@@ -36,27 +38,26 @@ export default {
   },
   data () {
     return {
-      topics: [],
       selectedTopic: undefined
     }
   },
+  computed: {
+    topics () {
+      return this.$store.getters.topics
+    }
+  },
   mounted () {
-    axios.get('/api/topics').then(response => {
-      this.topics = response.data
-      this.topics.sort((a, b) => {
-        if (a.score.sum < b.score.sum) {
-          return 1
-        } else if (a.score.sum > b.score.sum) {
-          return -1
-        } else {
-          return 0
-        }
-      })
-    })
+    this.$store.dispatch('initialize')
   },
   methods: {
     onSelect (topic) {
       this.selectedTopic = topic
+    },
+    onBack () {
+      this.selectedTopic = undefined;
+    },
+    onTopicChanged (topic) {
+      this.$store.dispatch('updateTopic', topic)
     }
   }
 }
