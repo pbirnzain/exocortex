@@ -9,53 +9,55 @@
     </div>
     <div class="content" >
       <div class="container">
-
-<div class="tile is-ancestor">
-  <div class="tile is-parent">
-    <div class="tile is-child box">
-      <h1 class="title">Topic list</h1>
-      <div v-for="topic in topics" :key="topic.id" class="box">
-        <a href="{% url 'topic-detail' pk=topic.id %}"><h3>{{topic.score.sum}}: {{ topic.title }}</h3></a>
-        <p>
-          <span v-for="(value, reason, idx) in topic.score.reasons" :key="idx">
-            ({{reason}}: {{value}})
-          </span>
-        </p>
-        <p>
-          {{ topic.text }}
-        </p>
-        <!-- <p>
-          {% for rel in topic.related.all %}
-            <a href="{% url 'topic-detail' pk=rel.id%}">
-              <span class="tag is-link">{{rel}}</span>
-            </a>
-          {% endfor %}
-        </p> -->
+        <div class="tile is-ancestor">
+          <div class="tile is-parent">
+            <div class="tile is-child box">
+              <topic v-if="selectedTopic" :topic="selectedTopic" />
+              <topic-list v-else title="Urgent Topics" :topics="topics"
+                @topic-selected="onSelect" />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>
-
-      </div>
-    </div>
-
   </div>
 </template>
 
 <script>
 import axios from 'axios'
+import TopicList from './components/TopicList'
+import Topic from './components/Topic'
 
 export default {
   name: 'app',
+  components: {
+    TopicList,
+    Topic
+  },
   data () {
     return {
-      topics: 'No topics.'
+      topics: [],
+      selectedTopic: undefined
     }
   },
   mounted () {
     axios.get('/api/topics').then(response => {
       this.topics = response.data
+      this.topics.sort((a, b) => {
+        if (a.score.sum < b.score.sum) {
+          return 1
+        } else if (a.score.sum > b.score.sum) {
+          return -1
+        } else {
+          return 0
+        }
+      })
     })
+  },
+  methods: {
+    onSelect (topic) {
+      this.selectedTopic = topic
+    }
   }
 }
 </script>
