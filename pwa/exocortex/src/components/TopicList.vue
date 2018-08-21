@@ -1,9 +1,8 @@
 <template lang="html">
   <div class="topic-list">
     <h1 class="title">{{ title }}</h1>
-    <div v-for="topic in topics" :key="topic.id" class="box has-ribbon"
-        @click="onClick(topic)">
-      <h3>{{ topic.title }}</h3>
+    <div v-for="topic in topics" :key="topic.id" class="box has-ribbon">
+      <a @click="onClick(topic)"><h3>{{ topic.title }}</h3></a>
       <div class="ribbon is-primary is-small">{{topic.score.sum}}</div>
       <p>
         {{ topic.text }}

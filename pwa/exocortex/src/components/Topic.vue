@@ -3,6 +3,10 @@
     input(:value="topic.title", @change="onTitleChange")
     .score-reasons
       span(v-for="(value, reason, idx) in topic.score.reasons",:key="idx") {{reason}}: {{value}}
+    .horizontal
+      label.checkbox
+        input(type="checkbox" :checked="topic.pinned" @click="onTogglePinned")
+        | pinned
     textarea(:value="topic.text" @change="onTextChange", cols=60, lines=4)
 </template>
 
@@ -16,6 +20,10 @@ export default {
     },
     onTextChange (event) {
       const topic = Object.assign(this.topic, {text: event.target.value})
+      this.$emit('topic-changed', topic)
+    },
+    onTogglePinned (event) {
+      const topic = Object.assign(this.topic, {pinned: !this.topic.pinned})
       this.$emit('topic-changed', topic)
     }
   }
@@ -34,7 +42,7 @@ export default {
 }
 
 .topic {
-  input, textarea {
+   > {
     width: 100%;
     padding: 0.25rem;
   }
