@@ -7,25 +7,22 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   strict: true,
   state: {
-    topics: undefined
+    topics: {}
   },
   getters: {
     topics (state) {
-      if (state.topics) {
-        return Array.from(state.topics.values())
-      }
-      return []
+      return Object.values(state.topics)
     }
   },
   mutations: {
     replaceAll (state, topics) {
-      state.topics = new Map()
+      state.topics = {}
       for (let topic of topics) {
-        state.topics.set(topic.id, topic)
+        Vue.set(state.topics, topic.id, topic)
       }
     },
     updateTopic (state, topic) {
-      state.topics.set(topic.id, topic)
+      Vue.set(state.topics, topic.id, topic)
     }
   },
   actions: {
@@ -46,7 +43,7 @@ export default new Vuex.Store({
     },
     updateTopic ({commit}, topic) {
       axios.put("/api/topics/" + topic.id + "/", topic).then(response => {
-        commit('updateTopic', topic)
+        commit('updateTopic', response.data)
       })
     }
   }
