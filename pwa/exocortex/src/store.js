@@ -16,7 +16,16 @@ export default new Vuex.Store({
   },
   getters: {
     topics (state) {
-      return Object.values(state.topics)
+      return Object.values(state.topics).sort((a, b) =>
+      {
+        if (a.score.sum < b.score.sum) {
+          return 1
+        } else if (a.score.sum > b.score.sum) {
+          return -1
+        } else {
+          return 0
+        }
+      });
     }
   },
   mutations: {
@@ -34,15 +43,6 @@ export default new Vuex.Store({
     initialize ({commit}) {
       axios.get('/api/topics').then(response => {
         const topics = response.data
-        topics.sort((a, b) => {
-          if (a.score.sum < b.score.sum) {
-            return 1
-          } else if (a.score.sum > b.score.sum) {
-            return -1
-          } else {
-            return 0
-          }
-        })
         commit('replaceAll', topics)
       })
     },
