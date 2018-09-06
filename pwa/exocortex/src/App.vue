@@ -2,24 +2,18 @@
   <div id="app">
     <div class="container">
       <nav class="navbar" role="navigation" aria-label="main navigation">
-        <div class="navbar-brand">
-          <a class="navbar-item" href="{% url 'topic-list' %}">ExoCortex</a>
-        </div>
+        <a class="navbar-item navbar-brand" href="/static/app">ExoCortex</a>
       </nav>
     </div>
     <div class="content" >
       <div class="container">
-        <div class="tile is-ancestor">
-          <div class="tile is-parent">
-            <div class="tile is-child box">
-              <div v-if="selectedTopic">
-                <button @click="onBack">Back</button>
-                <topic :topic="selectedTopic" @topic-changed="onTopicChanged"/>
-              </div>
-              <topic-list v-else title="Urgent Topics" :topics="topics"
-                @topic-selected="onSelect" />
-            </div>
+        <div class="box">
+          <div v-if="selectedTopic">
+            <button @click="onBack">Back</button>
+            <topic :topic="selectedTopic" @topic-changed="onTopicChanged"/>
           </div>
+          <topic-list v-else title="Topics by Urgency" :topics="topics"
+            @topic-selected="onSelect" />
         </div>
       </div>
     </div>
@@ -64,9 +58,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import "~bulma/bulma.sass";
-@import "./bulma-ribbon.sass";
-
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -74,14 +65,45 @@ export default {
   color: #2c3e50;
 }
 
-h3 {
-  font-size: 130%;
+.box {
+  padding: 0.5rem;
+  border-radius: 0;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #bbb;
+  position: relative;
+  margin: 0.5rem 0;
+
+  .ribbon {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0.25em;
+    font-family: monospace;
+    background-color: #ccc;
+    min-width: 1.5rem;
+    text-align: center;
+  }
 }
+
+p {
+  margin-bottom: 0;
+}
+
+h1, h3 {
+  margin: 0;
+}
+
 .content {
-  margin: 1rem;
+  //margin: 1rem;
 }
 .navbar-brand {
-  font-size: 130%;
+  font-size: 180%;
   font-weight: 700;
+}
+
+.navbar-item {
+  color: black;
+  text-decoration: none;
 }
 </style>
