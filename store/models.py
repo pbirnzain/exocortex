@@ -33,6 +33,7 @@ class DataChunk(models.Model):
 
     title = models.CharField(max_length=100)
     text = models.TextField(blank=True)
+    # TODO: use through-Model, add direction, importance float
     related = models.ManyToManyField("self", blank=True)
 
     added = models.DateTimeField(auto_now_add=True)
@@ -47,6 +48,7 @@ class DataChunk(models.Model):
 
 
 class Topic(DataChunk):
+    objects = InheritanceManager()
     pinned = models.BooleanField(default=False)
 
     def get_absolute_url(self):
