@@ -1,31 +1,27 @@
 <template lang="pug">
   .topic(v-if="topic")
-    input(:value="topic.title", @change="onTitleChange")
+    input(v-model="template.title", @change="onChange")
     .score-reasons
-      span(v-for="(value, reason, idx) in topic.score.reasons",:key="idx") {{reason}}: {{value}}
+      span(v-for="(value, reason, idx) in template.score.reasons",:key="idx") {{reason}}: {{value}}
     .horizontal
       label.checkbox
-        input(type="checkbox" :checked="topic.pinned" @click="onTogglePinned")
+        input(type="checkbox" v-model="template.pinned" @change="onChange")
         | pinned
-    textarea(:value="topic.text" @change="onTextChange", cols=60, lines=4)
+    textarea(v-model="template.text" @change="onChange", cols=60, lines=4)
 </template>
 
 <script>
 export default {
   props: ['topic'],
-  methods: {
-    onTitleChange (event) {
-      const topic = Object.assign(this.topic, {title: event.target.value})
-      this.$emit('topic-changed', topic)
-    },
-    onTextChange (event) {
-      const topic = Object.assign(this.topic, {text: event.target.value})
-      this.$emit('topic-changed', topic)
-    },
-    onTogglePinned (event) {
-      const topic = Object.assign(this.topic, {pinned: !this.topic.pinned})
-      this.$emit('topic-changed', topic)
+  data() {
+    return {
+        template: Object.assign({}, this.topic),
     }
+  },
+  methods: {
+    onChange (event) {
+      this.$emit('topic-changed', this.template)
+    },
   }
 }
 </script>
