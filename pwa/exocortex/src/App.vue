@@ -12,7 +12,7 @@
             <button @click="onBack">Back</button>
             <topic :topic="selectedTopic" @topic-changed="onTopicChanged"/>
           </div>
-          <topic-list v-else title="Topics by Urgency" :topics="topics"
+          <topic-list v-else title="Topics by Urgency" :topics="urgentTopics"
             @topic-selected="onSelect" />
         </div>
       </div>
@@ -30,14 +30,12 @@ export default {
     TopicList,
     Topic
   },
-  data () {
-    return {
-      selectedTopic: undefined
-    }
-  },
   computed: {
-    topics () {
-      return this.$store.getters.topics
+    urgentTopics () {
+      return this.$store.getters.urgentTopics
+    },
+    selectedTopic () {
+      return this.$store.getters.selectedTopic
     }
   },
   mounted () {
@@ -45,10 +43,10 @@ export default {
   },
   methods: {
     onSelect (topic) {
-      this.selectedTopic = topic
+      this.$store.dispatch('selectTopic', topic)
     },
     onBack () {
-      this.selectedTopic = undefined;
+      this.$store.dispatch('selectTopic', undefined)
     },
     onTopicChanged (topic) {
       this.$store.dispatch('updateTopic', topic)

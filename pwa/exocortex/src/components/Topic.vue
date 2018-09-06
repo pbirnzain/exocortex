@@ -2,21 +2,21 @@
   .topic(v-if="topic")
     input(v-model="template.title", @change="onChange")
     .score-reasons
-      span(v-for="(value, reason, idx) in template.score.reasons",:key="idx") {{reason}}: {{value}}
+      span Score: {{ template.score.sum }}
+      span(v-for="(value, reason, idx) in template.score.reasons",:key="idx") ({{reason}}: {{value}})
     .horizontal
       label.checkbox
         input(type="checkbox" v-model="template.pinned" @change="onChange")
         | pinned
+    input(v-model="template.due")
     textarea(v-model="template.text" @change="onChange", cols=60, lines=4)
 </template>
 
 <script>
 export default {
   props: ['topic'],
-  data() {
-    return {
-        template: Object.assign({}, this.topic),
-    }
+  computed: {
+    template() { return Object.assign({}, this.topic); },
   },
   methods: {
     onChange (event) {

@@ -12,10 +12,11 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   strict: true,
   state: {
-    topics: {}
+    topics: {},
+    selectedTopic: undefined,
   },
   getters: {
-    topics (state) {
+    urgentTopics (state) {
       return Object.values(state.topics).sort((a, b) =>
       {
         if (a.score.sum < b.score.sum) {
@@ -26,6 +27,9 @@ export default new Vuex.Store({
           return 0
         }
       });
+    },
+    selectedTopic (state) {
+      return state.selectedTopic;
     }
   },
   mutations: {
@@ -37,6 +41,12 @@ export default new Vuex.Store({
     },
     updateTopic (state, topic) {
       Vue.set(state.topics, topic.id, topic)
+      if (topic.id === state.selectedTopic.id) {
+        state.selectedTopic = topic;
+      }
+    },
+    selectTopic (state, topic) {
+      state.selectedTopic = topic;
     }
   },
   actions: {
@@ -50,6 +60,9 @@ export default new Vuex.Store({
       axios.put("/api/topics/" + topic.id + "/", topic).then(response => {
         commit('updateTopic', response.data)
       })
+    },
+    selectTopic ({commit}, topic) {
+      commit('selectTopic', topic)
     }
   }
 })
