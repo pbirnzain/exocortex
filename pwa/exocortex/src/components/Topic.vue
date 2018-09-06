@@ -28,7 +28,6 @@ export default {
 
 <style lang="scss">
 .score-reasons {
-  font-size: 68%;
   font-family: monospace;
   padding: 0.25rem 0;
 
@@ -42,7 +41,13 @@ export default {
     width: 100%;
     padding: 0.25rem;
   }
+  input:not([type="checkbox"]) {
+    width: 100%;
+    box-sizing: border-box;
+  }
   textarea {
+    box-sizing: border-box;
+    width: 100%;
     min-height: 4rem;
   }
 }

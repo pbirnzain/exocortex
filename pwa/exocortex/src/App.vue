@@ -86,12 +86,40 @@ export default {
   }
 }
 
-p {
+.container {
+  max-width: 960px;
+  margin: auto;
+}
+
+.box:last-child {
   margin-bottom: 0;
 }
 
-h1, h3 {
+p {
+  margin: 0.25rem 0;
+}
+@media (max-width: 480px) {
+  body {
+    font-size: 80%;
+  }
+
+  p {
   margin: 0;
+  }
+  h1, h3 {
+    margin: 0;
+  }
+}
+
+h1, h3 {
+  margin: 0.25rem 0 0 0;
+}
+
+h3 {
+  font-size: 140%;
+}
+h1 {
+  font-size: 160%;
 }
 
 .content {
