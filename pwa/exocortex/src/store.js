@@ -2,6 +2,11 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 
+axios.defaults.xsrfCookieName = 'csrftoken';
+axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN';
+//axios.defaults.baseURL = process.env.API_URL;
+axios.defaults.withCredentials = true;
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
