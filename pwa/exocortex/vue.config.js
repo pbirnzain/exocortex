@@ -10,6 +10,9 @@ module.exports = {
     proxy: {
       '/api': {
         target: 'http://localhost:8000'
+      },
+      '/admin': {
+        target: 'http://localhost:8000'
       }
     }
   }
