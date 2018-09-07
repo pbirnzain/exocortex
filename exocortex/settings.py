@@ -88,6 +88,45 @@ DATABASES = {
 }
 
 
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '%(levelname)s PID%(process)d %(asctime)s %(filename)s:%(lineno)s %(message)s',
+        },
+        'simple': {
+            'format': '%(levelname)s %(filename)s:%(lineno)s %(message)s',
+        },
+    },
+    'handlers': {
+        'logfile': {
+            'level': 'INFO',
+            'formatter': 'verbose',
+            'class': 'logging.FileHandler',
+            'filename': '/var/log/exocortex/exocortex.log' if not DEBUG else '/dev/null',
+        },
+        'console': {
+            'level': 'INFO',
+            'formatter': 'simple',
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'] if DEBUG else ['logfile'],
+            'level': 'WARN',
+            'propagate': True,
+        },
+        'store': {
+            'handlers': ['console'] if DEBUG else ['logfile'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+    }
+}
+
+
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
 
