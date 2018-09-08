@@ -1,56 +1,24 @@
 <template>
   <div id="app">
-    <div class="container">
-      <nav class="navbar" role="navigation" aria-label="main navigation">
-        <a class="navbar-item navbar-brand" href="/static/app">ExoCortex</a>
-      </nav>
-    </div>
-    <div class="content" >
+    <nav class="navbar" role="navigation" aria-label="main navigation">
       <div class="container">
-        <div class="box">
-          <div v-if="selectedTopic">
-            <button @click="onBack">Back</button>
-            <topic :topic="selectedTopic" @topic-changed="onTopicChanged"/>
-          </div>
-          <topic-list v-else title="Topics by Urgency" :topics="urgentTopics"
-            @topic-selected="onSelect" />
-        </div>
+        <router-link class="navbar-item navbar-brand" :to="{ name: 'home', params: {}}">ExoCortex</router-link>
+      </div>
+    </nav>
+    <div class="content">
+      <div class="container">
+        <router-view></router-view>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import TopicList from './components/TopicList'
-import Topic from './components/Topic'
 
 export default {
   name: 'app',
-  components: {
-    TopicList,
-    Topic
-  },
-  computed: {
-    urgentTopics () {
-      return this.$store.getters.urgentTopics
-    },
-    selectedTopic () {
-      return this.$store.getters.selectedTopic
-    }
-  },
   mounted () {
     this.$store.dispatch('initialize')
-  },
-  methods: {
-    onSelect (topic) {
-      this.$store.dispatch('selectTopic', topic)
-    },
-    onBack () {
-      this.$store.dispatch('selectTopic', undefined)
-    },
-    onTopicChanged (topic) {
-      this.$store.dispatch('updateTopic', topic)
-    }
   }
 }
 </script>
@@ -61,6 +29,10 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
+}
+
+.navbar {
+  margin-bottom: 1rem;
 }
 
 .box {

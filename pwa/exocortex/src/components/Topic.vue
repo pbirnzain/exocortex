@@ -1,7 +1,7 @@
 <template lang="pug">
-  .topic(v-if="topic")
+  .topic
     input(v-model="template.title", @change="onChange")
-    .score-reasons
+    .score-reasons(v-if="template.score")
       span Score: {{ template.score.sum }}
       span(v-for="(value, reason, idx) in template.score.reasons",:key="idx") ({{reason}}: {{value}})
     .horizontal
@@ -16,7 +16,17 @@
 export default {
   props: ['topic'],
   computed: {
-    template() { return Object.assign({}, this.topic); },
+    template() {
+      if (this.topic === undefined) {
+        return {
+          title: '',
+          pinned: false,
+          text: '',
+        }
+      } else {
+        return Object.assign({}, this.topic);
+      }
+    }
   },
   methods: {
     onChange (event) {
