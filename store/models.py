@@ -1,7 +1,6 @@
-from datetime import datetime
-
 from django.db import models
 from django.shortcuts import reverse
+from django.utils import timezone
 from model_utils.managers import InheritanceManager
 
 
@@ -51,6 +50,11 @@ class Topic(DataChunk):
     objects = InheritanceManager()
     pinned = models.BooleanField(default=False)
 
+    due = models.DateField(blank=True, null=True)
+    wait = models.DateField(blank=True, null=True)
+    complete = models.BooleanField(default=False)
+    action_required = models.BooleanField(default=False)
+
     def get_absolute_url(self):
         return reverse('topic-detail', args=[self.id])
 
@@ -60,26 +64,19 @@ class Topic(DataChunk):
         if self.pinned:
             score += ("pinned", 100)
 
-        return score
-
-
-class Task(Topic):
-    due = models.DateTimeField(blank=True, null=True)
-    wait = models.DateTimeField(blank=True, null=True)
-    complete = models.BooleanField(default=False)
-
-    @property
-    def score(self):
-        score = super().score
-        score += ("is task", 5)
-
-        if self.wait and self.wait > datetime.now():
-            score += ("waiting", -10)
+        if self.action_required:
+            score += ("is task", 5)
 
         if self.complete:
             score += ("complete", -20)
+        else:
+            if self.wait and self.wait > timezone.now().date():
+                score += ("waiting", -10)
 
-        if self.due:
-            score += ("has due date", 200)
+            if self.due:
+                if self.due < timezone.now().date():
+                    score += ("is overdue", 200)
+                else:
+                    score += ("has due date", 50)
 
         return score

@@ -4,11 +4,19 @@
     .score-reasons(v-if="template.score")
       span Score: {{ template.score.sum }}
       span(v-for="(value, reason, idx) in template.score.reasons",:key="idx") ({{reason}}: {{value}})
+    .timestamps(style="display:none;")
+      span Added: {{template.added}}
+      span Modified: {{template.modified}} */
     .horizontal
       label.checkbox
         input(type="checkbox" v-model="template.pinned" @change="onChange")
         | pinned
-    input(v-model="template.due")
+    .field
+      label Due:
+      input(type="date" v-model="template.due" @change="onChange")
+    .field
+      label Wait:
+      input(type="date" v-model="template.wait" @change="onChange")
     textarea(v-model="template.text" @change="onChange", cols=60, lines=4)
 </template>
 
@@ -19,9 +27,7 @@ export default {
     template() {
       if (this.topic === undefined) {
         return {
-          title: '',
-          pinned: false,
-          text: '',
+          pinned: true,
         }
       } else {
         return Object.assign({}, this.topic);

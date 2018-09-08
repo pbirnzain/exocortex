@@ -1,11 +1,6 @@
 from django.contrib import admin
 
-from .models import Task, Topic
-
-
-@admin.register(Task)
-class TaskAdmin(admin.ModelAdmin):
-    pass
+from .models import Topic
 
 
 @admin.register(Topic)

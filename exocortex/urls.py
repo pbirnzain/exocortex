@@ -18,15 +18,12 @@ from django.urls import include, path
 from rest_framework import routers
 
 from store.views import TopicViewSet
-from ui.views import TopicDetailView, TopicListView
 
 router = routers.DefaultRouter()
 router.register('topics', TopicViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', TopicListView.as_view(), name="topic-list"),
     path('api/', include(router.urls)),
-    path('topic/<int:pk>', TopicDetailView.as_view(), name="topic-detail"),
     path('api-auth/', include('rest_framework.urls')),
 ]
