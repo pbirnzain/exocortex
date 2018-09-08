@@ -47,6 +47,7 @@ export default {
   background-color: red;
   border-radius: 300em;
   display: flex;
+  z-index: 2;
 
   div {
     margin: auto;
