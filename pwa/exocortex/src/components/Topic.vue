@@ -15,8 +15,8 @@
       label Due:
       input(type="date" v-model="template.due" @change="onChange")
     .field
-      label Wait:
-      input(type="date" v-model="template.wait" @change="onChange")
+      label Ready:
+      input(type="date" v-model="template.ready" @change="onChange")
     textarea(v-model="template.text" @change="onChange", cols=60, lines=4)
 </template>
 

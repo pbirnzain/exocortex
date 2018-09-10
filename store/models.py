@@ -51,9 +51,8 @@ class Topic(DataChunk):
     pinned = models.BooleanField(default=False)
 
     due = models.DateField(blank=True, null=True)
-    wait = models.DateField(blank=True, null=True)
+    ready = models.DateField(blank=True, null=True)
     complete = models.BooleanField(default=False)
-    action_required = models.BooleanField(default=False)
 
     def get_absolute_url(self):
         return reverse('topic-detail', args=[self.id])
@@ -64,19 +63,21 @@ class Topic(DataChunk):
         if self.pinned:
             score += ("pinned", 100)
 
-        if self.action_required:
-            score += ("is task", 5)
-
         if self.complete:
             score += ("complete", -20)
-        else:
-            if self.wait and self.wait > timezone.now().date():
-                score += ("waiting", -10)
+            return score
 
-            if self.due:
-                if self.due < timezone.now().date():
-                    score += ("is overdue", 200)
-                else:
-                    score += ("has due date", 50)
+        if self.ready:
+            if self.ready > timezone.now().date():
+                score += ("blocked", -10)
+                return score
+            else:
+                score += ("ready", 10)
+
+        if self.due:
+            if self.due < timezone.now().date():
+                score += ("is overdue", 200)
+            else:
+                score += ("has due date", 50)
 
         return score
