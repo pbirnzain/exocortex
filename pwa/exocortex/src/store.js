@@ -56,6 +56,16 @@ export default new Vuex.Store({
           state.selectedTopic = undefined
         }
       }
+    },
+    SOCKET_ONMESSAGE (state, message) {
+      console.log('ws:', message)
+    },
+    SOCKET_ONOPEN (state, event) {
+    },
+    SOCKET_ONCLOSE (state, event) {
+    },
+    SOCKET_ONERROR (state, event) {
+      console.error(event)
     }
   },
   actions: {

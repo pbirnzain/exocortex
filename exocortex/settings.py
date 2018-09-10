@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'channels',
     'store',
     'ui',
     'pwa',
@@ -75,7 +76,15 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'exocortex.wsgi.application'
-
+ASGI_APPLICATION = "exocortex.routing.application"
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("localhost", 6379)],
+        },
+    },
+}
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases

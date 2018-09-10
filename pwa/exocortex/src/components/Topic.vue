@@ -1,12 +1,13 @@
 <template lang="pug">
   .topic
+    span {{ template.id }}
     input(v-model="template.title", @change="onChange")
     .score-reasons(v-if="template.score")
       span Score: {{ template.score.sum }}
       span(v-for="(value, reason, idx) in template.score.reasons",:key="idx") ({{reason}}: {{value}})
     .timestamps(style="display:none;")
       span Added: {{template.added}}
-      span Modified: {{template.modified}} */
+      span Modified: {{template.modified}}
     .horizontal
       label.checkbox
         input(type="checkbox" v-model="template.pinned" @change="onChange")

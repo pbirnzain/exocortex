@@ -1,2 +1,4 @@
 djangorestframework
 django-model-utils
+channels
+channels_redis
