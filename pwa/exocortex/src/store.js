@@ -40,7 +40,7 @@ export default new Vuex.Store({
     },
     updateTopic (state, topic) {
       Vue.set(state.topics, topic.id, topic)
-      if (state.selectedTopic != undefined) {
+      if (state.selectedTopic !== undefined) {
         if (topic.id === state.selectedTopic.id) {
           state.selectedTopic = topic
         }
@@ -51,8 +51,8 @@ export default new Vuex.Store({
     },
     deleteTopic (state, id) {
       Vue.delete(state.topics, id)
-      if (state.selectedTopic !== undefined){
-        if(state.selectedTopic.id === id) {
+      if (state.selectedTopic !== undefined) {
+        if (state.selectedTopic.id === id) {
           state.selectedTopic = undefined
         }
       }
@@ -60,7 +60,7 @@ export default new Vuex.Store({
   },
   actions: {
     initialize ({commit}) {
-      axios.get('/api/topics').then(response => {
+      axios.get('/api/topics/').then(response => {
         const topics = response.data
         commit('replaceAll', topics)
       })

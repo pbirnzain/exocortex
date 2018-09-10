@@ -11,6 +11,9 @@
       label.checkbox
         input(type="checkbox" v-model="template.pinned" @change="onChange")
         | pinned
+      label.checkbox
+        input(type="checkbox" v-model="template.complete" @change="onChange")
+        | complete
     .field
       label Due:
       input(type="date" v-model="template.due" @change="onChange")
@@ -24,20 +27,20 @@
 export default {
   props: ['topic'],
   computed: {
-    template() {
+    template () {
       if (this.topic === undefined) {
         return {
-          pinned: true,
+          pinned: true
         }
       } else {
-        return Object.assign({}, this.topic);
+        return Object.assign({}, this.topic)
       }
     }
   },
   methods: {
     onChange (event) {
       this.$emit('topic-changed', this.template)
-    },
+    }
   }
 }
 </script>
