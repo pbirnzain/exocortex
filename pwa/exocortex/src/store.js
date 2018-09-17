@@ -72,6 +72,17 @@ export default new Vuex.Store({
           commit('selectTopic', response.data)
         })
       } else {
+        // if a date field has been cleared (set to empty string), send null
+        // to tell the server to delete it (required by DRF)
+        // TODO: Should this be fixed on the server side?
+        // see https://github.com/encode/django-rest-framework/issues/5365
+        if (topic.due === '') {
+          topic.due = null
+        }
+        if (topic.ready === '') {
+          topic.ready = null
+        }
+
         axios.put('/api/topics/' + topic.id + '/', topic).then(response => {
           commit('updateTopic', response.data)
         })
