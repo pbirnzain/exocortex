@@ -68,7 +68,7 @@ export default {
   textarea {
     box-sizing: border-box;
     width: 100%;
-    min-height: 4rem;
+    resize: vertical;
   }
 }
 </style>
