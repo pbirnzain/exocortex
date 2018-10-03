@@ -108,3 +108,12 @@ export default new Vuex.Store({
     }
   }
 })
+
+axios.interceptors.response.use(function (response) {
+    return response;
+  }, function (error) {
+    if (error.response.status === 403) {
+      window.location.href = "/login/"
+    }
+    return Promise.reject(error);
+  });

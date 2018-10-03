@@ -1,6 +1,6 @@
 module.exports = {
-  baseUrl: '/static/app/',
-  outputDir: '../static/app/',
+  baseUrl: '/static/',
+  outputDir: '../static/',
   assetsDir: undefined,
   runtimeCompiler: undefined,
   productionSourceMap: undefined,
@@ -8,6 +8,12 @@ module.exports = {
   css: undefined,
   devServer: {
     proxy: {
+      '/login': {
+        target: 'http://localhost:8000'
+      },
+      '/logout': {
+        target: 'http://localhost:8000'
+      },
       '/api': {
         target: 'http://localhost:8000'
       },
