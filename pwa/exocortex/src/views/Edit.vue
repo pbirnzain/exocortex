@@ -1,5 +1,5 @@
 <template>
-  <div class="about">
+  <div class="edit-topic">
     <div class="box">
       <topic :topic="selectedTopic" @topic-changed="onTopicChanged"/>
       <button @click="onDelete">Delete</button>
@@ -31,3 +31,15 @@ export default {
   }
 }
 </script>
+<style lang="scss">
+.edit-topic {
+  display: flex;
+  flex-direction: column;
+
+  .box {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+}
+</style>

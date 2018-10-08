@@ -8,7 +8,7 @@
     .timestamps(style="display:none;")
       span Added: {{template.added}}
       span Modified: {{template.modified}}
-    .horizontal
+    div
       label.checkbox
         input(type="checkbox" v-model="template.pinned" @change="onChange")
         | pinned
@@ -21,7 +21,7 @@
     .field
       label Ready:
       input(type="date" v-model="template.ready" @change="onChange")
-    textarea(v-model="template.text" @change="onChange", cols=60, lines=4)
+    textarea(v-model="template.text" @change="onChange")
 </template>
 
 <script>
@@ -57,7 +57,10 @@ export default {
 }
 
 .topic {
-   > {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  > {
     width: 100%;
     padding: 0.25rem;
   }
@@ -66,6 +69,7 @@ export default {
     box-sizing: border-box;
   }
   textarea {
+    flex-grow: 1;
     box-sizing: border-box;
     width: 100%;
     resize: vertical;

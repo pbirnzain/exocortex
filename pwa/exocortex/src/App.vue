@@ -6,9 +6,7 @@
       </div>
     </nav>
     <div class="content">
-      <div class="container">
         <router-view></router-view>
-      </div>
     </div>
   </div>
 </template>
@@ -29,10 +27,34 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
+
+  display: flex;
+  flex-direction: column;
 }
 
-.navbar {
-  margin-bottom: 1rem;
+html {
+  height: 100%
+}
+body, #app {
+  height: 100%;
+  margin: 0;
+}
+
+.content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+
+  > * {
+    flex-grow: 1;
+    width: 100%;
+    max-width: 960px;
+    margin: auto;
+  }
+}
+
+.box:first-child {
+  margin-top: 0;
 }
 
 .box {
@@ -42,6 +64,7 @@ export default {
   border-width: 1px;
   border-color: #bbb;
   position: relative;
+
   margin: 0.5rem 0;
 
   .ribbon {
@@ -58,11 +81,8 @@ export default {
 
 .container {
   max-width: 960px;
-  margin: auto;
-}
-
-.box:last-child {
-  margin-bottom: 0;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 p {
@@ -92,9 +112,6 @@ h1 {
   font-size: 160%;
 }
 
-.content {
-  //margin: 1rem;
-}
 .navbar-brand {
   font-size: 180%;
   font-weight: 700;
