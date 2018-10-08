@@ -15,7 +15,7 @@
       label.checkbox
         input(type="checkbox" v-model="template.complete" @change="onChange")
         | complete
-    .field
+    .horizontal.field
       label Due:
       input(type="date" v-model="template.due" @change="onChange")
     .field
@@ -47,6 +47,8 @@ export default {
 </script>
 
 <style lang="scss">
+@import '@/styles/form.scss';
+
 .score-reasons {
   font-family: monospace;
   padding: 0.25rem 0;
