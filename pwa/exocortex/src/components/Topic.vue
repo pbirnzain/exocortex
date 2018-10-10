@@ -32,9 +32,9 @@ import DatePicker from 'vue-md-date-picker'
 export default {
   components: {DatePicker},
   props: ['topic'],
-  data() {
-    return {
-      template: Object.assign({pinned: true}, this.topic)
+  computed: {
+    template() {
+      return Object.assign({pinned: true}, this.topic)
     }
   },
   methods: {
