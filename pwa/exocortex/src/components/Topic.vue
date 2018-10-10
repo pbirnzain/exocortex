@@ -49,31 +49,32 @@ export default {
 @import '@/styles/form.scss';
 
 .score-reasons {
-  font-family: monospace;
-  padding: 0.25rem 0;
+  padding-top: 0.25rem;
 
   span {
-    margin-right: 1rem;
+    margin-right: 0.25rem;
   }
 }
 
 .topic {
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  > {
-    width: 100%;
-    padding: 0.25rem;
+  .md-card-header {
+    .md-title{
+      margin-top: 0!important;
+      width: 100%;
+    }
   }
-  input:not([type="checkbox"]) {
-    width: 100%;
-    box-sizing: border-box;
+  .md-card-content {
+    padding-bottom: 0!important;
   }
-  textarea {
-    flex-grow: 1;
-    box-sizing: border-box;
-    width: 100%;
-    resize: vertical;
+  .md-checkbox {
+    margin: 0 16px 0 0;
+  }
+  .md-field {
+    margin-top: -4px; // To compensate for padding
+
+    &:last-child {
+      margin-bottom: 0;
+    }
   }
 }
 </style>

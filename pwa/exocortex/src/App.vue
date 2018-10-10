@@ -38,8 +38,26 @@ export default {
 </script>
 
 <style lang="scss">
+
+@media(max-width: 460px) {
+  .app {
+    .score-reasons {
+      font-size: 11px!important;
+    }
+    .md-card-header .md-title {
+      font-size: 20px;
+      line-height: initial;
+    }
+  }
+}
+
+.app .md-card-header .md-title {
+  padding: 0.25rem 0 0 0.25rem;
+}
+
 .app .md-content {
   padding: 0;
+  height: auto;
 }
 
 .app .add-button {
