@@ -38,6 +38,10 @@ export default {
 </script>
 
 <style lang="scss">
+.app .md-content {
+  padding: 0;
+}
+
 .app .add-button {
   position: fixed;
   right: 1em;

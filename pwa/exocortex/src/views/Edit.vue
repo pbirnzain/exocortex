@@ -35,6 +35,8 @@ export default {
 </script>
 <style lang="scss">
 .edit-topic {
+  margin: 16px 0;
+
   display: flex;
   flex-direction: column;
 

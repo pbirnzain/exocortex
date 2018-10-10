@@ -2,12 +2,12 @@
   .topic-list
     h1(v-if="title") {{ title }}
 
-    md-card(v-for="topic in topics" :key="topic.id")
-      md-card-header
-        a.md-title(@click="onClick(topic)") {{ topic.title }}
-        .score {{topic.score.sum}}
-
-      md-card-content(v-if="topic.text") {{ topic.text }}
+    md-list
+      div(v-for="topic in topics" :key="topic.id")
+        md-list-item(@click="onClick(topic)")
+          div {{ topic.title }}
+          .score {{topic.score.sum}}
+        md-divider
 
 </template>
 
@@ -24,10 +24,12 @@ export default {
 
 <style lang="scss">
 
-.topic-list .md-card {
-  margin-bottom: 8px;
+.topic-list {
+  .md-list {
+    padding-bottom: 0;
+  }
 
-  .md-card-header {
+  .md-list-item-content {
     position: relative;
 
     .score {
