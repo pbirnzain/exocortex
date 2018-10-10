@@ -77,7 +77,7 @@ class Topic(DataChunk):
         if self.due:
             warn_days_before = 30
             due_in_days = (self.due - timezone.now().date()).days
-            print(due_in_days)
+
             if due_in_days <= 0:
                 score += ("is overdue", 200)
             elif due_in_days <= warn_days_before:

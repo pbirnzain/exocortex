@@ -1,9 +1,11 @@
 <template>
-  <div class="edit-topic">
-    <div class="box">
+  <div class="edit-topic md-layout">
+    <md-card>
       <topic :topic="selectedTopic" @topic-changed="onTopicChanged"/>
-      <button @click="onDelete">Delete</button>
-    </div>
+      <md-card-actions>
+        <md-button @click="onDelete">Delete</md-button>
+      </md-card-actions>
+    </md-card>
   </div>
 </template>
 

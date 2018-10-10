@@ -1,124 +1,46 @@
-<template>
-  <div id="app">
-    <nav class="navbar" role="navigation" aria-label="main navigation">
-      <div class="container">
-        <router-link class="navbar-item navbar-brand" :to="{ name: 'home', params: {}}">ExoCortex</router-link>
-      </div>
-    </nav>
-    <div class="content">
-        <router-view></router-view>
-    </div>
-  </div>
+<template lang="pug">
+  .app
+    <md-button v-if="showAddButton" class="add-button md-icon-button md-raised md-accent md-dense md-fab" @click="onNewTopic">
+      <md-icon>add</md-icon>
+    </md-button>
+
+    md-app
+      md-app-toolbar.md-primary
+        <router-link class="md-title" :to="{ name: 'home', params: {}}">ExoCortex</router-link>
+
+      md-app-content
+        router-view
 </template>
 
 <script>
+//
 
 export default {
   name: 'app',
+  data() {
+    return {
+      showAddButton: false,
+    }
+  },
   mounted () {
     this.$store.dispatch('initialize')
+    this.$router.afterEach((to, from) => {
+      this.showAddButton = this.$router.currentRoute.path === "/"
+    })
+  },
+  methods: {
+    onNewTopic () {
+      this.$store.dispatch('selectTopic', undefined)
+      this.$router.push('/edit')
+    }
   }
 }
 </script>
 
 <style lang="scss">
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
-
-  display: flex;
-  flex-direction: column;
-}
-
-html {
-  height: 100%
-}
-body, #app {
-  height: 100%;
-  margin: 0;
-}
-
-.content {
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-
-  > * {
-    flex-grow: 1;
-    width: 100%;
-    max-width: 960px;
-    margin: auto;
-  }
-}
-
-.box:first-child {
-  margin-top: 0;
-}
-
-.box {
-  padding: 0.5rem;
-  border-radius: 0;
-  border-style: solid;
-  border-width: 1px;
-  border-color: #bbb;
-  position: relative;
-
-  margin: 0.5rem 0;
-
-  .ribbon {
-    position: absolute;
-    top: 0;
-    right: 0;
-    padding: 0.25em;
-    font-family: monospace;
-    background-color: #ccc;
-    min-width: 1.5rem;
-    text-align: center;
-  }
-}
-
-.container {
-  max-width: 960px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-p {
-  margin: 0.25rem 0;
-}
-@media (max-width: 480px) {
-  body {
-    font-size: 80%;
-  }
-
-  p {
-  margin: 0;
-  }
-  h1, h3 {
-    margin: 0;
-  }
-}
-
-h1, h3 {
-  margin: 0.25rem 0 0 0;
-}
-
-h3 {
-  font-size: 140%;
-}
-h1 {
-  font-size: 160%;
-}
-
-.navbar-brand {
-  font-size: 180%;
-  font-weight: 700;
-}
-
-.navbar-item {
-  color: black;
-  text-decoration: none;
+.app .add-button {
+  position: fixed;
+  right: 1em;
+  bottom: 1em;
 }
 </style>

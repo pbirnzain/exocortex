@@ -1,14 +1,14 @@
-<template lang="html">
-  <div class="topic-list">
-    <h1 class="title">{{ title }}</h1>
-    <div v-for="topic in topics" :key="topic.id" class="box">
-      <a @click="onClick(topic)"><h3>{{ topic.title }}</h3></a>
-      <div class="ribbon">{{topic.score.sum}}</div>
-      <p>
-        {{ topic.text }}
-      </p>
-    </div>
-  </div>
+<template lang="pug">
+  .topic-list
+    h1(v-if="title") {{ title }}
+
+    md-card(v-for="topic in topics" :key="topic.id")
+      md-card-header
+        a.md-title(@click="onClick(topic)") {{ topic.title }}
+        .score {{topic.score.sum}}
+
+      md-card-content(v-if="topic.text") {{ topic.text }}
+
 </template>
 
 <script>
@@ -23,4 +23,25 @@ export default {
 </script>
 
 <style lang="scss">
+
+.topic-list .md-card {
+  margin-bottom: 8px;
+
+  .md-card-header {
+    position: relative;
+
+    .score {
+      position: absolute;
+      top: 0;
+      right: 0;
+      padding: 0 0.25rem;
+
+      font-size: 82%;
+      font-weight: 600;
+
+      background-color: red;
+      color: white;
+    }
+  }
+}
 </style>
