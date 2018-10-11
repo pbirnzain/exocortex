@@ -38,6 +38,9 @@ export default {
 </script>
 
 <style lang="scss">
+html {
+  height: 100%;
+}
 
 @media(max-width: 460px) {
   .app {
@@ -49,6 +52,10 @@ export default {
       line-height: initial;
     }
   }
+}
+
+.app, .md-app {
+  height: 100vh;
 }
 
 .app .md-card-header .md-title {
