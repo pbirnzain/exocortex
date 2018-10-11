@@ -7,19 +7,16 @@
         span(v-for="(value, reason, idx) in template.score.reasons",:key="idx") ({{reason}}: {{value}})
 
     md-card-content
-      .timestamps(style="display:none;")
-        span Added: {{template.added}}
-        span Modified: {{template.modified}}
       div
         md-checkbox(v-model="template.pinned" @change="onChange") pinned
         md-checkbox(v-model="template.complete" @change="onChange") complete
 
       md-field
-        md-input(type="date" v-model="template.due" @change="onChange")
+        md-input(type="text" v-model="template.due" @change="onChange")
         span.md-helper-text Due on
 
       md-field
-        md-input(type="date" v-model="template.ready" @change="onChange")
+        md-input(type="text" v-model="template.ready" @change="onChange")
         span.md-helper-text Ready starting on
 
       md-field
@@ -27,10 +24,7 @@
 </template>
 
 <script>
-import DatePicker from 'vue-md-date-picker'
-
 export default {
-  components: {DatePicker},
   props: ['topic'],
   computed: {
     template() {
