@@ -24,6 +24,7 @@ export default {
   },
   mounted () {
     this.$store.dispatch('initialize')
+    this.showAddButton = this.$router.currentRoute.path === "/"
     this.$router.afterEach((to, from) => {
       this.showAddButton = this.$router.currentRoute.path === "/"
     })
