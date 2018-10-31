@@ -1,17 +1,17 @@
 import VueNativeSock from 'vue-native-websocket'
+import './plugins/vuetify'
 import Vue from 'vue'
 import App from './App.vue'
 import store from './store'
 import './registerServiceWorker'
 import router from './router'
-// import { MdApp, MdToolbar } from 'vue-material/dist/components'
 import VueMaterial from 'vue-material'
-import 'vue-material/dist/vue-material.min.css'
-import 'vue-material/dist/theme/default.css'
+import 'roboto-fontface/css/roboto/roboto-fontface.css'
+import Vuetify from 'vuetify'
 
-Vue.use(VueMaterial)
-// Vue.use(MdApp)
-// Vue.use(MdToolbar)
+Vue.use(Vuetify, {
+  iconfont: 'md'
+})
 
 Vue.config.productionTip = false
 

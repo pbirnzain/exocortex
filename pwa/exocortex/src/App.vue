@@ -1,22 +1,31 @@
 <template lang="pug">
   .app
-    <md-button v-if="showAddButton" class="add-button md-icon-button md-raised md-accent md-dense md-fab" @click="onNewTopic">
-      <md-icon>add</md-icon>
-    </md-button>
+    v-btn(v-if="showAddButton" fab fixed bottom right color="red" @click="onNewTopic")
+      v-icon add
 
-    md-app
-      md-app-toolbar.md-primary
-        <router-link class="md-title" :to="{ name: 'home', params: {}}">ExoCortex</router-link>
+    v-app
+      v-toolbar(app="")
+        v-icon all_inbox
+        v-icon memory
+        v-toolbar-title
+          <router-link class="md-title" :to="{ name: 'home', params: {}}">ExoCortex</router-link>
 
-      md-app-content
+      v-content(app="")
         router-view
 </template>
 
 <script>
-//
+import { VApp, VToolbar, VContent, VContainer, VBtn } from 'vuetify/lib'
 
 export default {
   name: 'app',
+  components: {
+    VApp,
+    VToolbar,
+    VContent,
+    VContainer,
+    VBtn,
+  },
   data() {
     return {
       showAddButton: false,
@@ -53,6 +62,11 @@ html {
       line-height: initial;
     }
   }
+}
+
+.v-toolbar a {
+  color: black;
+  text-decoration: none;
 }
 
 .app, .md-app {

@@ -1,49 +1,51 @@
 <template lang="pug">
   .topic
-    md-card-header
-      input.md-title(v-model="template.title", @change="onChange")
-      .md-subhead.score-reasons(v-if="template.score")
-        span Score: {{ template.score.sum }}
-        span(v-for="(value, reason, idx) in template.score.reasons",:key="idx") ({{reason}}: {{value}})
+    v-text-field(v-model="template.title", @change="onChange")
+    .md-subhead.score-reasons(v-if="template.score")
+      span Score: {{ template.score.sum }}
+      span(v-for="(value, reason, idx) in template.score.reasons",:key="idx") ({{reason}}: {{value}})
 
-    md-card-content
-      div
-        md-checkbox(v-model="template.pinned" @change="onChange") pinned
-        md-checkbox(v-model="template.complete" @change="onChange") complete
+    .horizontal
+      v-checkbox(v-model="template.pinned" @change="onChange" label="pinned")
+      v-checkbox(v-model="template.complete" @change="onChange" label="complete")
 
-      md-field
-        datepicker(v-if="template" :date="due" @change="onChange")
-        span.md-helper-text Due on
+    v-dialog(v-model="showDuePicker" lazy full-width width="290px")
+      v-text-field(slot="activator" v-model="template.due" label="Due" prepend-icon="event" readonly)
+      v-date-picker(v-model="template.due" @change="onChange" scrollable)
 
-      md-field
-        datepicker(v-if="template" :date="ready" @change="onChange")
-        span.md-helper-text Ready starting on
+    v-dialog(v-model="showReadyPicker" lazy full-width width="290px")
+      v-text-field(slot="activator" v-model="template.ready" label="Ready" prepend-icon="event" readonly)
+      v-date-picker(v-model="template.ready" @change="onChange" scrollable)
 
-      md-field
-        md-textarea(v-model="template.text" @change="onChange" md-autogrow placeholder="Content")
+    v-textarea(:value="template.text" @change="onChange" auto-grow label="Content")
 </template>
 
 <script>
-import Datepicker from 'vue-datepicker/vue-datepicker-es6';
+import { VTextField, VTextarea, VDatePicker, VDialog, VCheckbox, VBtn } from 'vuetify/lib'
 
 export default {
   props: ['topic'],
-  components: { datepicker: Datepicker },
+  components: {
+    VTextField,
+    VDatePicker,
+    VDialog,
+    VTextarea,
+    VCheckbox,
+    VBtn,
+  },
+  data() {
+    return {
+      showDuePicker: false,
+      showReadyPicker: false,
+    }
+  },
   computed: {
     template() {
       return Object.assign({pinned: true}, this.topic)
     },
-    due() {
-      return { time: this.template.due }
-    },
-    ready() {
-      return { time: this.template.ready }
-    }
   },
   methods: {
     onChange (event) {
-      this.template.due = this.due.time
-      this.template.ready = this.ready.time
       this.$emit('topic-changed', this.template)
     }
   }
@@ -51,20 +53,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import '@/styles/form.scss';
-
-.cov-vue-date {
-  width: 100%!important;
-  input {
-    width: 100%!important;
-  }
-}
-
-.cov-datepicker {
-  color: rgba(0,0,0,0.87)!important;
-  box-shadow: none!important;
-}
-
 .score-reasons {
   padding-top: 0.25rem;
 
@@ -73,25 +61,13 @@ export default {
   }
 }
 
-.topic {
-  .md-card-header {
-    .md-title{
-      margin-top: 0!important;
-      width: 100%;
-    }
-  }
-  .md-card-content {
-    padding-bottom: 0!important;
-  }
-  .md-checkbox {
-    margin: 0 16px 0 0;
-  }
-  .md-field {
-    margin-top: -4px; // To compensate for padding
+.horizontal {
+  display: flex;
+}
 
-    &:last-child {
-      margin-bottom: 0;
-    }
+.topic {
+  .v-dialog__container {
+    width: 100%;
   }
 }
 </style>

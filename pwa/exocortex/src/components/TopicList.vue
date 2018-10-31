@@ -2,18 +2,29 @@
   .topic-list
     h1(v-if="title") {{ title }}
 
-    md-list
-      div(v-for="topic in topics" :key="topic.id")
-        md-list-item(@click="onClick(topic)")
-          div {{ topic.title }}
-          .score {{topic.score.sum}}
-        md-divider
+    v-list
+      v-list-tile(v-for="topic in topics" :key="topic.id" @click="onClick(topic)")
+        .topic-list-item
+          v-list-tile-content
+            v-list-tile-title(v-text="topic.title")
+        .score {{topic.score.sum}}
+
+
 
 </template>
 
 <script>
+import { VList, VDivider, VListTile, VListTileContent, VListTileTitle } from 'vuetify/lib'
+
 export default {
   props: ['title', 'topics'],
+  components: {
+    VList,
+    VDivider,
+    VListTile,
+    VListTileContent,
+    VListTileTitle,
+  },
   methods: {
     onClick (topic) {
       this.$emit('topic-selected', topic)
@@ -25,14 +36,15 @@ export default {
 <style lang="scss">
 
 .topic-list {
-  .md-list {
+  .v-list {
     padding-bottom: 0;
   }
 
-  .md-list-item-content {
+  .v-list {
     position: relative;
 
     .score {
+      display: none;
       position: absolute;
       top: 0;
       right: 0;

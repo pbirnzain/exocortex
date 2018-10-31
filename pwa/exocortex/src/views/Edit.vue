@@ -1,21 +1,31 @@
 <template>
   <div class="edit-topic md-layout">
-    <md-card>
-      <topic :topic="selectedTopic" @topic-changed="onTopicChanged"/>
-      <md-card-actions>
-        <md-button @click="onDelete">Delete</md-button>
-      </md-card-actions>
-    </md-card>
+    <v-container>
+      <v-card>
+        <v-card-text>
+          <topic :topic="selectedTopic" @topic-changed="onTopicChanged"/>
+        </v-card-text>
+        <v-card-actions>
+          <v-btn flat @click="onDelete">Delete</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-container>
   </div>
 </template>
 
 <script>
+import { VCard, VCardText, VCardActions, VBtn, VContainer } from 'vuetify/lib'
 import Topic from '../components/Topic'
 
 export default {
   name: 'app',
   components: {
-    Topic
+    Topic,
+    VCard,
+    VCardText,
+    VCardActions,
+    VBtn,
+    VContainer,
   },
   computed: {
     selectedTopic () {
