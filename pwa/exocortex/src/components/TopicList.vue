@@ -41,6 +41,9 @@ export default {
       if (topic.score.sum > 60) {
         return 'warning'
       }
+      if (topic.complete) {
+        return "success"
+      }
     }
   }
 }
