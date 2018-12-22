@@ -3,14 +3,12 @@
     h1(v-if="title") {{ title }}
 
     v-list
-      v-list-tile(v-for="topic in topics" :key="topic.id" @click="onClick(topic)")
+      v-list-tile(v-for="topic in topics" :key="topic.id" @click="onClick(topic)"
+          :color="color(topic)")
         .topic-list-item
           v-list-tile-content
             v-list-tile-title(v-text="topic.title")
         .score {{topic.score.sum}}
-
-
-
 </template>
 
 <script>
@@ -28,6 +26,15 @@ export default {
   methods: {
     onClick (topic) {
       this.$emit('topic-selected', topic)
+    },
+
+    color(topic) {
+      if (topic.score.reasons['is overdue']) {
+        return 'error'
+      }
+      if (topic.score.sum > 60) {
+        return 'warning'
+      }
     }
   }
 }
