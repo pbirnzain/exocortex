@@ -2,22 +2,21 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 
-axios.defaults.xsrfCookieName = 'csrftoken'
-axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN'
-// axios.defaults.baseURL = process.env.API_URL;
-axios.defaults.withCredentials = true
-
-Vue.use(Vuex)
-
-export default new Vuex.Store({
-  strict: true,
+const topicModule = {
   state: {
     topics: {},
     selectedTopic: undefined
   },
   getters: {
-    urgentTopics (state) {
-      return Object.values(state.topics).sort((a, b) => {
+    urgentTopics (state, getters, rootState) {
+      let filtered = Object.values(state.topics).filter( topic => {
+          const searchText = rootState.search.searchText.toLowerCase()
+          return topic.title.toLowerCase().indexOf(searchText) >= 0 ||
+            topic.text.toLowerCase().indexOf(searchText) >= 0
+        }
+      )
+
+      return filtered.sort((a, b) => {
         if (a.score.sum < b.score.sum) {
           return 1
         } else if (a.score.sum > b.score.sum) {
@@ -107,13 +106,6 @@ export default new Vuex.Store({
       })
     }
   }
-})
+}
 
-axios.interceptors.response.use(function (response) {
-    return response;
-  }, function (error) {
-    if (error.response.status === 403) {
-      window.location.href = "/login/"
-    }
-    return Promise.reject(error);
-  });
+export default topicModule;

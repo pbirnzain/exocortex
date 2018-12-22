@@ -8,6 +8,7 @@
         .topic-list-item
           v-list-tile-content
             v-list-tile-title(v-text="topic.title")
+            v-list-tile-sub-title(v-if="showText" v-text="topic.text")
         .score {{topic.score.sum}}
 </template>
 
@@ -22,6 +23,11 @@ export default {
     VListTile,
     VListTileContent,
     VListTileTitle,
+  },
+  computed: {
+    showText() {
+      return this.$store.state.search.searchText != ""
+    }
   },
   methods: {
     onClick (topic) {

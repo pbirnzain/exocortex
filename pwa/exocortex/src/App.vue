@@ -8,8 +8,11 @@
         v-icon all_inbox
         v-icon memory
         v-toolbar-title
-          <router-link class="md-title" :to="{ name: 'home', params: {}}">ExoCortex</router-link>
-
+          router-link(class="md-title" :to="{ name: 'home', params: {}}") ExoCortex
+        v-spacer
+        v-text-field(v-if="showAddButton" :value="searchText" @input="onSearchTextChanged"
+          placeholder="Search" prepend-icon="search"
+          append-icon="clear" @click:append="onClearSearchText")
       v-content(app="")
         router-view
 </template>
@@ -28,10 +31,15 @@ export default {
   },
   data() {
     return {
-      showAddButton: false,
+      showAddButton: false
     }
   },
-  mounted () {
+  computed: {
+    searchText() {
+      return this.$store.state.search.searchText
+    }
+  },
+  mounted() {
     this.$store.dispatch('initialize')
     this.showAddButton = this.$router.currentRoute.path === "/"
     this.$router.afterEach((to, from) => {
@@ -42,6 +50,12 @@ export default {
     onNewTopic () {
       this.$store.dispatch('selectTopic', undefined)
       this.$router.push('/edit')
+    },
+    onSearchTextChanged(newSearchText) {
+      this.$store.dispatch('setSearchText', newSearchText)
+    },
+    onClearSearchText() {
+      this.$store.dispatch('setSearchText', '')
     }
   }
 }
