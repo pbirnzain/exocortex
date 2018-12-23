@@ -67,7 +67,7 @@ class Topic(DataChunk):
             score += ("complete", -20)
             return score
 
-        if self.ready:
+        if self.ready and not self.due:
             if self.ready > timezone.now().date():
                 score += ("blocked", -10)
                 return score
