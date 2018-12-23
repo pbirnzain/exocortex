@@ -10,11 +10,13 @@
       v-checkbox(v-model="template.complete" @change="onChange" label="complete")
 
     v-dialog(v-model="showDuePicker" lazy full-width width="290px")
-      v-text-field(slot="activator" v-model="template.due" label="Due" prepend-icon="event" readonly)
-      v-date-picker(v-model="template.due" @change="onChange" scrollable)
+      v-text-field(slot="activator" v-model="template.due" readonly
+        label="Due" prepend-icon="event" :clearable="true" @input="onChange")
+      v-date-picker(v-model="template.due" scrollable @change="onChange")
 
     v-dialog(v-model="showReadyPicker" lazy full-width width="290px")
-      v-text-field(slot="activator" v-model="template.ready" label="Ready" prepend-icon="event" readonly)
+      v-text-field(slot="activator" v-model="template.ready" readonly
+        label="Ready" prepend-icon="event" :clearable="true" @input="onChange")
       v-date-picker(v-model="template.ready" @change="onChange" scrollable)
 
     v-textarea(:value="template.text" @change="onChange" auto-grow label="Content")
