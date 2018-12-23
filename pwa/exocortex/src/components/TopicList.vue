@@ -50,14 +50,10 @@ export default {
 </script>
 
 <style lang="scss">
-
 .topic-list {
   .v-list {
-    padding-bottom: 0;
-  }
-
-  .v-list {
     position: relative;
+    padding-bottom: 0;
 
     .score {
       display: none;

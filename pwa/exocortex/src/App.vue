@@ -11,8 +11,7 @@
           router-link(class="md-title" :to="{ name: 'home', params: {}}") ExoCortex
         v-spacer
         v-text-field(v-if="showAddButton" :value="searchText" @input="onSearchTextChanged"
-          placeholder="Search" prepend-icon="search"
-          append-icon="clear" @click:append="onClearSearchText")
+          placeholder="Search" prepend-icon="search" :clearable="true")
       v-content(app="")
         router-view
 </template>
@@ -53,9 +52,6 @@ export default {
     },
     onSearchTextChanged(newSearchText) {
       this.$store.dispatch('setSearchText', newSearchText)
-    },
-    onClearSearchText() {
-      this.$store.dispatch('setSearchText', '')
     }
   }
 }

@@ -8,7 +8,7 @@ const searchModule = {
   },
   mutations: {
     SETSEARCHTEXT (state, searchText) {
-      state.searchText = searchText
+      state.searchText = searchText ? searchText : ''
     }
   },
   actions: {
