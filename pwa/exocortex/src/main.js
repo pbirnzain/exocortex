@@ -5,7 +5,6 @@ import App from './App.vue'
 import store from './store/store'
 import './registerServiceWorker'
 import router from './router'
-import VueMaterial from 'vue-material'
 import 'roboto-fontface/css/roboto/roboto-fontface.css'
 import Vuetify from 'vuetify'
 
