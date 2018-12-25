@@ -19,7 +19,7 @@
         label="Ready" prepend-icon="event" :clearable="true" @input="onChange")
       v-date-picker(v-model="template.ready" @change="onChange" scrollable)
 
-    v-textarea(:value="template.text" @change="onChange" auto-grow label="Content")
+    v-textarea(v-model="template.text" @change="onChange" auto-grow label="Content")
 </template>
 
 <script>

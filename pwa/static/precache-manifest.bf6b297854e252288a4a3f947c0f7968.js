@@ -60,8 +60,8 @@ self.__precacheManifest = [
     "url": "/static/fonts/Roboto-Light.d26871e8.woff2"
   },
   {
-    "revision": "56878190efa88d88d5b4",
-    "url": "/static/js/app.b1bd3533.js"
+    "revision": "cdaf9017aeb4fdd0c6b1",
+    "url": "/static/js/app.3784e6e3.js"
   },
   {
     "revision": "9d4e6a338870822c93f8",
@@ -112,11 +112,11 @@ self.__precacheManifest = [
     "url": "/static/fonts/Roboto-BoldItalic.4fe0f73c.woff"
   },
   {
-    "revision": "146e84c1a1d1c20da9915e7958211c99",
+    "revision": "660eeb3eabf965fa7874ec63c904d3e9",
     "url": "/static/index.html"
   },
   {
-    "revision": "56878190efa88d88d5b4",
+    "revision": "cdaf9017aeb4fdd0c6b1",
     "url": "/static/css/app.55b67d68.css"
   }
 ];
