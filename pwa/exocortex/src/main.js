@@ -31,6 +31,8 @@ new Vue({
       const msg = JSON.parse(event.data)
       if(msg.type == 'update_topic') {
         this.$store.commit("updateTopic", msg.payload)
+      } else if (msg.type == 'delete_topic') {
+        this.$store.commit("deleteTopic", msg.payload)
       }
     }
   }

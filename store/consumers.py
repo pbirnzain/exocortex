@@ -17,8 +17,16 @@ class UpdateConsumer(WebsocketConsumer):
 
     def topic_changed(self, event):
         topic = event['message']
-        message = {
+        frame = {
             'type': 'update_topic',
             'payload': topic,
         }
-        self.send(text_data=json.dumps(message))
+        self.send(text_data=json.dumps(frame))
+
+    def topic_deleted(self, event):
+        id = event['message']
+        frame = {
+            'type': 'delete_topic',
+            'payload': id,
+        }
+        self.send(text_data=json.dumps(frame))

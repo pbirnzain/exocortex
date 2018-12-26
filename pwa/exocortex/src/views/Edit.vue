@@ -21,13 +21,19 @@ export default {
       return this.$store.getters.selectedTopic
     }
   },
+  watch: {
+    selectedTopic (newSelectedTopic) {
+      if (!newSelectedTopic) {
+        this.$router.push('/')
+      }
+    }
+  },
   methods: {
     onTopicChanged (topic) {
       this.$store.dispatch('updateTopic', topic)
     },
     onDelete () {
       this.$store.dispatch('deleteTopic', this.selectedTopic)
-      this.$router.push('/')
     }
   }
 }

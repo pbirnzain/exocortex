@@ -40,7 +40,7 @@ const topicModule = {
     updateTopic (state, topic) {
       Vue.set(state.topics, topic.id, topic)
       if (state.selectedTopic !== undefined) {
-        if (topic.id === state.selectedTopic.id) {
+        if (topic.id == state.selectedTopic.id) {
           state.selectedTopic = topic
         }
       }
@@ -51,7 +51,7 @@ const topicModule = {
     deleteTopic (state, id) {
       Vue.delete(state.topics, id)
       if (state.selectedTopic !== undefined) {
-        if (state.selectedTopic.id === id) {
+        if (state.selectedTopic.id == id) {
           state.selectedTopic = undefined
         }
       }
