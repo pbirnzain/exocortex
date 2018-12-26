@@ -2,7 +2,6 @@
   .edit-topic
     v-container
       topic(:topic="selectedTopic" @topic-changed="onTopicChanged")
-      v-btn(flat @click="onDelete") Delete
 </template>
 
 <script>
@@ -23,29 +22,15 @@ export default {
   },
   watch: {
     selectedTopic (newSelectedTopic) {
-      if (!newSelectedTopic) {
-        this.$router.push('/')
+      if (newSelectedTopic) {
+        this.$router.push('/edit/' + newSelectedTopic.id)
       }
     }
-  },
-  mounted() {
-    this.$store.dispatch('selectTopic', this.$route.params.id)
-  },
-  beforeRouteUpdate (to, from, next) {
-    this.$store.dispatch('selectTopic', to.params.id)
-    next()
-  },
-  beforeRouteLeave (to, from, next) {
-    this.$store.dispatch('selectTopic', undefined)
-    next()
   },
   methods: {
     onTopicChanged (topic) {
       this.$store.dispatch('updateTopic', topic)
     },
-    onDelete () {
-      this.$store.dispatch('deleteTopic', this.selectedTopic)
-    }
   }
 }
 </script>

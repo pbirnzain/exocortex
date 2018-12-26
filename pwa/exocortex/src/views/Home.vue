@@ -20,8 +20,7 @@ export default {
   },
   methods: {
     onSelect (topic) {
-      this.$store.dispatch('selectTopic', topic)
-      this.$router.push('/edit')
+      this.$router.push(`/edit/${topic.id}`)
     }
   }
 }
