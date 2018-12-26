@@ -13,9 +13,9 @@ class TopicViewSet(viewsets.ModelViewSet):
     def update(self, *args, **kwargs):
         ret = super().update(*args, **kwargs)
         channel_layer = get_channel_layer()
-        async_to_sync(channel_layer.group_send)('updates',
-                                                {
-                                                    'type': 'topic_changed',
-                                                    'message': 'test',
-                                                })
+        message = {
+            'type': 'topic_changed',
+            'message': ret.data
+        }
+        async_to_sync(channel_layer.group_send)('updates', message)
         return ret

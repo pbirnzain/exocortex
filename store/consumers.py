@@ -16,4 +16,9 @@ class UpdateConsumer(WebsocketConsumer):
         print("received via websock:", text_data)
 
     def topic_changed(self, event):
-        self.send(text_data=event['message'])
+        topic = event['message']
+        message = {
+            'type': 'update_topic',
+            'payload': topic,
+        }
+        self.send(text_data=json.dumps(message))

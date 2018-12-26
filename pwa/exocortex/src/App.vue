@@ -17,16 +17,20 @@
 </template>
 
 <script>
-import { VApp, VToolbar, VContent, VContainer, VBtn } from 'vuetify/lib'
+import { VApp, VToolbar, VToolbarTitle, VContent, VContainer, VBtn, VIcon, VSpacer, VTextField } from 'vuetify/lib'
 
 export default {
   name: 'app',
   components: {
     VApp,
     VToolbar,
+    VToolbarTitle,
     VContent,
     VContainer,
-    VBtn
+    VBtn,
+    VIcon,
+    VSpacer,
+    VTextField
   },
   data () {
     return {

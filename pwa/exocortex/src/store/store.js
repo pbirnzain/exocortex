@@ -18,18 +18,6 @@ export default new Vuex.Store({
     topics: topicModule,
     search: searchModule
   },
-  mutations: {
-    SOCKET_ONMESSAGE (state, message) {
-      console.log('ws:', message)
-    },
-    SOCKET_ONOPEN (state, event) {
-    },
-    SOCKET_ONCLOSE (state, event) {
-    },
-    SOCKET_ONERROR (state, event) {
-      console.error(event)
-    }
-  }
 })
 
 axios.interceptors.response.use(function (response) {
