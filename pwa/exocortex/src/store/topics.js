@@ -5,7 +5,7 @@ import axios from 'axios'
 const topicModule = {
   state: {
     topics: {},
-    selectedTopic: undefined
+    selectedTopicId: undefined
   },
   getters: {
     urgentTopics (state, getters, rootState) {
@@ -27,7 +27,7 @@ const topicModule = {
       })
     },
     selectedTopic (state) {
-      return state.selectedTopic
+      return state.selectedTopicId ? state.topics[state.selectedTopicId] : undefined
     }
   },
   mutations: {
@@ -45,8 +45,8 @@ const topicModule = {
         }
       }
     },
-    selectTopic (state, topic) {
-      state.selectedTopic = topic
+    selectTopic (state, id) {
+      state.selectedTopicId = id
     },
     deleteTopic (state, id) {
       Vue.delete(state.topics, id)
@@ -68,7 +68,7 @@ const topicModule = {
       if (topic.id === undefined) {
         axios.post('/api/topics/', topic).then(response => {
           commit('updateTopic', response.data)
-          commit('selectTopic', response.data)
+          commit('selectTopic', response.data.id)
         })
       } else {
         // if a date field has been cleared (set to empty string), send null
@@ -87,8 +87,8 @@ const topicModule = {
         })
       }
     },
-    selectTopic ({commit}, topic) {
-      commit('selectTopic', topic)
+    selectTopic ({commit}, id) {
+      commit('selectTopic', id)
     },
     deleteTopic ({commit}, topic) {
       axios.delete('/api/topics/' + topic.id + '/').then(response => {
