@@ -1,10 +1,8 @@
-<template>
-  <div class="edit-topic md-layout">
-    <v-container>
-      <topic :topic="selectedTopic" @topic-changed="onTopicChanged"/>
-      <v-btn flat @click="onDelete">Delete</v-btn>
-    </v-container>
-  </div>
+<template lang="pug">
+  .edit-topic
+    v-container
+      topic(:topic="selectedTopic" @topic-changed="onTopicChanged")
+      v-btn(flat @click="onDelete") Delete
 </template>
 
 <script>
@@ -39,8 +37,6 @@ export default {
 </script>
 <style lang="scss">
 .edit-topic {
-  margin: 16px 0;
-
   display: flex;
   flex-direction: column;
 
