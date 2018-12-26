@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { VList, VDivider, VListTile, VListTileContent, VListTileTitle } from 'vuetify/lib'
+import { VList, VDivider, VListTile, VListTileContent, VListTileTitle, VListTileSubTitle } from 'vuetify/lib'
 
 export default {
   props: ['title', 'topics'],
@@ -22,7 +22,8 @@ export default {
     VDivider,
     VListTile,
     VListTileContent,
-    VListTileTitle
+    VListTileTitle,
+    VListTileSubTitle
   },
   computed: {
     showText () {
