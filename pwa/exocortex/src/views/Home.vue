@@ -28,4 +28,7 @@ export default {
 </script>
 
 <style lang="scss">
+.topic-list-item {
+  overflow: hidden;
+}
 </style>
