@@ -2,7 +2,7 @@
   .topic
     v-text-field(v-model="template.title", @change="onChange")
     .md-subhead.score-reasons(v-if="template.score")
-      span Score: {{ template.score.sum }}
+      span Urgency: {{ template.score.sum }}
       span(v-for="(value, reason, idx) in template.score.reasons",:key="idx") ({{reason}}: {{value}})
 
     .horizontal
