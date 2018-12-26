@@ -1,14 +1,8 @@
 <template>
   <div class="edit-topic md-layout">
     <v-container>
-      <v-card>
-        <v-card-text>
-          <topic :topic="selectedTopic" @topic-changed="onTopicChanged"/>
-        </v-card-text>
-        <v-card-actions>
-          <v-btn flat @click="onDelete">Delete</v-btn>
-        </v-card-actions>
-      </v-card>
+      <topic :topic="selectedTopic" @topic-changed="onTopicChanged"/>
+      <v-btn flat @click="onDelete">Delete</v-btn>
     </v-container>
   </div>
 </template>
