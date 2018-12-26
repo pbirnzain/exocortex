@@ -1,6 +1,6 @@
 <template lang="pug">
   .topic
-    v-text-field(v-model="template.title", @change="onChange")
+    v-text-field(v-model="template.title", @change="onChange" ref="title")
     .md-subhead.score-reasons(v-if="template.score")
       span Urgency: {{ template.score.sum }}
       span(v-for="(value, reason, idx) in template.score.reasons",:key="idx") ({{reason}}: {{value}})
@@ -55,6 +55,9 @@ export default {
       }
       return false
     }
+  },
+  mounted() {
+    this.$refs.title.focus()
   },
   methods: {
     onChange () {
