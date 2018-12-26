@@ -6,16 +6,13 @@
 </template>
 
 <script>
-import { VCard, VCardText, VCardActions, VBtn, VContainer } from 'vuetify/lib'
+import { VBtn, VContainer } from 'vuetify/lib'
 import Topic from '../components/Topic'
 
 export default {
   name: 'app',
   components: {
     Topic,
-    VCard,
-    VCardText,
-    VCardActions,
     VBtn,
     VContainer
   },
