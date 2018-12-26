@@ -48,6 +48,8 @@ export default {
   },
   methods: {
     onChange (event) {
+      this.showDuePicker = false;
+      this.showReadyPicker = false;
       this.$emit('topic-changed', this.template)
     }
   }
