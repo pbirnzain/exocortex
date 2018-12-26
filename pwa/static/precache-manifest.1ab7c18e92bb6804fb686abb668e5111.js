@@ -112,7 +112,7 @@ self.__precacheManifest = [
     "url": "/static/fonts/Roboto-BoldItalic.4fe0f73c.woff"
   },
   {
-    "revision": "7cb1049a0ea77392077b83f2c7bca03d",
+    "revision": "f6e3fbcba0fc46511fc39146d0147e34",
     "url": "/static/index.html"
   },
   {
