@@ -28,7 +28,7 @@ export default {
 </script>
 
 <style lang="scss">
-.topic-list-item {
+.home .v-list__tile {
   overflow: hidden;
 }
 </style>

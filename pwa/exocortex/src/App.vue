@@ -75,6 +75,15 @@ html {
       font-size: 20px;
       line-height: initial;
     }
+    .v-toolbar {
+      .v-icon {
+        display: none;
+      }
+      .v-toolbar__title {
+        margin-left: 0;
+        overflow: unset;
+      }
+    }
   }
 }
 

@@ -5,11 +5,9 @@
     v-list
       v-list-tile(v-for="topic in topics" :key="topic.id" @click="onClick(topic)"
           :color="color(topic)")
-        .topic-list-item
-          v-list-tile-content
-            v-list-tile-title(v-text="topic.title")
-            v-list-tile-sub-title(v-if="showText" v-text="topic.text")
-        .score {{topic.score.sum}}
+        v-list-tile-content
+          v-list-tile-title(v-text="topic.title")
+          v-list-tile-sub-title(v-if="showText" v-text="topic.text")
 </template>
 
 <script>
@@ -55,20 +53,6 @@ export default {
   .v-list {
     position: relative;
     padding-bottom: 0;
-
-    .score {
-      display: none;
-      position: absolute;
-      top: 0;
-      right: 0;
-      padding: 0 0.25rem;
-
-      font-size: 82%;
-      font-weight: 600;
-
-      background-color: red;
-      color: white;
-    }
   }
 }
 </style>
