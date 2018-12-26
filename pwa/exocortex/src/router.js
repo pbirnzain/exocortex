@@ -13,7 +13,12 @@ export default new Router({
       component: Home
     },
     {
-      path: '/edit',
+      path: '/new',
+      name: 'new',
+      component: Edit
+    },
+    {
+      path: '/edit/:id',
       name: 'edit',
       component: Edit
     }

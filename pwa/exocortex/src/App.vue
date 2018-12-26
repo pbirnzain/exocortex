@@ -51,8 +51,7 @@ export default {
   },
   methods: {
     onNewTopic () {
-      this.$store.dispatch('selectTopic', undefined)
-      this.$router.push('/edit')
+      this.$router.push('/new')
     },
     onSearchTextChanged (newSearchText) {
       this.$store.dispatch('setSearchText', newSearchText)
