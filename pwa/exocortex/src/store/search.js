@@ -8,7 +8,7 @@ const searchModule = {
   },
   mutations: {
     SETSEARCHTEXT (state, searchText) {
-      state.searchText = searchText ? searchText : ''
+      state.searchText = searchText || ''
     }
   },
   actions: {
@@ -18,4 +18,4 @@ const searchModule = {
   }
 }
 
-export default searchModule;
+export default searchModule

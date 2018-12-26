@@ -33,18 +33,18 @@ export default {
     VDialog,
     VTextarea,
     VCheckbox,
-    VBtn,
+    VBtn
   },
-  data() {
+  data () {
     return {
       showDuePicker: false,
-      showReadyPicker: false,
+      showReadyPicker: false
     }
   },
   computed: {
-    template() {
+    template () {
       return Object.assign({pinned: true}, this.topic)
-    },
+    }
   },
   methods: {
     onChange (event) {

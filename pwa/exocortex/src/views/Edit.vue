@@ -25,7 +25,7 @@ export default {
     VCardText,
     VCardActions,
     VBtn,
-    VContainer,
+    VContainer
   },
   computed: {
     selectedTopic () {

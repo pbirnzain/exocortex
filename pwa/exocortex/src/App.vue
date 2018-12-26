@@ -26,23 +26,23 @@ export default {
     VToolbar,
     VContent,
     VContainer,
-    VBtn,
+    VBtn
   },
-  data() {
+  data () {
     return {
       showAddButton: false
     }
   },
   computed: {
-    searchText() {
+    searchText () {
       return this.$store.state.search.searchText
     }
   },
-  mounted() {
+  mounted () {
     this.$store.dispatch('initialize')
-    this.showAddButton = this.$router.currentRoute.path === "/"
+    this.showAddButton = this.$router.currentRoute.path === '/'
     this.$router.afterEach((to, from) => {
-      this.showAddButton = this.$router.currentRoute.path === "/"
+      this.showAddButton = this.$router.currentRoute.path === '/'
     })
   },
   methods: {
@@ -50,7 +50,7 @@ export default {
       this.$store.dispatch('selectTopic', undefined)
       this.$router.push('/edit')
     },
-    onSearchTextChanged(newSearchText) {
+    onSearchTextChanged (newSearchText) {
       this.$store.dispatch('setSearchText', newSearchText)
     }
   }

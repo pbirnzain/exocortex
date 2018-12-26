@@ -22,11 +22,11 @@ export default {
     VDivider,
     VListTile,
     VListTileContent,
-    VListTileTitle,
+    VListTileTitle
   },
   computed: {
-    showText() {
-      return this.$store.state.search.searchText != ""
+    showText () {
+      return this.$store.state.search.searchText != ''
     }
   },
   methods: {
@@ -34,7 +34,7 @@ export default {
       this.$emit('topic-selected', topic)
     },
 
-    color(topic) {
+    color (topic) {
       if (topic.score.reasons['is overdue']) {
         return 'error'
       }
@@ -42,7 +42,7 @@ export default {
         return 'warning'
       }
       if (topic.complete) {
-        return "success"
+        return 'success'
       }
     }
   }

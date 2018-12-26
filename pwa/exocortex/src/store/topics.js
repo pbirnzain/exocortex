@@ -9,11 +9,11 @@ const topicModule = {
   },
   getters: {
     urgentTopics (state, getters, rootState) {
-      let filtered = Object.values(state.topics).filter( topic => {
-          const searchText = rootState.search.searchText.toLowerCase()
-          return topic.title.toLowerCase().indexOf(searchText) >= 0 ||
+      let filtered = Object.values(state.topics).filter(topic => {
+        const searchText = rootState.search.searchText.toLowerCase()
+        return topic.title.toLowerCase().indexOf(searchText) >= 0 ||
             topic.text.toLowerCase().indexOf(searchText) >= 0
-        }
+      }
       )
 
       return filtered.sort((a, b) => {
@@ -108,4 +108,4 @@ const topicModule = {
   }
 }
 
-export default topicModule;
+export default topicModule
