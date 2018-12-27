@@ -46,8 +46,9 @@ export default {
       return Object.assign({pinned: true}, this.topic)
     },
     dirty() {
+      // HACK
       if (!this.topic) {
-        return false
+        return this.template.title != '' && this.template.title != undefined
       }
       for (var key in this.template) {
         if (this.template[key] != this.topic[key])
