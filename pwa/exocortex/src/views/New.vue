@@ -1,7 +1,7 @@
 <template lang="pug">
   .edit-topic
     v-container
-      topic(:topic="selectedTopic" @topic-changed="onTopicChanged")
+      topic(:topic="newTopic" @topic-changed="onTopicChanged" :disabled="disabled")
 </template>
 
 <script>
@@ -14,6 +14,9 @@ export default {
     Topic,
     VBtn,
     VContainer
+  },
+  data () {
+    return { newTopic: null, disabled: false }
   },
   computed: {
     selectedTopic () {
@@ -29,7 +32,10 @@ export default {
   },
   methods: {
     onTopicChanged (topic) {
-      this.$store.dispatch('updateTopic', topic)
+      if (!this.disabled) {
+        this.$store.dispatch('updateTopic', topic)
+        this.disabled = true
+      }
     }
   }
 }

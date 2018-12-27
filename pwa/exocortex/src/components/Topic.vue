@@ -1,32 +1,34 @@
 <template lang="pug">
   .topic
-    v-text-field(v-model="template.title", @change="onChange" ref="title")
+    v-text-field(v-model="template.title", @change="onChange" ref="title" :disabled="disabled")
     .md-subhead.score-reasons(v-if="template.score")
       span Urgency: {{ template.score.sum }}
       span(v-for="(value, reason, idx) in template.score.reasons",:key="idx") ({{reason}}: {{value}})
 
     .horizontal
-      v-checkbox(v-model="template.pinned" @change="onChange" label="pinned")
-      v-checkbox(v-model="template.complete" @change="onChange" label="complete")
+      v-checkbox(v-model="template.pinned" @change="onChange" label="pinned" :disabled="disabled")
+      v-checkbox(v-model="template.complete" @change="onChange" label="complete" :disabled="disabled")
 
-    v-dialog(v-model="showDuePicker" lazy full-width width="290px")
+    v-dialog(v-model="showDuePicker" lazy full-width width="290px" :disabled="disabled")
       v-text-field(slot="activator" v-model="template.due" readonly
-        label="Due" prepend-icon="event" :clearable="true" @input="onChange")
+        label="Due" prepend-icon="event" :clearable="true" @input="onChange"
+        :disabled="disabled")
       v-date-picker(v-model="template.due" scrollable @change="onChange")
 
-    v-dialog(v-model="showReadyPicker" lazy full-width width="290px")
+    v-dialog(v-model="showReadyPicker" lazy full-width width="290px" :disabled="disabled")
       v-text-field(slot="activator" v-model="template.ready" readonly
-        label="Ready" prepend-icon="event" :clearable="true" @input="onChange")
+        label="Ready" prepend-icon="event" :clearable="true" @input="onChange"
+        :disabled="disabled")
       v-date-picker(v-model="template.ready" @change="onChange" scrollable)
 
-    v-textarea(v-model="template.text" @change="onChange" auto-grow label="Content")
+    v-textarea(v-model="template.text" @change="onChange" auto-grow label="Content" :disabled="disabled")
 </template>
 
 <script>
 import { VTextField, VTextarea, VDatePicker, VDialog, VCheckbox, VBtn } from 'vuetify/lib'
 
 export default {
-  props: ['topic'],
+  props: ['topic', 'disabled'],
   components: {
     VTextField,
     VDatePicker,
