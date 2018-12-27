@@ -45,29 +45,28 @@ export default {
     template () {
       return Object.assign({pinned: true}, this.topic)
     },
-    dirty() {
+    dirty () {
       // HACK
       if (!this.topic) {
         return this.template.title != '' && this.template.title != undefined
       }
       for (var key in this.template) {
-        if (this.template[key] != this.topic[key])
-          return true
+        if (this.template[key] != this.topic[key]) { return true }
       }
       return false
     }
   },
-  mounted() {
+  mounted () {
     this.$refs.title.focus()
   },
   methods: {
     onChange () {
-      this.showDuePicker = false;
-      this.showReadyPicker = false;
+      this.showDuePicker = false
+      this.showReadyPicker = false
       this.$emit('topic-changed', this.template)
     }
   },
-  beforeDestroy() {
+  beforeDestroy () {
     // A focused VTextField does not emit a 'changed' event when destroyed,
     // so pending changes are emitted here
     if (this.dirty) {

@@ -28,7 +28,7 @@ export default {
       }
     }
   },
-  mounted() {
+  mounted () {
     this.$store.dispatch('selectTopic', this.$route.params.id)
   },
   beforeRouteUpdate (to, from, next) {

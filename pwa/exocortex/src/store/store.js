@@ -18,6 +18,15 @@ export default new Vuex.Store({
     topics: topicModule,
     search: searchModule
   },
+  actions: {
+    frameReceived ({commit}, frame) {
+      if (frame.type == 'update_topic') {
+        commit('updateTopic', frame.payload)
+      } else if (frame.type == 'delete_topic') {
+        commit('deleteTopic', frame.payload)
+      }
+    }
+  }
 })
 
 axios.interceptors.response.use(function (response) {

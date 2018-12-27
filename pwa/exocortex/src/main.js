@@ -1,10 +1,9 @@
 import Vue from 'vue'
-
 import store from './store/store'
-import './registerServiceWorker'
 import router from './router'
-import 'roboto-fontface/css/roboto/roboto-fontface.css'
 import './plugins/vuetify'
+import './registerServiceWorker'
+import 'roboto-fontface/css/roboto/roboto-fontface.css'
 import App from './App.vue'
 
 Vue.config.productionTip = false
@@ -25,15 +24,10 @@ new Vue({
   store,
   router,
   render: h => h(App),
-  mounted() {
+  mounted () {
     this.$ws = new WebSocket(ws_endpoint)
     this.$ws.onmessage = (event) => {
-      const msg = JSON.parse(event.data)
-      if(msg.type == 'update_topic') {
-        this.$store.commit("updateTopic", msg.payload)
-      } else if (msg.type == 'delete_topic') {
-        this.$store.commit("deleteTopic", msg.payload)
-      }
+      this.$store.dispatch('frameReceived', JSON.parse(event.data))
     }
   }
 }).$mount('#app')

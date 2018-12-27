@@ -30,7 +30,7 @@ export default {
   methods: {
     onTopicChanged (topic) {
       this.$store.dispatch('updateTopic', topic)
-    },
+    }
   }
 }
 </script>
