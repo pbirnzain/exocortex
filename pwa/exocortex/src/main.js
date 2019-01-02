@@ -20,14 +20,29 @@ if (loc.protocol === 'http:') {
 ws_endpoint += '//' + loc.host
 ws_endpoint += '/api/ws/updates/'
 
+
 new Vue({
   store,
   router,
   render: h => h(App),
   mounted () {
-    this.$ws = new WebSocket(ws_endpoint)
-    this.$ws.onmessage = (event) => {
-      this.$store.dispatch('frameReceived', JSON.parse(event.data))
+    this.connect()
+  },
+  methods: {
+    connect() {
+      this.$ws = new WebSocket(ws_endpoint)
+      this.$ws.onmessage = (event) => {
+        this.$store.dispatch('frameReceived', JSON.parse(event.data))
+      }
+      this.$ws.onclose = (e) => {
+        console.warn('WebSocket connection closed. Reconnecting in 2s.')
+        setTimeout(() => {
+          this.connect()
+        }, 2000)
+      }
+      this.$ws.onerror = (e) => {
+        console.error("WebSocket Error:", e)
+      }
     }
   }
 }).$mount('#app')
