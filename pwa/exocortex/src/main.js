@@ -20,6 +20,7 @@ if (loc.protocol === 'http:') {
 ws_endpoint += '//' + loc.host
 ws_endpoint += '/api/ws/updates/'
 
+
 new Vue({
   store,
   router,
