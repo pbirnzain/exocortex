@@ -20,7 +20,6 @@ if (loc.protocol === 'http:') {
 ws_endpoint += '//' + loc.host
 ws_endpoint += '/api/ws/updates/'
 
-
 new Vue({
   store,
   router,
@@ -29,7 +28,7 @@ new Vue({
     this.connect()
   },
   methods: {
-    connect() {
+    connect () {
       this.$ws = new WebSocket(ws_endpoint)
       this.$ws.onmessage = (event) => {
         this.$store.dispatch('frameReceived', JSON.parse(event.data))
@@ -41,7 +40,7 @@ new Vue({
         }, 2000)
       }
       this.$ws.onerror = (e) => {
-        console.error("WebSocket Error:", e)
+        console.error('WebSocket Error:', e)
       }
     }
   }

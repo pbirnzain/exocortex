@@ -4,8 +4,6 @@
 </template>
 
 <script>
-// @ is an alias to /src
-import { VContainer } from 'vuetify/lib'
 import TopicList from '@/components/TopicList.vue'
 
 export default {
