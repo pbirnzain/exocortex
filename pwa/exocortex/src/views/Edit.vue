@@ -36,7 +36,9 @@ export default {
     next()
   },
   beforeRouteLeave (to, from, next) {
-    this.$store.dispatch('selectTopic', undefined)
+    if (this.selectedTopic) {
+      this.$store.dispatch('selectTopic', undefined)
+    }
     next()
   },
   methods: {

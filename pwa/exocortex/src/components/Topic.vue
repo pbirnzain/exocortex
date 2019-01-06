@@ -52,9 +52,6 @@ export default {
       if (!this.topic) {
         return this.template.title != '' && this.template.title != undefined
       }
-      for (var key in this.template) {
-        if (this.template[key] != this.topic[key]) { return true }
-      }
       return false
     }
   },

@@ -63,7 +63,7 @@ const topicModule = {
         commit('replaceAll', topics)
       })
     },
-    updateTopic ({commit}, topic) {
+    updateTopic ({commit, state}, topic) {
       if (topic.id === undefined) {
         axios.post('/api/topics/', topic).then(response => {
           commit('updateTopic', response.data)
@@ -81,9 +81,20 @@ const topicModule = {
           topic.ready = null
         }
 
-        axios.put('/api/topics/' + topic.id + '/', topic).then(response => {
-          commit('updateTopic', response.data)
-        })
+        const oldTopic = state.topics[topic.id]
+        const delta = {}
+        for (var key in topic) {
+          if (oldTopic[key] != topic[key]) {
+            delta[key] = topic[key]
+          }
+        }
+
+        if (Object.keys(delta).length) {
+          commit('updateTopic', topic) // optimistic update
+          axios.patch('/api/topics/' + topic.id + '/', delta).then(response => {
+            commit('updateTopic', response.data)
+          })
+        }
       }
     },
     selectTopic ({commit}, id) {
