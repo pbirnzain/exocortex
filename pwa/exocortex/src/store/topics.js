@@ -7,14 +7,16 @@ const topicModule = {
     selectedTopicId: undefined
   },
   getters: {
-    urgentTopics (state, getters, rootState) {
+    filteredTopics (state, getters, rootState) {
+      const searchText = rootState.search.searchText.toLowerCase()
       let filtered = Object.values(state.topics).filter(topic => {
-        const searchText = rootState.search.searchText.toLowerCase()
         return topic.title.toLowerCase().indexOf(searchText) >= 0 ||
             topic.text.toLowerCase().indexOf(searchText) >= 0
-      }
-      )
-
+      })
+      return filtered
+    },
+    urgentTopics (state, getters, rootState) {
+      const filtered = getters.filteredTopics
       return filtered.sort((a, b) => {
         if (a.score.sum < b.score.sum) {
           return 1
