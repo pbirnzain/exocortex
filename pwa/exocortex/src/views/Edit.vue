@@ -18,7 +18,7 @@ export default {
   },
   computed: {
     selectedTopic () {
-      return this.$store.getters.selectedTopic
+      return this.$store.getters['topics/selectedTopic']
     }
   },
   watch: {
@@ -29,24 +29,24 @@ export default {
     }
   },
   mounted () {
-    this.$store.dispatch('selectTopic', this.$route.params.id)
+    this.$store.dispatch('topics/selectTopic', this.$route.params.id)
   },
   beforeRouteUpdate (to, from, next) {
-    this.$store.dispatch('selectTopic', to.params.id)
+    this.$store.dispatch('topics/selectTopic', to.params.id)
     next()
   },
   beforeRouteLeave (to, from, next) {
     if (this.selectedTopic) {
-      this.$store.dispatch('selectTopic', undefined)
+      this.$store.dispatch('topics/selectTopic', undefined)
     }
     next()
   },
   methods: {
     onTopicChanged (topic) {
-      this.$store.dispatch('updateTopic', topic)
+      this.$store.dispatch('topics/updateTopic', topic)
     },
     onDelete () {
-      this.$store.dispatch('deleteTopic', this.selectedTopic)
+      this.$store.dispatch('topics/deleteTopic', this.selectedTopic)
     }
   }
 }

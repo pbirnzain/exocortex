@@ -13,7 +13,7 @@ export default {
   },
   computed: {
     urgentTopics () {
-      return this.$store.getters.urgentTopics
+      return this.$store.getters['topics/urgentTopics']
     }
   },
   methods: {

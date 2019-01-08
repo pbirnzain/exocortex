@@ -2,6 +2,7 @@ import Vue from 'vue'
 import axios from 'axios'
 
 const topicModule = {
+  namespaced: true,
   state: {
     topics: {},
     selectedTopicId: undefined
@@ -32,13 +33,13 @@ const topicModule = {
     }
   },
   mutations: {
-    replaceAll (state, topics) {
+    REPLACEALL (state, topics) {
       state.topics = {}
       for (let topic of topics) {
         Vue.set(state.topics, topic.id, topic)
       }
     },
-    updateTopic (state, topic) {
+    UPDATETOPIC (state, topic) {
       Vue.set(state.topics, topic.id, topic)
       if (state.selectedTopic !== undefined) {
         if (topic.id == state.selectedTopic.id) {
@@ -46,10 +47,10 @@ const topicModule = {
         }
       }
     },
-    selectTopic (state, id) {
+    SELECTTOPIC (state, id) {
       state.selectedTopicId = id
     },
-    deleteTopic (state, id) {
+    DELETETOPIC (state, id) {
       Vue.delete(state.topics, id)
       if (state.selectedTopic !== undefined) {
         if (state.selectedTopic.id == id) {
@@ -62,14 +63,14 @@ const topicModule = {
     initialize ({commit}) {
       axios.get('/api/topics/').then(response => {
         const topics = response.data
-        commit('replaceAll', topics)
+        commit('REPLACEALL', topics)
       })
     },
     updateTopic ({commit, state}, topic) {
       if (topic.id === undefined) {
         axios.post('/api/topics/', topic).then(response => {
-          commit('updateTopic', response.data)
-          commit('selectTopic', response.data.id)
+          commit('UPDATETOPIC', response.data)
+          commit('SELECTTOPIC', response.data.id)
         })
       } else {
         // if a date field has been cleared (set to empty string), send null
@@ -92,19 +93,19 @@ const topicModule = {
         }
 
         if (Object.keys(delta).length) {
-          commit('updateTopic', topic) // optimistic update
+          commit('UPDATETOPIC', topic) // optimistic update
           axios.patch('/api/topics/' + topic.id + '/', delta).then(response => {
-            commit('updateTopic', response.data)
+            commit('UPDATETOPIC', response.data)
           })
         }
       }
     },
     selectTopic ({commit}, id) {
-      commit('selectTopic', id)
+      commit('SELECTTOPIC', id)
     },
     deleteTopic ({commit}, topic) {
       axios.delete('/api/topics/' + topic.id + '/').then(response => {
-        commit('deleteTopic', topic.id)
+        commit('DELETETOPIC', topic.id)
       })
     }
   }

@@ -14,6 +14,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   strict: true,
+
   modules: {
     topics: topicModule,
     search: searchModule
@@ -21,9 +22,9 @@ export default new Vuex.Store({
   actions: {
     frameReceived ({commit}, frame) {
       if (frame.type == 'update_topic') {
-        commit('updateTopic', frame.payload)
+        commit('topics/UPDATETOPIC', frame.payload)
       } else if (frame.type == 'delete_topic') {
-        commit('deleteTopic', frame.payload)
+        commit('topics/DELETETOPIC', frame.payload)
       }
     }
   }

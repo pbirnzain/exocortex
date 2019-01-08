@@ -1,4 +1,5 @@
 const searchModule = {
+  namespaced: true,
   state: {
     searchText: ''
   },

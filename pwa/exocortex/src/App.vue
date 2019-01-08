@@ -39,11 +39,11 @@ export default {
   },
   computed: {
     searchText () {
-      return this.$store.state.search.searchText
+      return this.$store.state['search/searchText']
     }
   },
   mounted () {
-    this.$store.dispatch('initialize')
+    this.$store.dispatch('topics/initialize')
     this.showAddButton = this.$router.currentRoute.path === '/'
     this.$router.afterEach((to, from) => {
       this.showAddButton = this.$router.currentRoute.path === '/'
@@ -54,7 +54,7 @@ export default {
       this.$router.push('/new')
     },
     onSearchTextChanged (newSearchText) {
-      this.$store.dispatch('setSearchText', newSearchText)
+      this.$store.dispatch('search/setSearchText', newSearchText)
     }
   }
 }

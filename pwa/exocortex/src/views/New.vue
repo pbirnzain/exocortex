@@ -20,7 +20,7 @@ export default {
   },
   computed: {
     selectedTopic () {
-      return this.$store.getters.selectedTopic
+      return this.$store.getters['topics/selectedTopic']
     }
   },
   watch: {
@@ -33,7 +33,7 @@ export default {
   methods: {
     onTopicChanged (topic) {
       if (!this.disabled) {
-        this.$store.dispatch('updateTopic', topic)
+        this.$store.dispatch('topics/updateTopic', topic)
         this.disabled = true
       }
     }
