@@ -39,7 +39,7 @@ export default {
   },
   computed: {
     searchText () {
-      return this.$store.state['search/searchText']
+      return this.$store.state.search.searchText
     }
   },
   mounted () {

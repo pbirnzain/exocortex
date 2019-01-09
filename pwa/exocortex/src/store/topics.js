@@ -10,7 +10,7 @@ const topicModule = {
   getters: {
     filteredTopics (state, getters, rootState) {
       const searchText = rootState.search.searchText.toLowerCase()
-      let filtered = Object.values(state.topics).filter(topic => {
+      const filtered = Object.values(state.topics).filter(topic => {
         return topic.title.toLowerCase().indexOf(searchText) >= 0 ||
             topic.text.toLowerCase().indexOf(searchText) >= 0
       })
