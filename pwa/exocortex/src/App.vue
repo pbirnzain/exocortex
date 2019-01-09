@@ -3,6 +3,8 @@
     v-btn(v-if="showAddButton" fab fixed bottom right color="red" @click="onNewTopic")
       v-icon add
 
+    error-snackbar
+
     v-app
       v-toolbar(app="")
         v-icon all_inbox
@@ -18,6 +20,7 @@
 
 <script>
 import { VApp, VToolbar, VToolbarTitle, VContent, VContainer, VBtn, VIcon, VSpacer, VTextField } from 'vuetify/lib'
+import ErrorSnackbar from '@/components/ErrorSnackbar'
 
 export default {
   name: 'app',
@@ -30,7 +33,8 @@ export default {
     VBtn,
     VIcon,
     VSpacer,
-    VTextField
+    VTextField,
+    ErrorSnackbar
   },
   data () {
     return {
