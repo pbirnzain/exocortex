@@ -1,6 +1,6 @@
 <template lang="pug">
   .topic
-    v-text-field(v-model="template.title", @input="onInput" ref="title" :disabled="disabled")
+    v-text-field(v-model="template.title", @change="onChange" ref="title" :disabled="disabled")
     .md-subhead.score-reasons(v-if="template.score")
       span Urgency: {{ template.score.sum }}
       span(v-for="(value, reason, idx) in template.score.reasons",:key="idx") ({{reason}}: {{value}})
@@ -21,12 +21,11 @@
         :disabled="disabled")
       v-date-picker(v-model="template.ready" @change="onChange" scrollable)
 
-    v-textarea(v-model="template.text" @input="onInput" auto-grow label="Content" :disabled="disabled")
+    v-textarea(v-model="template.text" @change="onChange" auto-grow label="Content" :disabled="disabled")
 </template>
 
 <script>
 import { VTextField, VTextarea, VDatePicker, VDialog, VCheckbox, VBtn } from 'vuetify/lib'
-import { debounce } from 'lodash'
 
 export default {
   props: ['topic', 'disabled'],
@@ -60,7 +59,6 @@ export default {
     this.$refs.title.focus()
   },
   methods: {
-    onInput: debounce(function () { this.onChange() }, 500),
     onChange () {
       this.showDuePicker = false
       this.showReadyPicker = false
