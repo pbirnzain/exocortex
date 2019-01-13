@@ -8,26 +8,6 @@ const topicModule = {
     selectedTopicId: undefined
   },
   getters: {
-    filteredTopics (state, getters, rootState) {
-      const searchText = rootState.search.searchText.toLowerCase()
-      const filtered = Object.values(state.topics).filter(topic => {
-        return topic.title.toLowerCase().indexOf(searchText) >= 0 ||
-            topic.text.toLowerCase().indexOf(searchText) >= 0
-      })
-      return filtered
-    },
-    urgentTopics (state, getters, rootState) {
-      const filtered = getters.filteredTopics
-      return filtered.sort((a, b) => {
-        if (a.score.sum < b.score.sum) {
-          return 1
-        } else if (a.score.sum > b.score.sum) {
-          return -1
-        } else {
-          return 0
-        }
-      })
-    },
     selectedTopic (state) {
       return state.selectedTopicId ? state.topics[state.selectedTopicId] : undefined
     }

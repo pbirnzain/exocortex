@@ -14,7 +14,7 @@
 import { VList, VDivider, VListTile, VListTileContent, VListTileTitle, VListTileSubTitle } from 'vuetify/lib'
 
 export default {
-  props: ['title', 'topics'],
+  props: ['title', 'topics', 'showText'],
   components: {
     VList,
     VDivider,
@@ -22,11 +22,6 @@ export default {
     VListTileContent,
     VListTileTitle,
     VListTileSubTitle
-  },
-  computed: {
-    showText () {
-      return this.$store.state.search.searchText != ''
-    }
   },
   methods: {
     onClick (topic) {
