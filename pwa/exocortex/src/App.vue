@@ -13,7 +13,8 @@
           router-link(class="md-title" :to="{ name: 'home', params: {}}") ExoCortex
         v-spacer
         v-text-field(v-if="showAddButton" :value="searchText" @input="onSearchTextChanged"
-          placeholder="Search" prepend-icon="search" :clearable="true")
+          placeholder="Search" prepend-icon="search" :clearable="true"
+          :append-icon="searchText ? 'add' : ''" @click:append="onAdd")
       v-content(app="")
         router-view
 </template>
@@ -59,6 +60,11 @@ export default {
     },
     onSearchTextChanged (newSearchText) {
       this.$store.dispatch('search/setSearchText', newSearchText)
+    },
+    onAdd () {
+      const topic = { title: this.searchText, pinned: true }
+      this.$store.dispatch('topics/updateTopic', topic)
+      this.$store.dispatch('search/setSearchText', '')
     }
   }
 }

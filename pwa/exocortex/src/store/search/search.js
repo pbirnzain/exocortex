@@ -14,10 +14,10 @@ const searchModule = {
       return filtered
     },
     urgentTopics (state, getters, rootState) {
-      return getters.matchingTopics.filter(topic => topic.score.sum > 0)
+      return getters.matchingTopics.filter(topic => topic.score.sum > 10)
     },
     uncriticalTopics (state, getters) {
-      return getters.matchingTopics.filter(topic => topic.score.sum <= 0 && !topic.complete)
+      return getters.matchingTopics.filter(topic => topic.score.sum <= 10 && !topic.complete)
     },
     completeTopics (state, getters) {
       return getters.matchingTopics.filter(topic => topic.complete)
