@@ -29,15 +29,7 @@ const searchModule = {
       } else if (state.filter === 'ready') {
         result = getters.readyTopics
       } else if (state.filter === 'blocked') {
-        result = getters.blockedTopics.sort((a, b) => {
-          if (a.ready < b.ready) {
-            return -1
-          } else if (a.ready > b.ready) {
-            return 1
-          } else {
-            return 0
-          }
-        })
+        result = getters.blockedTopics
       } else {
         result = getters.urgentTopics
       }
@@ -47,6 +39,12 @@ const searchModule = {
           return 1
         } else if (a.score.sum > b.score.sum) {
           return -1
+        }
+
+        if (a.ready < b.ready) {
+          return -1
+        } else if (a.ready > b.ready) {
+          return 1
         } else {
           return 0
         }
