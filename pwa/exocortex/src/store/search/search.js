@@ -16,20 +16,28 @@ const searchModule = {
     urgentTopics (state, getters, rootState) {
       return getters.matchingTopics.filter(topic => topic.score.sum > 10)
     },
-    uncriticalTopics (state, getters) {
+    readyTopics (state, getters) {
       return getters.matchingTopics.filter(topic => topic.score.sum <= 10 && !topic.complete)
     },
-    completeTopics (state, getters) {
-      return getters.matchingTopics.filter(topic => topic.complete)
+    blockedTopics (state, getters) {
+      return getters.matchingTopics.filter(topic => topic.score.sum < 0 && !topic.complete)
     },
     resultingTopics (state, getters) {
       let result
       if (state.filter === 'all') {
         result = getters.matchingTopics
-      } else if (state.filter === 'uncritical') {
-        result = getters.uncriticalTopics
-      } else if (state.filter === 'complete') {
-        result = getters.completeTopics
+      } else if (state.filter === 'ready') {
+        result = getters.readyTopics
+      } else if (state.filter === 'blocked') {
+        result = getters.blockedTopics.sort((a, b) => {
+          if (a.ready < b.ready) {
+            return -1
+          } else if (a.ready > b.ready) {
+            return 1
+          } else {
+            return 0
+          }
+        })
       } else {
         result = getters.urgentTopics
       }

@@ -1,3 +1,3 @@
 
-const filters = ['urgent', 'uncritical', 'complete', 'all']
+const filters = ['urgent', 'ready', 'blocked', 'all']
 export { filters }
