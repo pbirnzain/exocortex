@@ -17,13 +17,15 @@ const searchModule = {
       return getters.matchingTopics.filter(topic => topic.score.sum > 10)
     },
     readyTopics (state, getters) {
-      return getters.matchingTopics.filter(topic => topic.score.sum <= 10 && !topic.complete)
+      return getters.matchingTopics.filter(topic =>
+        topic.score.sum <= 10 && topic.score.sum >= 0 && !topic.complete)
     },
     blockedTopics (state, getters) {
       return getters.matchingTopics.filter(topic => topic.score.sum < 0 && !topic.complete)
     },
     resultingTopics (state, getters) {
       let result
+
       if (state.filter === 'all') {
         result = getters.matchingTopics
       } else if (state.filter === 'ready') {
