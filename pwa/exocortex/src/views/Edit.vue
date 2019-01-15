@@ -43,7 +43,7 @@ export default {
   },
   methods: {
     onTopicChanged (topic) {
-      this.$store.dispatch('topics/updateTopic', topic)
+      this.$store.dispatch('topics/upsertTopic', topic)
     },
     onDelete () {
       this.$store.dispatch('topics/deleteTopic', this.selectedTopic)

@@ -33,7 +33,7 @@ export default {
   methods: {
     onTopicChanged (topic) {
       if (!this.disabled) {
-        this.$store.dispatch('topics/updateTopic', topic)
+        this.$store.dispatch('topics/upsertTopic', topic)
         this.disabled = true
       }
     }

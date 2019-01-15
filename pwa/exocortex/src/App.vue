@@ -63,7 +63,7 @@ export default {
     },
     onAdd () {
       const topic = { title: this.searchText, pinned: true }
-      this.$store.dispatch('topics/updateTopic', topic)
+      this.$store.dispatch('topics/upsertTopic', topic)
       this.$store.dispatch('search/setSearchText', '')
     }
   }

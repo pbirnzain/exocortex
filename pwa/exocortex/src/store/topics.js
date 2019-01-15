@@ -19,7 +19,7 @@ const topicModule = {
         Vue.set(state.topics, topic.id, topic)
       }
     },
-    UPDATETOPIC (state, topic) {
+    UPSERT_TOPIC (state, topic) {
       Vue.set(state.topics, topic.id, topic)
       if (state.selectedTopic !== undefined) {
         if (topic.id == state.selectedTopic.id) {
@@ -46,10 +46,10 @@ const topicModule = {
         commit('REPLACEALL', topics)
       })
     },
-    updateTopic ({commit, state}, topic) {
+    upsertTopic ({commit, state}, topic) {
       if (topic.id === undefined) {
         axios.post('/api/topics/', topic).then(response => {
-          commit('UPDATETOPIC', response.data)
+          commit('UPSERT_TOPIC', response.data)
           commit('SELECTTOPIC', response.data.id)
         })
       } else {
@@ -73,9 +73,9 @@ const topicModule = {
         }
 
         if (Object.keys(delta).length) {
-          commit('UPDATETOPIC', topic) // optimistic update
+          commit('UPSERT_TOPIC', topic) // optimistic update
           axios.patch('/api/topics/' + topic.id + '/', delta).then(response => {
-            commit('UPDATETOPIC', response.data)
+            commit('UPSERT_TOPIC', response.data)
           })
         }
       }
