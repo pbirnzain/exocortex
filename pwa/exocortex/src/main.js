@@ -5,20 +5,9 @@ import './plugins/vuetify'
 import './registerServiceWorker'
 import 'roboto-fontface/css/roboto/roboto-fontface.css'
 import App from './App.vue'
+import { wsEndpoint } from './wsConfig'
 
 Vue.config.productionTip = false
-
-// Websocket config
-// HACK: At least move this to a dedicated file
-const loc = window.location
-var ws_endpoint
-if (loc.protocol === 'http:') {
-  ws_endpoint = 'ws:'
-} else {
-  ws_endpoint = 'wss:'
-}
-ws_endpoint += '//' + loc.host
-ws_endpoint += '/api/ws/updates/'
 
 new Vue({
   store,
@@ -29,7 +18,7 @@ new Vue({
   },
   methods: {
     connect () {
-      this.$ws = new WebSocket(ws_endpoint)
+      this.$ws = new WebSocket(wsEndpoint)
       this.$ws.onmessage = (event) => {
         this.$store.dispatch('frameReceived', JSON.parse(event.data))
       }
