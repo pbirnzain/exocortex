@@ -13,7 +13,7 @@ new Vue({
   store,
   router,
   render: h => h(App),
-  mounted () {
+  created () {
     this.connect()
   },
   methods: {

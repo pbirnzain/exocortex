@@ -47,8 +47,10 @@ export default {
       return this.$store.state.search.searchText
     }
   },
-  mounted () {
+  created() {
     this.$store.dispatch('topics/initialize')
+  },
+  mounted () {
     this.showAddButton = this.$router.currentRoute.path === '/'
     this.$router.afterEach((to, from) => {
       this.showAddButton = this.$router.currentRoute.path === '/'
