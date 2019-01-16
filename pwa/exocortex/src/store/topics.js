@@ -13,7 +13,7 @@ const topicModule = {
     }
   },
   mutations: {
-    REPLACEALL (state, topics) {
+    REPLACE_ALL (state, topics) {
       state.topics = {}
       for (let topic of topics) {
         Vue.set(state.topics, topic.id, topic)
@@ -21,16 +21,15 @@ const topicModule = {
     },
     UPSERT_TOPIC (state, topic) {
       Vue.set(state.topics, topic.id, topic)
-      if (state.selectedTopic !== undefined) {
-        if (topic.id == state.selectedTopic.id) {
-          state.selectedTopic = topic
-        }
+
+      if (state.selectedTopic != undefined && topic.id == state.selectedTopic.id) {
+        state.selectedTopic = topic
       }
     },
-    SELECTTOPIC (state, id) {
+    SELECT_TOPIC (state, id) {
       state.selectedTopicId = id
     },
-    DELETETOPIC (state, id) {
+    DELETE_TOPIC (state, id) {
       Vue.delete(state.topics, id)
       if (state.selectedTopic !== undefined) {
         if (state.selectedTopic.id == id) {
@@ -43,14 +42,14 @@ const topicModule = {
     initialize ({commit}) {
       axios.get('/api/topics/').then(response => {
         const topics = response.data
-        commit('REPLACEALL', topics)
+        commit('REPLACE_ALL', topics)
       })
     },
     upsertTopic ({commit, state}, topic) {
       if (topic.id === undefined) {
         axios.post('/api/topics/', topic).then(response => {
           commit('UPSERT_TOPIC', response.data)
-          commit('SELECTTOPIC', response.data.id)
+          commit('SELECT_TOPIC', response.data.id)
         })
       } else {
         // if a date field has been cleared (set to empty string), send null
@@ -81,11 +80,11 @@ const topicModule = {
       }
     },
     selectTopic ({commit}, id) {
-      commit('SELECTTOPIC', id)
+      commit('SELECT_TOPIC', id)
     },
     deleteTopic ({commit}, topic) {
       axios.delete('/api/topics/' + topic.id + '/').then(response => {
-        commit('DELETETOPIC', topic.id)
+        commit('DELETE_TOPIC', topic.id)
       })
     }
   }

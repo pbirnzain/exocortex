@@ -54,19 +54,19 @@ const searchModule = {
     }
   },
   mutations: {
-    SETSEARCHTEXT (state, searchText) {
+    SET_SEARCH_TEXT (state, searchText) {
       state.searchText = searchText || ''
     },
-    SETFILTER (state, filter) {
+    SET_FILTER (state, filter) {
       state.filter = filter || 'urgent'
     }
   },
   actions: {
     setSearchText ({commit}, searchText) {
-      commit('SETSEARCHTEXT', searchText)
+      commit('SET_SEARCH_TEXT', searchText)
     },
     setFilter ({commit}, filter) {
-      commit('SETFILTER', filter)
+      commit('SET_FILTER', filter)
     }
   }
 }
