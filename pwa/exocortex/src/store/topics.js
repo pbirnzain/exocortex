@@ -20,6 +20,11 @@ const topicModule = {
       }
     },
     UPSERT_TOPIC (state, topic) {
+      const current = state.topics[topic.id]
+      if (current && topic.modified < current.modified) {
+        return // don't update to older versions
+      }
+
       Vue.set(state.topics, topic.id, topic)
 
       if (state.selectedTopic != undefined && topic.id == state.selectedTopic.id) {
