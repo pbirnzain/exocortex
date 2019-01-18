@@ -30,9 +30,6 @@ export default {
     FilterSelection,
     EmptyState
   },
-  created() {
-    this.$store.dispatch('topics/initialize')
-  },
   computed: {
     resultingTopics () {
       return this.$store.getters['search/resultingTopics']

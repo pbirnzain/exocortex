@@ -17,6 +17,9 @@ export default {
     VApp,
     VContent,
     ErrorSnackbar
+  },
+  mounted () {
+    this.$store.dispatch('topics/initialize')
   }
 }
 </script>
