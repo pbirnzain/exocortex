@@ -46,11 +46,11 @@ const store = new Vuex.Store({
 axios.interceptors.response.use(function (response) {
   return response
 }, function (error) {
+  console.log(error)
   if (error.response.status === 403) {
     window.location.href = '/login/'
   } else {
-    const desc = error.response.data.slice(0, error.response.data.indexOf('\n'))
-    store.dispatch('setErrors', [error.message, desc])
+    store.dispatch('setErrors', [error.message])
   }
   return Promise.reject(error)
 })
