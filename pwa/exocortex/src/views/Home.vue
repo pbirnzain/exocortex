@@ -1,18 +1,30 @@
 <template lang="pug">
   .home
-    filter-selection(:selection="filter", @selectionChanged="onFilterChanged")
+    v-btn(fab fixed bottom right color="red" @click="onNewTopic")
+      v-icon add
+
+    home-toolbar
     topic-list(:topics="resultingTopics" :showText="showText" @topic-selected="onSelect")
 </template>
 
 <script>
-import TopicList from '@/components/TopicList.vue'
-import FilterSelection from '@/components/FilterSelection.vue'
+import { VBtn, VIcon, VContent } from 'vuetify/lib'
+import HomeToolbar from './home/HomeToolbar'
+import TopicList from '@/components/TopicList'
+import FilterSelection from '@/components/FilterSelection'
 
 export default {
   name: 'home',
   components: {
+    VBtn,
+    VContent,
+    VIcon,
+    HomeToolbar,
     TopicList,
     FilterSelection
+  },
+  created() {
+    this.$store.dispatch('topics/initialize')
   },
   computed: {
     resultingTopics () {
@@ -20,24 +32,15 @@ export default {
     },
     showText () {
       return this.$store.state.search.searchText != ''
-    },
-    filter () {
-      return this.$store.state.search.filter
     }
   },
   methods: {
+    onNewTopic () {
+      this.$router.push('/new')
+    },
     onSelect (topic) {
       this.$router.push(`/edit/${topic.id}`)
-    },
-    onFilterChanged (filter) {
-      this.$store.dispatch("search/setFilter", filter)
     }
   }
 }
 </script>
-
-<style lang="scss">
-.home .v-list__tile {
-  overflow: hidden;
-}
-</style>

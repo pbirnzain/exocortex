@@ -1,11 +1,16 @@
 <template lang="pug">
   .edit-topic
+    v-toolbar
+      router-link(:to="{ name: 'home', params: {}}")
+        v-icon arrow_back
+      router-link(:to="{ name: 'home', params: {}}")
+        v-toolbar-title New
     v-container
       topic(:topic="newTopic" @topic-changed="onTopicChanged" :disabled="disabled")
 </template>
 
 <script>
-import { VBtn, VContainer } from 'vuetify/lib'
+import { VBtn, VContainer, VToolbar, VToolbarTitle, VIcon } from 'vuetify/lib'
 import Topic from '../components/Topic'
 
 export default {
@@ -13,7 +18,10 @@ export default {
   components: {
     Topic,
     VBtn,
-    VContainer
+    VContainer,
+    VToolbar,
+    VToolbarTitle,
+    VIcon
   },
   data () {
     return { newTopic: null, disabled: false }

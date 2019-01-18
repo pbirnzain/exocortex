@@ -1,12 +1,18 @@
 <template lang="pug">
   .edit-topic
+    v-toolbar
+      router-link(:to="{ name: 'home', params: {}}")
+        v-icon arrow_back
+      router-link(:to="{ name: 'home', params: {}}")
+        v-toolbar-title Edit
+
     v-container
       topic(:topic="selectedTopic" @topic-changed="onTopicChanged")
       v-btn(flat @click="onDelete") Delete
 </template>
 
 <script>
-import { VBtn, VContainer } from 'vuetify/lib'
+import { VBtn, VContainer, VToolbar, VToolbarTitle, VIcon } from 'vuetify/lib'
 import Topic from '../components/Topic'
 
 export default {
@@ -14,7 +20,10 @@ export default {
   components: {
     Topic,
     VBtn,
-    VContainer
+    VContainer,
+    VToolbar,
+    VToolbarTitle,
+    VIcon
   },
   computed: {
     selectedTopic () {
@@ -60,6 +69,9 @@ export default {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
+  }
+  .v-toolbar__title {
+    margin-left: 20px;
   }
 }
 </style>

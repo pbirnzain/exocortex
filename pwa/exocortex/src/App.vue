@@ -1,73 +1,22 @@
 <template lang="pug">
   .app
-    v-btn(v-if="showAddButton" fab fixed bottom right color="red" @click="onNewTopic")
-      v-icon add
-
     error-snackbar
 
     v-app
-      v-toolbar(app="")
-        v-icon all_inbox
-        v-icon memory
-        v-toolbar-title
-          router-link(class="md-title" :to="{ name: 'home', params: {}}") ExoCortex
-        v-spacer
-        v-text-field(v-if="showAddButton" :value="searchText" @input="onSearchTextChanged"
-          placeholder="Search" prepend-icon="search" :clearable="true"
-          :append-icon="searchText ? 'add' : ''" @click:append="onAdd")
-      v-content(app="")
+      v-content
         router-view
 </template>
 
 <script>
-import { VApp, VToolbar, VToolbarTitle, VContent, VContainer, VBtn, VIcon, VSpacer, VTextField } from 'vuetify/lib'
+import { VApp, VContent } from 'vuetify/lib'
 import ErrorSnackbar from '@/components/ErrorSnackbar'
 
 export default {
   name: 'app',
   components: {
     VApp,
-    VToolbar,
-    VToolbarTitle,
     VContent,
-    VContainer,
-    VBtn,
-    VIcon,
-    VSpacer,
-    VTextField,
     ErrorSnackbar
-  },
-  data () {
-    return {
-      showAddButton: false
-    }
-  },
-  computed: {
-    searchText () {
-      return this.$store.state.search.searchText
-    }
-  },
-  created() {
-    this.$store.dispatch('topics/initialize')
-  },
-  mounted () {
-    this.showAddButton = this.$router.currentRoute.path === '/'
-    this.$router.afterEach((to, from) => {
-      this.showAddButton = this.$router.currentRoute.path === '/'
-    })
-  },
-  methods: {
-    onNewTopic () {
-      this.$router.push('/new')
-    },
-    onSearchTextChanged (newSearchText) {
-      this.$store.dispatch('search/setSearchText', newSearchText)
-    },
-    onAdd () {
-      const topic = { title: this.searchText, pinned: true }
-      this.$store.dispatch('topics/upsertTopic', topic)
-      this.$store.dispatch('search/setSearchText', '')
-    }
   }
 }
 </script>
