@@ -2,12 +2,13 @@
   .topic-list
     h1(v-if="title") {{ title }}
 
-    v-list
+    v-list(v-if="topics.length > 0")
       v-list-tile(v-for="topic in topics" :key="topic.id" @click="onClick(topic)"
           :color="color(topic)")
         v-list-tile-content
           v-list-tile-title(v-text="topic.title")
           v-list-tile-sub-title(v-if="showText" v-text="topic.text")
+    slot(v-if="topics.length === 0")
 </template>
 
 <script>

@@ -58,5 +58,8 @@ export default {
     display: flex;
     flex-direction: column;
   }
+  .v-toolbar__title {
+    margin-left: 20px;
+  }
 }
 </style>
