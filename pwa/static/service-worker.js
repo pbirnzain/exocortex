@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.4.1/workbox-sw.js");
 
 importScripts(
-  "/static/precache-manifest.66aaeca7d55178f04c593850bde9ef0b.js"
+  "/static/precache-manifest.d732d13cb12f6deecb73825ce86899ed.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "exocortex"});

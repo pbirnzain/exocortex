@@ -6,13 +6,15 @@
       router-link(:to="{ name: 'home', params: {}}")
         v-toolbar-title Edit
 
+      v-spacer
+      a(@click="onDelete")
+        v-icon delete
+
     v-container
       topic(:topic="selectedTopic" @topic-changed="onTopicChanged")
-      v-btn(flat @click="onDelete") Delete
 </template>
-
 <script>
-import { VBtn, VContainer, VToolbar, VToolbarTitle, VIcon } from 'vuetify/lib'
+import { VBtn, VContainer, VToolbar, VToolbarTitle, VSpacer, VIcon } from 'vuetify/lib'
 import Topic from '../components/Topic'
 
 export default {
@@ -23,6 +25,7 @@ export default {
     VContainer,
     VToolbar,
     VToolbarTitle,
+    VSpacer,
     VIcon
   },
   computed: {
