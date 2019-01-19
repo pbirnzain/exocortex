@@ -65,14 +65,6 @@ export default {
 </script>
 <style lang="scss">
 .edit-topic {
-  display: flex;
-  flex-direction: column;
-
-  .box {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-  }
   .v-toolbar__title {
     margin-left: 20px;
   }

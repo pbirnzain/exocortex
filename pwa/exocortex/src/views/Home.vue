@@ -4,14 +4,13 @@
       v-icon add
 
     home-toolbar
-    .topic-list-wrapper
-      topic-list(v-if="haveTopics" :topics="resultingTopics" :showText="showText" @topic-selected="onSelect")
-        empty-state(v-if="!searchText && filter === 'urgent'"
-          img="/img/empty_state_background.svg"
-          tagline="No urgent tasks." message="Go do something fun!")
-        empty-state(v-else tagline="No tasks found."
-          message="Try using a different filter, search text, or add new topics.")
-      v-progress-circular(v-else indeterminate)
+    topic-list(v-if="haveTopics" :topics="resultingTopics" :showText="showText" @topic-selected="onSelect")
+      empty-state(v-if="!searchText && filter === 'urgent'"
+        img="/img/empty_state_background.svg"
+        tagline="No urgent tasks." message="Go do something fun!")
+      empty-state(v-else tagline="No tasks found."
+        message="Try using a different filter, search text, or add new topics.")
+    v-progress-circular(v-else indeterminate)
 </template>
 <script>
 import { VBtn, VIcon, VContent, VProgressCircular } from 'vuetify/lib'
@@ -61,20 +60,15 @@ export default {
 </script>
 <style lang="scss">
 .home {
-  height: 100%;
+  height: 100vh;
   width: 100%;
   display: flex;
   flex-direction: column;
 
-  .topic-list-wrapper {
-    flex-grow: 1;
-    display: flex;
-    max-height: 100vh;
-  }
   .topic-list {
     flex-grow: 1;
     display: flex;
-    overflow-x: hidden;
+    overflow-y: auto;
   }
   .v-list {
     width: 100%;
