@@ -8,7 +8,7 @@ self.__precacheManifest = [
     "url": "/static/img/empty_state_background.svg"
   },
   {
-    "revision": "b6216d61c03e6ce0c9aea6ca7808f7ca",
+    "revision": "f71d20196d4caf35b6a670db8c70b03d",
     "url": "/static/robots.txt"
   },
   {
