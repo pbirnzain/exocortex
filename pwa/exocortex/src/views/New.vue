@@ -52,6 +52,7 @@ export default {
 .edit-topic {
   display: flex;
   flex-direction: column;
+  background: white;
 
   .box {
     flex-grow: 1;

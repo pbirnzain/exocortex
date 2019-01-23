@@ -16,6 +16,7 @@ export default {
 .empty-state {
     flex-grow: 1;
     display: flex;
+    background: white;
 
     .content {
       margin: auto;

@@ -65,6 +65,8 @@ export default {
 </script>
 <style lang="scss">
 .edit-topic {
+  background: white;
+
   .v-toolbar__title {
     margin-left: 20px;
   }
