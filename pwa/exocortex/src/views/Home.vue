@@ -72,6 +72,7 @@ export default {
   }
   .v-list {
     width: 100%;
+    height: 100%;
   }
   .v-progress-circular {
     margin: auto;
