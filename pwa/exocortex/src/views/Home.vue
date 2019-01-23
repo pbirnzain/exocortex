@@ -10,7 +10,7 @@
         tagline="No urgent tasks." message="Go do something fun!")
       empty-state(v-else tagline="No tasks found."
         message="Try using a different filter, search text, or add new topics.")
-    v-progress-circular(v-else indeterminate)
+    v-progress-circular(v-else indeterminate color="grey" size="50" width="5")
 </template>
 <script>
 import { VBtn, VIcon, VContent, VProgressCircular } from 'vuetify/lib'
