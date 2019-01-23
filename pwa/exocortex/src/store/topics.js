@@ -5,7 +5,7 @@ const topicModule = {
   namespaced: true,
   state: {
     topics: {},
-    haveTopics: false,
+    topicsLoaded: false,
     selectedTopicId: undefined
   },
   getters: {
@@ -15,7 +15,7 @@ const topicModule = {
   },
   mutations: {
     REPLACE_ALL (state, topics) {
-      state.haveTopics = true
+      state.topicsLoaded = true
       state.topics = {}
       for (let topic of topics) {
         Vue.set(state.topics, topic.id, topic)

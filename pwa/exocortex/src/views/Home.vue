@@ -4,7 +4,7 @@
       v-icon add
 
     home-toolbar
-    topic-list(v-if="haveTopics" :topics="resultingTopics" :showText="showText" @topic-selected="onSelect")
+    topic-list(v-if="topicsLoaded" :topics="resultingTopics" :showText="showTopicText" @topic-selected="onSelect")
       empty-state(v-if="!searchText && filter === 'urgent'"
         img="/img/empty_state_background.svg"
         tagline="No urgent tasks." message="Go do something fun!")
@@ -32,13 +32,13 @@ export default {
     VProgressCircular
   },
   computed: {
-    haveTopics () {
-      return this.$store.state.topics.haveTopics
+    topicsLoaded () {
+      return this.$store.state.topics.topicsLoaded
     },
     resultingTopics () {
       return this.$store.getters['search/resultingTopics']
     },
-    showText () {
+    showTopicText () {
       return this.$store.state.search.searchText != ''
     },
     searchText () {
