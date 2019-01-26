@@ -21,14 +21,14 @@
           v-list-tile(v-for="filter in filters" :key="filter" @click="onFilterChanged(filter)")
             v-list-tile-title(v-text="filter")
 
-    v-toolbar.desktop-only
-      v-toolbar-title {{ filter }}
+    v-toolbar.desktop-only(tabs)
       v-text-field(:value="searchText" @input="onSearchTextChanged" placeholder="Search")
       a(v-if="searchText" @click="onAdd")
         v-icon add
       a(v-if="searchText" @click="onClearSearchText")
         v-icon clear
-    filter-selection.desktop-only(:selection="filter" @selectionChanged="onFilterChanged")
+      filter-selection.desktop-only(slot="extension" :selection="filter" @selectionChanged="onFilterChanged")
+
 </template>
 
 <script>
@@ -107,13 +107,15 @@ export default {
 .home-toolbar {
   .v-toolbar__title {
     text-transform: capitalize;
-    margin-right: 16px;
   }
   .v-toolbar {
     z-index: 2;
   }
   .v-toolbar__content a > .v-icon:not(first-child) {
     margin-left: 10px;
+  }
+  .v-tabs__bar {
+    background: #f5f5f5;
   }
 }
 
