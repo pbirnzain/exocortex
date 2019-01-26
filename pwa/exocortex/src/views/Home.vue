@@ -46,7 +46,7 @@ export default {
     },
     filter () {
       return this.$store.state.search.filter
-    },
+    }
   },
   methods: {
     onNewTopic () {

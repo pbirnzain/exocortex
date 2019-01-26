@@ -17,12 +17,12 @@ export default {
     selectionIdx () {
       return filters.indexOf(this.selection)
     },
-    filters() {
+    filters () {
       return filters
     }
   },
   methods: {
-    onSelectionChanged(idx) {
+    onSelectionChanged (idx) {
       const newSelection = filters[idx]
       this.$emit('selectionChanged', newSelection)
     }

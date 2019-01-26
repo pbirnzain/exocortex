@@ -13,18 +13,18 @@ export default {
     VSnackbar,
     VBtn
   },
-  data() {
+  data () {
     return {
       showErrors: false
     }
   },
   computed: {
-    errors() {
+    errors () {
       return this.$store.state.errors
     }
   },
   methods: {
-    clearErrors() {
+    clearErrors () {
       this.$store.commit('CLEAR_ERRORS')
     }
   }

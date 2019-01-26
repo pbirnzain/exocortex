@@ -48,12 +48,12 @@ export default {
     filter () {
       return this.$store.state.search.filter
     },
-    filters() {
+    filters () {
       return filters
     },
     searchText () {
       return this.$store.state.search.searchText
-    },
+    }
   },
   watch: {
     showSearchInput (flag) {
@@ -66,7 +66,7 @@ export default {
   },
   methods: {
     onFilterChanged (filter) {
-      this.$store.dispatch("search/setFilter", filter)
+      this.$store.dispatch('search/setFilter', filter)
     },
     onSearchTextChanged (newSearchText) {
       this.$store.dispatch('search/setSearchText', newSearchText)
