@@ -1,23 +1,34 @@
 <template lang="pug">
-  v-toolbar.home-toolbar
-    template(v-if="!showSearchInput")
+  .home-toolbar
+
+    v-toolbar.mobile-only
+      template(v-if="!showSearchInput")
+        v-toolbar-title {{ filter }}
+        v-spacer
+        a(@click="showSearchInput = true")
+          v-icon search
+      template(v-else)
+        v-text-field(:value="searchText" @input="onSearchTextChanged"
+          ref="search" placeholder="Search")
+        a(v-if="searchText" @click="onAdd")
+          v-icon add
+        a(@click="onClearSearchText")
+          v-icon clear
+      v-menu(content-class="filter-menu")
+        a(@click="showFilters = true" slot="activator")
+          v-icon filter_list
+        v-list
+          v-list-tile(v-for="filter in filters" :key="filter" @click="onFilterChanged(filter)")
+            v-list-tile-title(v-text="filter")
+
+    v-toolbar.desktop-only
       v-toolbar-title {{ filter }}
-      v-spacer
-      a(@click="showSearchInput = true")
-        v-icon search
-    template(v-else)
-      v-text-field(:value="searchText" @input="onSearchTextChanged"
-        ref="search" placeholder="Search")
+      v-text-field(:value="searchText" @input="onSearchTextChanged" placeholder="Search")
       a(v-if="searchText" @click="onAdd")
         v-icon add
-      a(@click="onClearSearchText")
+      a(v-if="searchText" @click="onClearSearchText")
         v-icon clear
-    v-menu
-      a(@click="showFilters = true" slot="activator")
-        v-icon filter_list
-      v-list
-        v-list-tile(v-for="filter in filters" :key="filter" @click="onFilterChanged(filter)")
-          v-list-tile-title.filter-tile(v-text="filter")
+    filter-selection.desktop-only(:selection="filter" @selectionChanged="onFilterChanged")
 </template>
 
 <script>
@@ -25,6 +36,7 @@ import Vue from 'vue'
 import { VToolbar, VToolbarTitle, VIcon, VSpacer, VTextField,
   VMenu, VList, VListTile, VListTileTitle } from 'vuetify/lib'
 import { filters } from '@/store/search/filter.model'
+import FilterSelection from '@/components/FilterSelection'
 
 export default {
   components: {
@@ -36,7 +48,8 @@ export default {
     VMenu,
     VList,
     VListTile,
-    VListTileTitle
+    VListTileTitle,
+    FilterSelection
   },
   data () {
     return {
@@ -56,6 +69,11 @@ export default {
     }
   },
   watch: {
+    searchText () {
+      if (this.searchText && !this.showSearchInput) {
+        this.showSearchInput = true
+      }
+    },
     showSearchInput (flag) {
       if (flag) {
         Vue.nextTick(() => {
@@ -89,15 +107,25 @@ export default {
 .home-toolbar {
   .v-toolbar__title {
     text-transform: capitalize;
+    margin-right: 16px;
   }
-  &.v-toolbar {
+  .v-toolbar {
     z-index: 2;
   }
   .v-toolbar__content a > .v-icon:not(first-child) {
     margin-left: 10px;
   }
 }
-.filter-tile {
-  text-transform: capitalize;
+
+@media(min-width: 461px) {
+  .filter-menu {
+    display: none;
+  }
+}
+
+.filter-menu {
+ .v-list__tile__title {
+   text-transform: capitalize;
+ }
 }
 </style>

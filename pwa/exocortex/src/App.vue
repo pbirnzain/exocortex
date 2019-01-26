@@ -38,6 +38,19 @@ html {
   }
 }
 
+.mobile-only {
+  display: none;
+  @media(max-width: 460px) {
+    display: inherit;
+  }
+}
+
+.desktop-only {
+  @media(max-width: 460px) {
+    display: none;
+  }
+}
+
 .v-toolbar a {
   color: black;
   text-decoration: none;
