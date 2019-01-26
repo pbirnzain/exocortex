@@ -67,12 +67,7 @@ export default {
 
   .topic-list {
     flex-grow: 1;
-    display: flex;
     overflow-y: auto;
-  }
-  .v-list {
-    width: 100%;
-    height: 100%;
   }
   .v-progress-circular {
     margin: auto;
