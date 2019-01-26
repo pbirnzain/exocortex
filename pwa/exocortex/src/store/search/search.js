@@ -5,20 +5,23 @@ const searchModule = {
     filter: 'urgent'
   },
   getters: {
+    allTopics (state, getters, rootState) {
+      return Object.values(rootState.topics.topics)
+    },
     matchingTopics (state, getters, rootState) {
       const searchText = state.searchText.toLowerCase()
-      const filtered = Object.values(rootState.topics.topics).filter(topic => {
+      const filtered = getters.allTopics.filter(topic => {
         return topic.title.toLowerCase().indexOf(searchText) >= 0 ||
             topic.text.toLowerCase().indexOf(searchText) >= 0
       })
       return filtered
     },
     urgentTopics (state, getters, rootState) {
-      return getters.matchingTopics.filter(topic => topic.score.sum > 10)
+      return getters.matchingTopics.filter(topic => topic.score.sum > 50)
     },
     readyTopics (state, getters) {
       return getters.matchingTopics.filter(topic =>
-        topic.score.sum <= 10 && topic.score.sum > 0 && !topic.complete)
+        topic.score.sum <= 50 && topic.score.sum > 0 && !topic.complete)
     },
     blockedTopics (state, getters) {
       return getters.matchingTopics.filter(topic => topic.score.sum < 0 && !topic.complete)
