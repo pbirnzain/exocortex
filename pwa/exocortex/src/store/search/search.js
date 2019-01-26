@@ -23,7 +23,7 @@ const searchModule = {
     blockedTopics (state, getters) {
       return getters.matchingTopics.filter(topic => topic.score.sum < 0 && !topic.complete)
     },
-    uncriticalTopics (state, getters) {
+    infoTopics (state, getters) {
       return getters.matchingTopics.filter(topic => topic.score.sum == 0 && !topic.complete)
     },
     resultingTopics (state, getters) {
@@ -35,8 +35,8 @@ const searchModule = {
         result = getters.readyTopics
       } else if (state.filter === 'blocked') {
         result = getters.blockedTopics
-      } else if (state.filter === 'uncritical') {
-        result = getters.uncriticalTopics
+      } else if (state.filter === 'info') {
+        result = getters.infoTopics
       } else {
         result = getters.urgentTopics
       }
