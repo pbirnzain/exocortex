@@ -3,14 +3,18 @@
     v-toolbar
       router-link(:to="{ name: 'home', params: {}}")
         v-icon arrow_back
-      router-link(:to="{ name: 'home', params: {}}")
-        v-toolbar-title New
+
+      v-text-field(ref="tf" single-line full-width hide-details placeholder="Title"
+        v-model="newTopic.title")
+
+      a(@click="onSave")
+        v-icon save
     v-container
-      topic(:topic="newTopic" @topic-changed="onTopicChanged" :disabled="disabled")
+      topic(:topic="newTopic" @topic-changed="onTopicChanged" :disabled="disabled" :hideTitle="true")
 </template>
 
 <script>
-import { VBtn, VContainer, VToolbar, VToolbarTitle, VIcon } from 'vuetify/lib'
+import { VBtn, VContainer, VToolbar, VToolbarTitle, VIcon, VTextField } from 'vuetify/lib'
 import Topic from '../components/Topic'
 
 export default {
@@ -21,29 +25,30 @@ export default {
     VContainer,
     VToolbar,
     VToolbarTitle,
-    VIcon
+    VIcon,
+    VTextField
   },
   data () {
-    return { newTopic: null, disabled: false }
+    return { newTopic: {title: '', pinned: true}, disabled: false }
   },
-  computed: {
-    selectedTopic () {
-      return this.$store.getters['topics/selectedTopic']
-    }
+  mounted () {
+    this.$refs.tf.focus()
   },
-  watch: {
-    selectedTopic (newSelectedTopic) {
-      if (newSelectedTopic) {
-        this.$router.push('/edit/' + newSelectedTopic.id)
-      }
+  beforeRouteLeave (to, from, next) {
+    if (this.newTopic && this.newTopic.title) {
+      this.$store.dispatch('topics/upsertTopic', this.newTopic)
+      this.newTopic = null
     }
+    next()
   },
   methods: {
     onTopicChanged (topic) {
-      if (!this.disabled && topic.title) {
-        this.$store.dispatch('topics/upsertTopic', topic)
-        this.disabled = true
-      }
+      this.newTopic = topic
+    },
+    onSave () {
+      this.$store.dispatch('topics/upsertTopic', this.newTopic)
+      this.newTopic = null
+      this.$router.push('/')
     }
   }
 }

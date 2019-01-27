@@ -1,6 +1,6 @@
 <template lang="pug">
   .topic
-    v-text-field(v-if="!hideTitle" v-model="template.title", @change="onChange" ref="title" :disabled="disabled")
+    v-text-field(v-if="!hideTitle" v-model="template.title", @change="onChange" ref="title" label="title" :disabled="disabled")
     .md-subhead.score-reasons(v-if="template.score")
       span Urgency: {{ template.score.sum }}
       span(v-for="(value, reason, idx) in template.score.reasons",:key="idx") ({{reason}}: {{value}})
