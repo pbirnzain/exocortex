@@ -44,6 +44,7 @@ export default {
 
 <style lang="scss">
 .topic-list {
+  position: relative;
   .v-list {
     position: relative;
     padding-bottom: 0;

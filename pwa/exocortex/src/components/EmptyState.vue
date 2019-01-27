@@ -14,8 +14,12 @@ export default {
 
 <style lang="scss">
 .empty-state {
-    height: 100%;
-    width: 100%;
+    // https://stackoverflow.com/questions/33636796/chrome-safari-not-filling-100-height-of-flex-parent
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
 
     display: flex;
     background: white;
