@@ -8,7 +8,7 @@
         v-model="newTopic.title")
 
       a(@click="onSave")
-        v-icon save
+        v-icon(:disabled="!canSave") save
     v-container
       topic(:topic="newTopic" @topic-changed="onTopicChanged" :disabled="disabled" :hideTitle="true")
 </template>
@@ -31,13 +31,17 @@ export default {
   data () {
     return { newTopic: {title: '', pinned: true}, disabled: false }
   },
+  computed: {
+    canSave () {
+      return this.newTopic && this.newTopic.title;
+    }
+  },
   mounted () {
     this.$refs.tf.focus()
   },
   beforeRouteLeave (to, from, next) {
-    if (this.newTopic && this.newTopic.title) {
-      this.$store.dispatch('topics/upsertTopic', this.newTopic)
-      this.newTopic = null
+    if (this.canSave) {
+      this.save()
     }
     next()
   },
@@ -46,9 +50,14 @@ export default {
       this.newTopic = topic
     },
     onSave () {
+      if (this.canSave) {
+        this.save()
+        this.$router.push('/')
+      }
+    },
+    save () {
       this.$store.dispatch('topics/upsertTopic', this.newTopic)
       this.newTopic = null
-      this.$router.push('/')
     }
   }
 }
