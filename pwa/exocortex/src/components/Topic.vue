@@ -50,13 +50,6 @@ export default {
   computed: {
     template () {
       return Object.assign({pinned: true}, this.topic)
-    },
-    dirty () {
-      // HACK
-      if (!this.topic) {
-        return this.template.title != '' && this.template.title != undefined
-      }
-      return false
     }
   },
   mounted () {
@@ -66,13 +59,6 @@ export default {
     onChange () {
       this.showDuePicker = false
       this.showReadyPicker = false
-      this.$emit('topic-changed', this.template)
-    }
-  },
-  beforeDestroy () {
-    // A focused VTextField does not emit a 'changed' event when destroyed,
-    // so pending changes are emitted here
-    if (this.dirty) {
       this.$emit('topic-changed', this.template)
     }
   }

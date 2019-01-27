@@ -40,7 +40,7 @@ export default {
   },
   methods: {
     onTopicChanged (topic) {
-      if (!this.disabled) {
+      if (!this.disabled && topic.title) {
         this.$store.dispatch('topics/upsertTopic', topic)
         this.disabled = true
       }
