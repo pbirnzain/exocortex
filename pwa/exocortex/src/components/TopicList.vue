@@ -1,7 +1,5 @@
 <template lang="pug">
   .topic-list
-    h1(v-if="title") {{ title }}
-
     v-list(v-if="topics.length > 0")
       v-list-tile(v-for="topic in topics" :key="topic.id" @click="onClick(topic)"
           :color="color(topic)")
@@ -15,7 +13,7 @@
 import { VList, VDivider, VListTile, VListTileContent, VListTileTitle, VListTileSubTitle } from 'vuetify/lib'
 
 export default {
-  props: ['title', 'topics', 'showText'],
+  props: ['topics', 'showText'],
   components: {
     VList,
     VDivider,
