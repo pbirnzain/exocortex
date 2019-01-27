@@ -1,20 +1,19 @@
 <template lang="pug">
-  .edit-topic
+  .edit-topic(v-if="selectedTopic")
     v-toolbar
       router-link(:to="{ name: 'home', params: {}}")
         v-icon arrow_back
-      router-link(:to="{ name: 'home', params: {}}")
-        v-toolbar-title Edit
 
-      v-spacer
+      v-text-field(ref="tf" single-line full-width hide-details :value="selectedTopic.title" @change="onTitleChanged")
+
       a(@click="onDelete")
         v-icon delete
 
     v-container
-      topic(:topic="selectedTopic" @topic-changed="onTopicChanged")
+      topic(:topic="selectedTopic" @topic-changed="onTopicChanged" :hideTitle="true")
 </template>
 <script>
-import { VBtn, VContainer, VToolbar, VToolbarTitle, VSpacer, VIcon } from 'vuetify/lib'
+import { VBtn, VContainer, VToolbar, VToolbarTitle, VSpacer, VIcon, VTextField } from 'vuetify/lib'
 import Topic from '../components/Topic'
 
 export default {
@@ -26,7 +25,8 @@ export default {
     VToolbar,
     VToolbarTitle,
     VSpacer,
-    VIcon
+    VIcon,
+    VTextField
   },
   computed: {
     selectedTopic () {
@@ -49,11 +49,18 @@ export default {
   },
   beforeRouteLeave (to, from, next) {
     if (this.selectedTopic) {
+      // The textfield does not emit a change event when destroyed while still focused
+      if (this.$refs.tf.lazyValue !== this.selectedTopic.title)
+        this.onTitleChanged(this.$refs.tf.lazyValue)
+
       this.$store.dispatch('topics/selectTopic', undefined)
     }
     next()
   },
   methods: {
+    onTitleChanged (title) {
+      this.onTopicChanged({...this.selectedTopic, title: title})
+    },
     onTopicChanged (topic) {
       this.$store.dispatch('topics/upsertTopic', topic)
     },

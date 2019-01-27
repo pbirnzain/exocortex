@@ -1,6 +1,6 @@
 <template lang="pug">
   .topic
-    v-text-field(v-model="template.title", @change="onChange" ref="title" :disabled="disabled")
+    v-text-field(v-if="!hideTitle" v-model="template.title", @change="onChange" ref="title" :disabled="disabled")
     .md-subhead.score-reasons(v-if="template.score")
       span Urgency: {{ template.score.sum }}
       span(v-for="(value, reason, idx) in template.score.reasons",:key="idx") ({{reason}}: {{value}})
@@ -24,14 +24,14 @@
           label="Ready" :clearable="true" @input="onChange" :disabled="disabled")
         v-date-picker(v-model="template.ready" @change="onChange" scrollable)
 
-    v-textarea(v-model="template.text" @change="onChange" auto-grow label="Content" :disabled="disabled")
+    v-textarea(v-model="template.text" @change="onChange" auto-grow label="Content" ref="text" :disabled="disabled")
 </template>
 
 <script>
 import { VTextField, VTextarea, VDatePicker, VDialog, VCheckbox, VBtn, VIcon } from 'vuetify/lib'
 
 export default {
-  props: ['topic', 'disabled'],
+  props: ['topic', 'disabled', 'hideTitle'],
   components: {
     VTextField,
     VDatePicker,
@@ -53,13 +53,26 @@ export default {
     }
   },
   mounted () {
-    this.$refs.title.focus()
+    if(this.$refs.title)
+      this.$refs.title.focus()
   },
   methods: {
     onChange () {
       this.showDuePicker = false
       this.showReadyPicker = false
       this.$emit('topic-changed', this.template)
+    }
+  },
+  beforeDestroy () {
+    // Emit possible changes in still focused inputs
+    // (they don't send change events when destroyed)
+    if (this.topic) {
+      for (let key in this.template) {
+        if (this.template[key] !== this.topic[key]) {
+          this.$emit('topic-changed', this.template)
+          return
+        }
+      }
     }
   }
 }
