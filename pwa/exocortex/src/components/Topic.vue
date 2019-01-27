@@ -9,23 +9,26 @@
       v-checkbox(v-model="template.pinned" @change="onChange" label="pinned" :disabled="disabled")
       v-checkbox(v-model="template.complete" @change="onChange" label="complete" :disabled="disabled")
 
-    v-dialog(v-model="showDuePicker" lazy full-width width="290px" :disabled="disabled")
-      v-text-field(slot="activator" v-model="template.due" readonly
-        label="Due" prepend-icon="event" :clearable="true" @input="onChange"
-        :disabled="disabled")
-      v-date-picker(v-model="template.due" scrollable @change="onChange")
-
-    v-dialog(v-model="showReadyPicker" lazy full-width width="290px" :disabled="disabled")
-      v-text-field(slot="activator" v-model="template.ready" readonly
-        label="Ready" prepend-icon="event" :clearable="true" @input="onChange"
-        :disabled="disabled")
-      v-date-picker(v-model="template.ready" @change="onChange" scrollable)
+    .horizontal
+      a.v-input__prepend-outer(@click="showDuePicker = true")
+        v-icon event
+      v-dialog(v-model="showDuePicker" lazy full-width width="290px" :disabled="disabled")
+        v-text-field(slot="activator" v-model="template.due" readonly
+          label="Due" :clearable="true" @input="onChange" :disabled="disabled")
+        v-date-picker(v-model="template.due" scrollable @change="onChange")
+    .horizontal
+      a.v-input__prepend-outer(@click="showReadyPicker = true")
+        v-icon event
+      v-dialog(v-model="showReadyPicker" lazy full-width width="290px" :disabled="disabled")
+        v-text-field(slot="activator" v-model="template.ready" readonly
+          label="Ready" :clearable="true" @input="onChange" :disabled="disabled")
+        v-date-picker(v-model="template.ready" @change="onChange" scrollable)
 
     v-textarea(v-model="template.text" @change="onChange" auto-grow label="Content" :disabled="disabled")
 </template>
 
 <script>
-import { VTextField, VTextarea, VDatePicker, VDialog, VCheckbox, VBtn } from 'vuetify/lib'
+import { VTextField, VTextarea, VDatePicker, VDialog, VCheckbox, VBtn, VIcon } from 'vuetify/lib'
 
 export default {
   props: ['topic', 'disabled'],
@@ -35,7 +38,8 @@ export default {
     VDialog,
     VTextarea,
     VCheckbox,
-    VBtn
+    VBtn,
+    VIcon
   },
   data () {
     return {
@@ -91,6 +95,10 @@ export default {
 .topic {
   .v-dialog__container {
     width: 100%;
+  }
+
+  a.v-input__prepend-outer {
+    margin-top: 0;
   }
 }
 </style>
