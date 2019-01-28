@@ -1,12 +1,12 @@
 <template lang="pug">
   .edit-topic(v-if="selectedTopic")
     v-toolbar
-      router-link(:to="{ name: 'home', params: {}}")
+      v-btn(icon @click="onBack")
         v-icon arrow_back
 
       v-text-field(ref="tf" single-line full-width hide-details :value="selectedTopic.title" @change="onTitleChanged")
 
-      a(@click="onDelete")
+      v-btn(icon @click="onDelete")
         v-icon delete
 
     v-container
@@ -63,6 +63,9 @@ export default {
     },
     onTopicChanged (topic) {
       this.$store.dispatch('topics/upsertTopic', topic)
+    },
+    onBack () {
+      this.$router.push('/')
     },
     onDelete () {
       this.$store.dispatch('topics/deleteTopic', this.selectedTopic)

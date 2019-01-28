@@ -1,13 +1,13 @@
 <template lang="pug">
-  .edit-topic
+  .new-topic
     v-toolbar
-      router-link(:to="{ name: 'home', params: {}}")
+      v-btn(icon @click="onBack")
         v-icon arrow_back
 
       v-text-field(ref="tf" single-line full-width hide-details placeholder="Title"
         v-model="newTopic.title")
 
-      a(@click="onSave")
+      v-btn(icon @click="onSave")
         v-icon(:disabled="!canSave") save
     v-container
       topic(:topic="newTopic" @topic-changed="onTopicChanged" :disabled="disabled" :hideTitle="true")
@@ -49,6 +49,9 @@ export default {
     onTopicChanged (topic) {
       this.newTopic = topic
     },
+    onBack () {
+      this.$router.push('/')
+    },
     onSave () {
       if (this.canSave) {
         this.save()
@@ -63,7 +66,7 @@ export default {
 }
 </script>
 <style lang="scss">
-.edit-topic {
+.new-topic {
   display: flex;
   flex-direction: column;
   background: white;
@@ -72,9 +75,6 @@ export default {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-  }
-  .v-toolbar__title {
-    margin-left: 20px;
   }
 }
 </style>
