@@ -5,17 +5,17 @@
       template(v-if="!showSearchInput")
         v-toolbar-title {{ filter }}
         v-spacer
-        v-btn(icon @click="showSearchInput = true")
+        a(@click="showSearchInput = true")
           v-icon search
       template(v-else)
         v-text-field(:value="searchText" @input="onSearchTextChanged"
           ref="search" placeholder="Search")
-        v-btn(icon v-if="searchText" @click="onAdd")
+        a(v-if="searchText" @click="onAdd")
           v-icon add
-        v-btn(icon @click="onClearSearchText")
+        a(@click="onClearSearchText")
           v-icon clear
       v-menu(content-class="filter-menu")
-        v-btn(icon @click="showFilters = true" slot="activator")
+        a(@click="showFilters = true" slot="activator")
           v-icon filter_list
         v-list
           v-list-tile(v-for="filter in filters" :key="filter" @click="onFilterChanged(filter)")
@@ -23,17 +23,18 @@
 
     v-toolbar.desktop-only(tabs)
       v-text-field(:value="searchText" @input="onSearchTextChanged" placeholder="Search")
-      v-btn(icon v-if="searchText" @click="onAdd")
+      a(v-if="searchText" @click="onAdd")
         v-icon add
-      v-btn(icon v-if="searchText" @click="onClearSearchText")
+      a(v-if="searchText" @click="onClearSearchText")
         v-icon clear
       filter-selection.desktop-only(slot="extension" :selection="filter" @selectionChanged="onFilterChanged")
+
 </template>
 
 <script>
 import Vue from 'vue'
 import { VToolbar, VToolbarTitle, VIcon, VSpacer, VTextField,
-  VMenu, VList, VListTile, VListTileTitle, VBtn } from 'vuetify/lib'
+  VMenu, VList, VListTile, VListTileTitle } from 'vuetify/lib'
 import { filters } from '@/store/search/filter.model'
 import FilterSelection from '@/components/FilterSelection'
 
@@ -48,7 +49,6 @@ export default {
     VList,
     VListTile,
     VListTileTitle,
-    VBtn,
     FilterSelection
   },
   data () {
