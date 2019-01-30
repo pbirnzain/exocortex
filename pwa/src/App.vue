@@ -24,40 +24,30 @@ export default {
 }
 </script>
 
-<style lang="scss">
-html {
-  overflow: auto;
-  height: 100%;
-}
+<style lang="styl">
+html
+  overflow: auto
+  height: 100%
 
-@media(max-width: 460px) {
-  .app {
-    .score-reasons {
-      font-size: 11px;
-    }
-  }
-}
+@media(max-width: 460px)
+  .app
+    .score-reasons
+      font-size: 11px
 
-.mobile-only {
-  display: none;
-  @media(max-width: 460px) {
-    display: inherit;
-  }
-}
+.mobile-only
+  display: none
+  @media(max-width: 460px)
+    display: inherit
 
-.desktop-only {
-  @media(max-width: 460px) {
-    display: none;
-  }
-}
+.desktop-only
+  @media(max-width: 460px)
+    display: none
 
-.v-toolbar a {
-  text-decoration: none;
-}
+.v-toolbar a
+  text-decoration: none
 
-.app .add-button {
-  position: fixed;
-  right: 1em;
-  bottom: 1em;
-}
+.app .add-button
+  position: fixed
+  right: 1em
+  bottom: 1em
 </style>
