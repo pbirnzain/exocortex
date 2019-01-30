@@ -11,6 +11,9 @@ const topicModule = {
   getters: {
     selectedTopic (state) {
       return state.selectedTopicId ? state.topics[state.selectedTopicId] : undefined
+    },
+    topicsLoaded (state) {
+      return state.topicsLoaded
     }
   },
   mutations: {

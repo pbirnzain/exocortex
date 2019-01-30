@@ -33,7 +33,7 @@ export default {
   },
   computed: {
     topicsLoaded () {
-      return this.$store.state.topics.topicsLoaded
+      return this.$store.getters['topics/topicsLoaded']
     },
     resultingTopics () {
       return this.$store.getters['search/resultingTopics']
