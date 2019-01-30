@@ -52,7 +52,6 @@ html {
 }
 
 .v-toolbar a {
-  color: black;
   text-decoration: none;
 }
 
