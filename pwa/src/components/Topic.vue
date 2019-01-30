@@ -53,7 +53,7 @@ export default {
     }
   },
   mounted () {
-    if(this.$refs.title)
+    if (this.$refs.title)
       this.$refs.title.focus()
   },
   methods: {

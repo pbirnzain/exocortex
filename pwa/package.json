@@ -45,7 +45,8 @@
       "@vue/standard"
     ],
     "rules": {
-      "eqeqeq": 0
+      "eqeqeq": 0,
+      "curly": 0
     },
     "parserOptions": {
       "parser": "babel-eslint"

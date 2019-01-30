@@ -33,7 +33,7 @@ export default {
   },
   computed: {
     canSave () {
-      return this.newTopic && this.newTopic.title;
+      return this.newTopic && this.newTopic.title
     }
   },
   mounted () {
