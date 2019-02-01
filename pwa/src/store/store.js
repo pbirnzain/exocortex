@@ -32,9 +32,9 @@ const store = new Vuex.Store({
   actions: {
     frameReceived ({commit}, frame) {
       if (frame.type == 'update_topic') {
-        commit('topics/UPSERT_TOPIC', frame.payload)
+        commit('topics/UPSERT', frame.payload)
       } else if (frame.type == 'delete_topic') {
-        commit('topics/DELETE_TOPIC', frame.payload)
+        commit('topics/DELETE', frame.payload)
       }
     },
     setErrors ({commit}, error) {

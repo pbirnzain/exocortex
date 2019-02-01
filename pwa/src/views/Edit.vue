@@ -17,7 +17,6 @@ import { VBtn, VContainer, VToolbar, VToolbarTitle, VSpacer, VIcon, VTextField }
 import Topic from '../components/Topic'
 
 export default {
-  name: 'app',
   components: {
     Topic,
     VBtn,
@@ -41,10 +40,10 @@ export default {
     }
   },
   mounted () {
-    this.$store.dispatch('topics/selectTopic', this.$route.params.id)
+    this.$store.dispatch('topics/select', this.$route.params.id)
   },
   beforeRouteUpdate (to, from, next) {
-    this.$store.dispatch('topics/selectTopic', to.params.id)
+    this.$store.dispatch('topics/select', to.params.id)
     next()
   },
   beforeRouteLeave (to, from, next) {
@@ -53,7 +52,7 @@ export default {
       if (this.$refs.tf.lazyValue !== this.selectedTopic.title)
         this.onTitleChanged(this.$refs.tf.lazyValue)
 
-      this.$store.dispatch('topics/selectTopic', undefined)
+      this.$store.dispatch('topics/select', undefined)
     }
     next()
   },
@@ -62,10 +61,10 @@ export default {
       this.onTopicChanged({...this.selectedTopic, title: title})
     },
     onTopicChanged (topic) {
-      this.$store.dispatch('topics/upsertTopic', topic)
+      this.$store.dispatch('topics/upsert', topic)
     },
     onDelete () {
-      this.$store.dispatch('topics/deleteTopic', this.selectedTopic)
+      this.$store.dispatch('topics/delete', this.selectedTopic)
     }
   }
 }

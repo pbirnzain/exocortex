@@ -96,7 +96,7 @@ export default {
     onAdd () {
       this.showSearchInput = false
       const topic = { title: this.searchText, pinned: true }
-      this.$store.dispatch('topics/upsertTopic', topic)
+      this.$store.dispatch('topics/upsert', topic)
       this.$store.dispatch('search/setSearchText', '')
     }
   }

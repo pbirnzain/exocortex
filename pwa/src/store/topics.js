@@ -24,7 +24,7 @@ const topicModule = {
         Vue.set(state.topics, topic.id, topic)
       }
     },
-    UPSERT_TOPIC (state, topic) {
+    UPSERT (state, topic) {
       const current = state.topics[topic.id]
       if (current && topic.modified < current.modified) {
         return // don't update to older versions
@@ -36,10 +36,10 @@ const topicModule = {
         state.selectedTopic = topic
       }
     },
-    SELECT_TOPIC (state, id) {
+    SELECT (state, id) {
       state.selectedTopicId = id
     },
-    DELETE_TOPIC (state, id) {
+    DELETE (state, id) {
       Vue.delete(state.topics, id)
       if (state.selectedTopic !== undefined) {
         if (state.selectedTopic.id == id) {
@@ -55,11 +55,11 @@ const topicModule = {
         commit('REPLACE_ALL', topics)
       })
     },
-    upsertTopic ({commit, state}, topic) {
+    upsert ({commit, state}, topic) {
       if (topic.id === undefined) {
         axios.post('/api/topics/', topic).then(response => {
-          commit('UPSERT_TOPIC', response.data)
-          commit('SELECT_TOPIC', response.data.id)
+          commit('UPSERT', response.data)
+          commit('SELECT', response.data.id)
         })
       } else {
         // if a date field has been cleared (set to empty string), send null
@@ -82,19 +82,19 @@ const topicModule = {
         }
 
         if (Object.keys(delta).length) {
-          commit('UPSERT_TOPIC', topic) // optimistic update
+          commit('UPSERT', topic) // optimistic update
           axios.patch('/api/topics/' + topic.id + '/', delta).then(response => {
-            commit('UPSERT_TOPIC', response.data)
+            commit('UPSERT', response.data)
           })
         }
       }
     },
-    selectTopic ({commit}, id) {
-      commit('SELECT_TOPIC', id)
+    select ({commit}, id) {
+      commit('SELECT', id)
     },
-    deleteTopic ({commit}, topic) {
+    delete ({commit}, topic) {
       axios.delete('/api/topics/' + topic.id + '/').then(response => {
-        commit('DELETE_TOPIC', topic.id)
+        commit('DELETE', topic.id)
       })
     }
   }
