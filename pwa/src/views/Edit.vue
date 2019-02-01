@@ -4,7 +4,7 @@
       router-link(:to="{ name: 'home', params: {}}")
         v-icon arrow_back
 
-      v-text-field(ref="tf" single-line full-width hide-details :value="selectedTopic.title" @change="onTitleChanged")
+      v-text-field(ref="tf" :autofocus="true" single-line full-width hide-details :value="selectedTopic.title" @change="onTitleChanged")
 
       a(@click="onDelete")
         v-icon delete
