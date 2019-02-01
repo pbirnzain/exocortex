@@ -30,7 +30,7 @@ class Score:
 class DataChunk(models.Model):
     objects = InheritanceManager()
 
-    title = models.CharField(max_length=100)
+    title = models.CharField(max_length=100, blank=True)
     text = models.TextField(blank=True)
     # TODO: use through-Model, add direction, importance float
     related = models.ManyToManyField("self", blank=True)
