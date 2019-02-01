@@ -57,9 +57,12 @@ const topicModule = {
     },
     upsert ({commit, state}, topic) {
       if (topic.id === undefined) {
-        axios.post('/api/topics/', topic).then(response => {
+        return axios.post('/api/topics/', topic).then(response => {
           commit('UPSERT', response.data)
           commit('SELECT', response.data.id)
+          return new Promise((resolve, reject) => {
+            resolve(response.data)
+          })
         })
       } else {
         // if a date field has been cleared (set to empty string), send null
@@ -83,8 +86,11 @@ const topicModule = {
 
         if (Object.keys(delta).length) {
           commit('UPSERT', topic) // optimistic update
-          axios.patch('/api/topics/' + topic.id + '/', delta).then(response => {
+          return axios.patch('/api/topics/' + topic.id + '/', delta).then(response => {
             commit('UPSERT', response.data)
+            return new Promise((resolve, reject) => {
+              resolve(response.data)
+            })
           })
         }
       }
