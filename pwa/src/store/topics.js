@@ -99,6 +99,7 @@ const topicModule = {
       commit('SELECT', id)
     },
     delete ({commit}, topic) {
+      commit('DELETE', topic.id) // optimistic delete
       axios.delete('/api/topics/' + topic.id + '/').then(response => {
         commit('DELETE', topic.id)
       })
