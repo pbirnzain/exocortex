@@ -28,7 +28,6 @@
       a(v-if="searchText" @click="onClearSearchText")
         v-icon clear
       filter-selection.desktop-only(slot="extension" :selection="filter" @selectionChanged="onFilterChanged")
-
 </template>
 
 <script>
@@ -94,9 +93,9 @@ export default {
       this.$store.dispatch('search/setSearchText', '')
     },
     onAdd () {
+      this.$emit('new-topic', this.searchText)
+
       this.showSearchInput = false
-      const topic = { title: this.searchText, pinned: true }
-      this.$store.dispatch('topics/upsert', topic)
       this.$store.dispatch('search/setSearchText', '')
     }
   }

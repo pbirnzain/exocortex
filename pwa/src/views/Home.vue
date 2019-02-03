@@ -1,9 +1,9 @@
 <template lang="pug">
   .home
-    v-btn(fab fixed bottom right color="red" @click="onNewTopic")
+    v-btn(fab fixed bottom right color="red" @click="onNewTopic()")
       v-icon add
 
-    home-toolbar
+    home-toolbar(@new-topic="onNewTopic")
     topic-list(v-if="topicsLoaded" :topics="resultingTopics" :showText="showTopicText" @topic-selected="onSelect")
       empty-state(v-if="!searchText && filter === 'urgent'"
         img="/img/empty_state_background.svg"
@@ -49,8 +49,8 @@ export default {
     }
   },
   methods: {
-    onNewTopic () {
-      this.$router.push('/new')
+    onNewTopic (title) {
+      this.$router.push(`/new/${title || ''}`)
     },
     onSelect (topic) {
       this.$router.push(`/edit/${topic.id}`)

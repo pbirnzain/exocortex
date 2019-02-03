@@ -15,7 +15,12 @@ export default {
     VProgressCircular
   },
   mounted () {
-    this.$store.dispatch('topics/upsert', {pinned: true}).then( (topic) => {
+    let newTopic = { pinned: true }
+    if (this.$route.params.title) {
+      newTopic.title = this.$route.params.title
+    }
+
+    this.$store.dispatch('topics/upsert', newTopic).then((topic) => {
       this.$router.push(`/edit/${topic.id}`)
     })
   }

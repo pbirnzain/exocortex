@@ -17,6 +17,11 @@ export default new Router({
       component: () => import('./views/New.vue')
     },
     {
+      path: '/new/:title',
+      name: 'new_title',
+      component: () => import('./views/New.vue')
+    },
+    {
       path: '/edit/:id',
       name: 'edit',
       component: () => import('./views/Edit.vue')
