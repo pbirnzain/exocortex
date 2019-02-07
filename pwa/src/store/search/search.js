@@ -1,3 +1,5 @@
+import { topicIsEmpty } from '@/store/topic.model'
+
 const searchModule = {
   namespaced: true,
   state: {
@@ -44,7 +46,7 @@ const searchModule = {
         result = getters.urgentTopics
       }
 
-      return result.sort((a, b) => {
+      result = result.sort((a, b) => {
         if (a.score.sum < b.score.sum) {
           return 1
         } else if (a.score.sum > b.score.sum) {
@@ -59,6 +61,8 @@ const searchModule = {
           return 0
         }
       })
+
+      return result.filter(t => !topicIsEmpty(t))
     }
   },
   mutations: {

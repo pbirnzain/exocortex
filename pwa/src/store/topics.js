@@ -7,6 +7,7 @@ const topicModule = {
     topics: {},
     topicsLoaded: false,
     selectedTopicId: undefined
+    // selectedTopicLoaded
   },
   getters: {
     selectedTopic (state) {
