@@ -24,7 +24,8 @@
           label="Ready" :clearable="true" @input="onChange" :disabled="disabled")
         v-date-picker(v-model="template.ready" @change="onChange" scrollable)
 
-    v-textarea(v-model="template.text" @change="onChange" auto-grow label="Content" ref="text" :disabled="disabled")
+    v-textarea(v-model="template.text" @change="onChange" auto-grow
+               label="Content" ref="text" :disabled="disabled" data-e2e="topicDescription")
 </template>
 
 <script>

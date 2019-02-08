@@ -1,6 +1,6 @@
 <template lang="pug">
   .home
-    v-btn(fab fixed bottom right color="red" @click="onNewTopic()")
+    v-btn(fab fixed bottom right color="red" @click="onNewTopic()" data-e2e="fabAdd")
       v-icon add
 
     home-toolbar(@new-topic="onNewTopic")

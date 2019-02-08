@@ -1,5 +1,5 @@
 <template lang="pug">
-  .empty-state(slot="empty")
+  .empty-state(slot="empty", data-e2e="emptyState")
     .content
       img(v-if="img" :src="img")
       .tagline {{ tagline }}

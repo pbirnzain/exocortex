@@ -2,12 +2,14 @@
   .edit-topic
     v-toolbar
       router-link(:to="{ name: 'home', params: {}}")
-        v-icon arrow_back
+        v-icon(data-e2e="editBack") arrow_back
 
       template(v-if="selectedTopic")
-        v-text-field(ref="tf" :autofocus="true" single-line full-width hide-details :value="selectedTopic.title" @change="onTitleChanged")
+        v-text-field(ref="tf" :autofocus="true" single-line full-width hide-details
+          :value="selectedTopic.title" @change="onTitleChanged"
+          data-e2e="topicTitle")
         a(@click="onDelete")
-          v-icon delete
+          v-icon(data-e2e="editDelete") delete
 
     v-container
       topic(v-if="selectedTopic" :topic="selectedTopic" @topic-changed="onTopicChanged" :hideTitle="true")

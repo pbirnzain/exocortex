@@ -15,6 +15,13 @@
 
 // Import commands.js using ES2015 syntax:
 import './commands'
+import './login'
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
+
+Cypress.Cookies.defaults({
+  whitelist: ['sessionid', 'csrftoken']
+})
+
+window.e = function (identifier) { return `[data-e2e="${identifier}"]` }

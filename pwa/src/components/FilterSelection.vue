@@ -1,6 +1,6 @@
 <template lang="pug">
   v-tabs(:value="selectionIdx" @change="onSelectionChanged" :grow="true")
-    v-tab(v-for="filter in filters" :key="filter") {{ filter }}
+    v-tab(v-for="filter in filters" :key="filter" :data-e2e="'filter' + filter") {{ filter }}
 </template>
 
 <script>

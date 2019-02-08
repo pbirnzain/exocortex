@@ -18,16 +18,19 @@
         a(@click="showFilters = true" slot="activator")
           v-icon filter_list
         v-list
-          v-list-tile(v-for="filter in filters" :key="filter" @click="onFilterChanged(filter)")
+          v-list-tile(v-for="filter in filters" :key="filter"
+                      @click="onFilterChanged(filter)")
             v-list-tile-title(v-text="filter")
 
     v-toolbar.desktop-only(tabs)
-      v-text-field(:value="searchText" @input="onSearchTextChanged" placeholder="Search")
+      v-text-field(:value="searchText" @input="onSearchTextChanged"
+                   placeholder="Search" data-e2e="searchText")
       a(v-if="searchText" @click="onAdd")
         v-icon add
       a(v-if="searchText" @click="onClearSearchText")
         v-icon clear
-      filter-selection.desktop-only(slot="extension" :selection="filter" @selectionChanged="onFilterChanged")
+      filter-selection.desktop-only(slot="extension" :selection="filter"
+        @selectionChanged="onFilterChanged")
 </template>
 
 <script>

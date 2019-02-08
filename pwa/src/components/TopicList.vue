@@ -2,7 +2,7 @@
   .topic-list
     v-list(v-if="topics.length > 0")
       v-list-tile(v-for="topic in topics" :key="topic.id" @click="onClick(topic)"
-          :color="color(topic)")
+                  :color="color(topic)" data-e2e="topicListTile")
         v-list-tile-content
           v-list-tile-title(v-text="topic.title")
           v-list-tile-sub-title(v-if="showText" v-text="topic.text")
