@@ -20,5 +20,10 @@ module.exports = {
         target: 'http://localhost:8000'
       }
     }
+  },
+  pluginOptions: {
+    webpackBundleAnalyzer: {
+      openAnalyzer: false
+    }
   }
 }
