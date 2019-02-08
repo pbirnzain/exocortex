@@ -1,5 +1,4 @@
 module.exports = {
-  baseUrl: '/static/',
   outputDir: './static/',
   assetsDir: undefined,
   runtimeCompiler: undefined,
