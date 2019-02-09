@@ -41,7 +41,6 @@ export default {
     }
   },
   mounted () {
-    this.$store.dispatch('topics/initialize')
     this.$store.dispatch('topics/select', this.$route.params.id)
   },
   beforeRouteUpdate (to, from, next) {

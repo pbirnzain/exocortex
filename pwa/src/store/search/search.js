@@ -4,9 +4,12 @@ const searchModule = {
   namespaced: true,
   state: {
     searchText: '',
-    filter: 'urgent'
+    filter: undefined
   },
   getters: {
+    loaded (state, getters, rootState, rootGetters) {
+      return rootGetters['topics/loaded']
+    },
     allTopics (state, getters, rootState) {
       return Object.values(rootState.topics.topics)
     },
@@ -77,8 +80,10 @@ const searchModule = {
     setSearchText ({commit}, searchText) {
       commit('SET_SEARCH_TEXT', searchText)
     },
-    setFilter ({commit}, filter) {
+    setFilter ({commit, state, getters, dispatch}, filter) {
       commit('SET_FILTER', filter)
+      if (!getters.loaded)
+        dispatch('topics/initialize', undefined, { root: true })
     }
   }
 }

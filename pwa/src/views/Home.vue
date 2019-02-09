@@ -33,7 +33,7 @@ export default {
   },
   computed: {
     topicsLoaded () {
-      return this.$store.getters['topics/topicsLoaded']
+      return this.$store.getters['search/loaded']
     },
     resultingTopics () {
       return this.$store.getters['search/resultingTopics']
@@ -48,8 +48,9 @@ export default {
       return this.$store.state.search.filter
     }
   },
-  mounted () {
-    this.$store.dispatch('topics/initialize')
+  created () {
+    if (!this.filter)
+      this.$store.dispatch('search/setFilter', 'urgent')
   },
   methods: {
     onNewTopic (title) {

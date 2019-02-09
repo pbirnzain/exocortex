@@ -1,25 +1,30 @@
 import Vue from 'vue'
 import axios from 'axios'
 
+const endpoint = '/api/topics/'
+
 const topicModule = {
   namespaced: true,
   state: {
     topics: {},
-    topicsLoaded: false,
+    loaded: false,
     selectedTopicId: undefined
-    // selectedTopicLoaded
   },
   getters: {
+    loaded (state) {
+      return state.loaded
+    },
     selectedTopic (state) {
       return state.selectedTopicId ? state.topics[state.selectedTopicId] : undefined
     },
-    topicsLoaded (state) {
-      return state.topicsLoaded
+    selectedTopicLoaded (state) {
+      const id = state.selectedTopicId
+      return !id || id in state.topics
     }
   },
   mutations: {
     REPLACE_ALL (state, topics) {
-      state.topicsLoaded = true
+      state.loaded = true
       state.topics = {}
       for (let topic of topics) {
         Vue.set(state.topics, topic.id, topic)
@@ -27,38 +32,38 @@ const topicModule = {
     },
     UPSERT (state, topic) {
       const current = state.topics[topic.id]
-      if (current && topic.modified < current.modified) {
+      if (current && topic.modified < current.modified)
         return // don't update to older versions
-      }
 
       Vue.set(state.topics, topic.id, topic)
-
-      if (state.selectedTopic != undefined && topic.id == state.selectedTopic.id) {
-        state.selectedTopic = topic
-      }
     },
     SELECT (state, id) {
       state.selectedTopicId = id
     },
     DELETE (state, id) {
       Vue.delete(state.topics, id)
-      if (state.selectedTopic !== undefined) {
-        if (state.selectedTopic.id == id) {
-          state.selectedTopic = undefined
-        }
+      if (state.selectedTopicId.id == id) {
+        state.selectedTopicId = undefined
       }
     }
   },
   actions: {
-    initialize ({commit}) {
-      axios.get('/api/topics/').then(response => {
-        const topics = response.data
-        commit('REPLACE_ALL', topics)
+    initialize ({state, commit}) {
+      if (!state.loaded) {
+        axios.get(endpoint).then(response => {
+          const topics = response.data
+          commit('REPLACE_ALL', topics)
+        })
+      }
+    },
+    require ({commit}, id) {
+      axios.get(endpoint + id + '/').then(response => {
+        commit('UPSERT', response.data)
       })
     },
     upsert ({commit, state}, topic) {
       if (topic.id === undefined) {
-        return axios.post('/api/topics/', topic).then(response => {
+        return axios.post(endpoint, topic).then(response => {
           commit('UPSERT', response.data)
           commit('SELECT', response.data.id)
           return new Promise((resolve, reject) => {
@@ -87,7 +92,7 @@ const topicModule = {
 
         if (Object.keys(delta).length) {
           commit('UPSERT', topic) // optimistic update
-          return axios.patch('/api/topics/' + topic.id + '/', delta).then(response => {
+          return axios.patch(endpoint + topic.id + '/', delta).then(response => {
             commit('UPSERT', response.data)
             return new Promise((resolve, reject) => {
               resolve(response.data)
@@ -96,14 +101,16 @@ const topicModule = {
         }
       }
     },
-    select ({commit}, id) {
-      commit('SELECT', id)
-    },
     delete ({commit}, topic) {
       commit('DELETE', topic.id) // optimistic delete
-      axios.delete('/api/topics/' + topic.id + '/').then(response => {
+      axios.delete(endpoint + topic.id + '/').then(response => {
         commit('DELETE', topic.id)
       })
+    },
+    select ({commit, dispatch, getters}, id) {
+      commit('SELECT', id)
+      if (!getters.selectedTopicLoaded)
+        dispatch('require', id)
     }
   }
 }
