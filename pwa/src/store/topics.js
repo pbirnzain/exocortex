@@ -65,7 +65,6 @@ const topicModule = {
       if (topic.id === undefined) {
         return axios.post(endpoint, topic).then(response => {
           commit('UPSERT', response.data)
-          commit('SELECT', response.data.id)
           return new Promise((resolve, reject) => {
             resolve(response.data)
           })
