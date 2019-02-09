@@ -11,14 +11,14 @@
         a(@click="onDelete")
           v-icon(data-e2e="editDelete") delete
 
-    v-container
-      topic(v-if="selectedTopic" :topic="selectedTopic" @topic-changed="onTopicChanged" :hideTitle="true")
-      empty-state(v-else tagline="Topic not found." message="Most likely it has been deleted.")
+    v-container(v-if="selectedTopicLoaded")
+      topic(:topic="selectedTopic" :hideTitle="true"
+            @topic-changed="onTopicChanged")
+    v-progress-circular(v-else indeterminate color="grey" :size="50" :width="5")
 </template>
 <script>
-import { VBtn, VContainer, VToolbar, VToolbarTitle, VSpacer, VIcon, VTextField } from 'vuetify/lib'
-import Topic from '@/components/Topic'
-import EmptyState from '@/components/EmptyState'
+import { VBtn, VContainer, VToolbar, VToolbarTitle, VSpacer, VIcon, VTextField, VProgressCircular } from 'vuetify/lib'
+import Topic from '@/components/topic/Topic'
 
 export default {
   components: {
@@ -30,14 +30,18 @@ export default {
     VSpacer,
     VIcon,
     VTextField,
-    EmptyState
+    VProgressCircular
   },
   computed: {
     selectedTopic () {
       return this.$store.getters['topics/selectedTopic']
+    },
+    selectedTopicLoaded () {
+      return this.$store.getters['topics/selectedTopicLoaded']
     }
   },
   mounted () {
+    this.$store.dispatch('topics/initialize')
     this.$store.dispatch('topics/select', this.$route.params.id)
   },
   beforeRouteUpdate (to, from, next) {
@@ -84,6 +88,9 @@ export default {
   }
   .v-toolbar__title {
     margin-left: 20px;
+  }
+  .v-progress-circular {
+    margin: auto;
   }
 }
 </style>

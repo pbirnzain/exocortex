@@ -15,7 +15,7 @@
 <script>
 import { VBtn, VIcon, VContent, VProgressCircular } from 'vuetify/lib'
 import HomeToolbar from './home/HomeToolbar'
-import TopicList from '@/components/TopicList'
+import TopicList from '@/components/topic/TopicList'
 import FilterSelection from '@/components/FilterSelection'
 import EmptyState from '@/components/EmptyState'
 
@@ -47,6 +47,9 @@ export default {
     filter () {
       return this.$store.state.search.filter
     }
+  },
+  mounted () {
+    this.$store.dispatch('topics/initialize')
   },
   methods: {
     onNewTopic (title) {
