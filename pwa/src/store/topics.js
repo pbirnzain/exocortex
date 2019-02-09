@@ -1,115 +1,62 @@
-import Vue from 'vue'
-import axios from 'axios'
+import EntityModule from './entity'
 
-const endpoint = '/api/topics/'
-
+const entityModule = EntityModule('/api/topics/')
 const topicModule = {
   namespaced: true,
-  state: {
-    topics: {},
-    loaded: false,
-    selectedTopicId: undefined
+  state: {...entityModule.state,
+    selectedTopicId: undefined,
+    loaded: false
   },
   getters: {
     loaded (state) {
       return state.loaded
     },
     selectedTopic (state) {
-      return state.selectedTopicId ? state.topics[state.selectedTopicId] : undefined
+      return state.selectedTopicId ? state.entities[state.selectedTopicId] : undefined
     },
     selectedTopicLoaded (state) {
       const id = state.selectedTopicId
-      return !id || id in state.topics
+      return !id || id in state.entities
     }
   },
-  mutations: {
-    REPLACE_ALL (state, topics) {
-      state.loaded = true
-      state.topics = {}
-      for (let topic of topics) {
-        Vue.set(state.topics, topic.id, topic)
-      }
-    },
-    UPSERT (state, topic) {
-      const current = state.topics[topic.id]
-      if (current && topic.modified < current.modified)
-        return // don't update to older versions
-
-      Vue.set(state.topics, topic.id, topic)
-    },
+  mutations: {...entityModule.mutations,
     SELECT (state, id) {
       state.selectedTopicId = id
     },
     DELETE (state, id) {
-      Vue.delete(state.topics, id)
-      if (state.selectedTopicId.id == id) {
+      entityModule.mutations.DELETE(state, id)
+      if (state.selectedTopicId.id == id)
         state.selectedTopicId = undefined
-      }
+    },
+    INITIALIZED (state) {
+      state.loaded = true
     }
   },
-  actions: {
-    initialize ({state, commit}) {
-      if (!state.loaded) {
-        axios.get(endpoint).then(response => {
-          const topics = response.data
-          commit('REPLACE_ALL', topics)
-        })
-      }
-    },
-    require ({commit}, id) {
-      axios.get(endpoint + id + '/').then(response => {
-        commit('UPSERT', response.data)
+  actions: {...entityModule.actions,
+    initialize ({dispatch, commit, state}) {
+      dispatch('require', null).then(() => {
+        if (!state.loaded)
+          commit('INITIALIZED')
       })
     },
-    upsert ({commit, state}, topic) {
-      if (topic.id === undefined) {
-        return axios.post(endpoint, topic).then(response => {
-          commit('UPSERT', response.data)
-          return new Promise((resolve, reject) => {
-            resolve(response.data)
-          })
-        })
-      } else {
-        // if a date field has been cleared (set to empty string), send null
-        // to tell the server to delete it (required by DRF)
-        // TODO: Should this be fixed on the server side?
-        // see https://github.com/encode/django-rest-framework/issues/5365
-        if (topic.due === '') {
-          topic.due = null
-        }
-        if (topic.ready === '') {
-          topic.ready = null
-        }
-
-        const oldTopic = state.topics[topic.id]
-        const delta = {}
-        for (var key in topic) {
-          if (oldTopic[key] != topic[key]) {
-            delta[key] = topic[key]
-          }
-        }
-
-        if (Object.keys(delta).length) {
-          commit('UPSERT', topic) // optimistic update
-          return axios.patch(endpoint + topic.id + '/', delta).then(response => {
-            commit('UPSERT', response.data)
-            return new Promise((resolve, reject) => {
-              resolve(response.data)
-            })
-          })
-        }
-      }
-    },
-    delete ({commit}, topic) {
-      commit('DELETE', topic.id) // optimistic delete
-      axios.delete(endpoint + topic.id + '/').then(response => {
-        commit('DELETE', topic.id)
-      })
-    },
-    select ({commit, dispatch, getters}, id) {
+    select ({commit, dispatch}, id) {
       commit('SELECT', id)
-      if (!getters.selectedTopicLoaded)
-        dispatch('require', id)
+      if (id)
+        dispatch('require', { id })
+    },
+    upsert (context, entity) {
+      // if a date field has been cleared (set to empty string), send null
+      // to tell the server to delete it (required by DRF)
+      // TODO: Should this be fixed on the server side?
+      // see https://github.com/encode/django-rest-framework/issues/5365
+      if (entity.due === '') {
+        entity.due = null
+      }
+      if (entity.ready === '') {
+        entity.ready = null
+      }
+
+      return entityModule.actions.upsert(context, entity)
     }
   }
 }

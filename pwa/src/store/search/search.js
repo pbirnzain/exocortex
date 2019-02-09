@@ -11,7 +11,7 @@ const searchModule = {
       return rootGetters['topics/loaded']
     },
     allTopics (state, getters, rootState) {
-      return Object.values(rootState.topics.topics)
+      return Object.values(rootState.topics.entities)
     },
     matchingTopics (state, getters, rootState) {
       const searchText = state.searchText.toLowerCase()
@@ -70,10 +70,10 @@ const searchModule = {
   },
   mutations: {
     SET_SEARCH_TEXT (state, searchText) {
-      state.searchText = searchText || ''
+      state.searchText = searchText
     },
     SET_FILTER (state, filter) {
-      state.filter = filter || 'urgent'
+      state.filter = filter
     }
   },
   actions: {
