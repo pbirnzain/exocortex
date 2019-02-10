@@ -3,7 +3,7 @@
     v-btn(fab fixed bottom right color="red" @click="onNewTopic()" data-e2e="fabAdd")
       v-icon add
 
-    home-toolbar(@new-topic="onNewTopic")
+    home-toolbar
     topic-list(v-if="topicsLoaded" :topics="resultingTopics" :showText="showTopicText" @topic-selected="onSelect")
       empty-state(v-if="!searchText && filter === 'urgent'"
         img="/img/empty_state_background.svg"
@@ -53,7 +53,8 @@ export default {
       this.$store.dispatch('search/setFilter', 'urgent')
   },
   methods: {
-    onNewTopic (title) {
+    onNewTopic () {
+      const title = this.searchText
       this.$router.push(`/new/${title || ''}`)
     },
     onSelect (topic) {

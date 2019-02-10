@@ -10,8 +10,6 @@
       template(v-else)
         v-text-field(:value="searchText" @input="onSearchTextChanged"
           ref="search" placeholder="Search")
-        a(v-if="searchText" @click="onAdd")
-          v-icon add
         a(@click="onClearSearchText")
           v-icon clear
       v-menu(content-class="filter-menu")
@@ -25,8 +23,6 @@
     v-toolbar.desktop-only(tabs)
       v-text-field(:value="searchText" @input="onSearchTextChanged"
                    placeholder="Search" data-e2e="searchText")
-      a(v-if="searchText" @click="onAdd")
-        v-icon add
       a(v-if="searchText" @click="onClearSearchText")
         v-icon clear
       filter-selection.desktop-only(slot="extension" :selection="filter"
