@@ -70,7 +70,7 @@ const searchModule = {
   },
   mutations: {
     SET_SEARCH_TEXT (state, searchText) {
-      state.searchText = searchText
+      state.searchText = searchText || ''
     },
     SET_FILTER (state, filter) {
       state.filter = filter
