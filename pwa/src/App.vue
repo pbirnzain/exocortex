@@ -47,4 +47,18 @@ html
   position: fixed
   right: 1em
   bottom: 1em
+
+.e-content
+  position: relative
+  padding: 16px
+
+.e-container
+  display: flex
+
+  margin: 0 auto
+  width: 100%
+  max-width: 900px
+
+  &> *
+    flex-grow: 1
 </style>

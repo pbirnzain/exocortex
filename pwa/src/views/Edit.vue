@@ -6,25 +6,23 @@
 
       template(v-if="selectedTopic")
         v-text-field(ref="tf" :autofocus="true" single-line full-width hide-details
-          :value="selectedTopic.title" @change="onTitleChanged"
-          data-e2e="topicTitle")
+          :value="selectedTopic.title" @change="onTitleChanged" data-e2e="topicTitle")
         a(@click="onDelete")
           v-icon(data-e2e="editDelete") delete
 
-    v-container(v-if="selectedTopicLoaded")
+    .e-content.e-container(v-if="selectedTopicLoaded")
       topic(:topic="selectedTopic" :hideTitle="true"
             @topic-changed="onTopicChanged")
     v-progress-circular(v-else indeterminate color="grey" :size="50" :width="5")
 </template>
 <script>
-import { VBtn, VContainer, VToolbar, VToolbarTitle, VSpacer, VIcon, VTextField, VProgressCircular } from 'vuetify/lib'
+import { VBtn, VToolbar, VToolbarTitle, VSpacer, VIcon, VTextField, VProgressCircular } from 'vuetify/lib'
 import Topic from '@/components/topic/Topic'
 
 export default {
   components: {
     Topic,
     VBtn,
-    VContainer,
     VToolbar,
     VToolbarTitle,
     VSpacer,
@@ -79,11 +77,12 @@ export default {
   flex-direction: column;
   background: white;
 
-  .container {
-    position: relative;
-  }
   .v-toolbar {
     z-index: 10;
+
+    .v-input__slot {
+      padding: 0 16px;
+    }
   }
   .v-toolbar__title {
     margin-left: 20px;
