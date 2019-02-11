@@ -13,7 +13,7 @@ axios.defaults.withCredentials = true
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
-  strict: true,
+  strict: process.env.NODE_ENV !== 'production',
   modules: {
     topics: topicModule,
     search: searchModule
