@@ -18,7 +18,11 @@
         v-text-field(slot="activator" v-model="template.due" readonly
           label="Due" :clearable="true" @input="onChange" :disabled="disabled")
         v-date-picker(v-model="template.due" scrollable @change="onChange")
-      v-btn(@click="setDueToday()" flat) today
+      v-btn(@click="setDue()" small flat icon)
+        v-icon today
+      v-btn(@click="setDue(1)" small flat icon)
+        img(src='/img/baseline-tomorrow-24px.svg')
+
 
     .horizontal
       a.v-input__prepend-outer(@click="showReadyPicker = true")
@@ -27,7 +31,10 @@
         v-text-field(slot="activator" v-model="template.ready" readonly
           label="Ready" :clearable="true" @input="onChange" :disabled="disabled")
         v-date-picker(v-model="template.ready" @change="onChange" scrollable)
-      v-btn(@click="setReadyToday()" flat) today
+      v-btn(@click="setReady()" small flat icon)
+        v-icon today
+      v-btn(@click="setReady(1)" small flat icon)
+        icon-tomorrow
 
     v-textarea(v-model="template.text" @change="onChange" auto-grow
                label="Content" ref="text" :disabled="disabled" data-e2e="topicDescription")
@@ -35,6 +42,7 @@
 
 <script>
 import { VTextField, VTextarea, VDatePicker, VDialog, VCheckbox, VBtn, VIcon } from 'vuetify/lib'
+import IconTomorrow from './IconTomorrow'
 
 export default {
   props: ['topic', 'disabled', 'hideTitle'],
@@ -45,7 +53,8 @@ export default {
     VTextarea,
     VCheckbox,
     VBtn,
-    VIcon
+    VIcon,
+    IconTomorrow
   },
   data () {
     return {
@@ -68,12 +77,16 @@ export default {
       this.showReadyPicker = false
       this.$emit('topic-changed', this.template)
     },
-    setDueToday () {
-      this.template.due = (new Date()).toISOString().split('T')[0]
+    setDue (offset = 0) {
+      const date = new Date()
+      date.setDate(date.getDate() + offset)
+      this.template.due = date.toISOString().split('T')[0]
       this.onChange()
     },
-    setReadyToday () {
-      this.template.ready = (new Date()).toISOString().split('T')[0]
+    setReady (offset = 0) {
+      const date = new Date()
+      date.setDate(date.getDate() + offset)
+      this.template.ready = date.toISOString().split('T')[0]
       this.onChange()
     }
   },
@@ -109,6 +122,7 @@ export default {
 .topic {
   .v-dialog__container {
     width: 100%;
+    margin-right: 12px;
   }
 
   a.v-input__prepend-outer {
