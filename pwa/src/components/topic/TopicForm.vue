@@ -1,9 +1,11 @@
 <template lang="pug">
   .topic
-    v-text-field(v-if="!hideTitle" v-model="template.title", @change="onChange" ref="title" label="title" :disabled="disabled")
+    v-text-field(v-if="!hideTitle" v-model="template.title",
+                 @change="onChange" ref="title" label="title" :disabled="disabled")
     .md-subhead.score-reasons(v-if="template.score")
       span Urgency: {{ template.score.sum }}
-      span(v-for="(value, reason, idx) in template.score.reasons",:key="idx") ({{reason}}: {{value}})
+      span(v-for="(value, reason, idx) in template.score.reasons",
+           :key="idx") ({{reason}}: {{value}})
 
     .horizontal
       v-checkbox(v-model="template.pinned" @change="onChange" label="pinned" :disabled="disabled")
@@ -16,6 +18,8 @@
         v-text-field(slot="activator" v-model="template.due" readonly
           label="Due" :clearable="true" @input="onChange" :disabled="disabled")
         v-date-picker(v-model="template.due" scrollable @change="onChange")
+      v-btn(@click="setDueToday()" flat) today
+
     .horizontal
       a.v-input__prepend-outer(@click="showReadyPicker = true")
         v-icon event
@@ -23,6 +27,7 @@
         v-text-field(slot="activator" v-model="template.ready" readonly
           label="Ready" :clearable="true" @input="onChange" :disabled="disabled")
         v-date-picker(v-model="template.ready" @change="onChange" scrollable)
+      v-btn(@click="setReadyToday()" flat) today
 
     v-textarea(v-model="template.text" @change="onChange" auto-grow
                label="Content" ref="text" :disabled="disabled" data-e2e="topicDescription")
@@ -62,6 +67,14 @@ export default {
       this.showDuePicker = false
       this.showReadyPicker = false
       this.$emit('topic-changed', this.template)
+    },
+    setDueToday () {
+      this.template.due = (new Date()).toISOString().split('T')[0]
+      this.onChange()
+    },
+    setReadyToday () {
+      this.template.ready = (new Date()).toISOString().split('T')[0]
+      this.onChange()
     }
   },
   beforeDestroy () {
@@ -90,6 +103,7 @@ export default {
 
 .horizontal {
   display: flex;
+  align-items: center;
 }
 
 .topic {
