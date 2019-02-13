@@ -30,7 +30,7 @@ Cypress.Commands.add('login', () => {
     if (!sessionid) {
       cy.visit('/login')
       cy.get('#id_username').type('patrick')
-      cy.get('#id_password').type('swordfish')
+      cy.get('#id_password').type('swordfish91919191')
       cy.get('button[type="submit"]').click()
     }
   })
