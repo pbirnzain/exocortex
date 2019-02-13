@@ -21,8 +21,7 @@
       v-btn(@click="setDue()" small flat icon)
         v-icon today
       v-btn(@click="setDue(1)" small flat icon)
-        img(src='/img/baseline-tomorrow-24px.svg')
-
+        icon-tomorrow
 
     .horizontal
       a.v-input__prepend-outer(@click="showReadyPicker = true")
@@ -123,6 +122,10 @@ export default {
   .v-dialog__container {
     width: 100%;
     margin-right: 12px;
+  }
+
+  .v-btn {
+    color: rgba(0,0,0,0.54)
   }
 
   a.v-input__prepend-outer {

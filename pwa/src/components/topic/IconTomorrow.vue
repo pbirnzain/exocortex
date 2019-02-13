@@ -87,5 +87,5 @@ export default {
 
 <style lang="styl">
 svg
-  fill: rgba(0,0,0,0.87)
+  fill: rgba(0,0,0,0.54)
 </style>
