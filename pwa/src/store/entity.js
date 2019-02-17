@@ -5,8 +5,8 @@ export default function (endpoint) {
   return {
     endpoint,
     namespaced: true,
-    state: {
-      entities: {}
+    state () {
+      return { entities: {} }
     },
     getters: {
       entities (state) {
@@ -79,11 +79,17 @@ export default function (endpoint) {
           }
         }
       },
-      delete ({commit}, entity) {
-        commit('DELETE', entity.id) // optimistic delete
-        axios.delete(endpoint + entity.id + '/').then(response => {
-          commit('DELETE', entity.id)
+      delete ({commit}, id) {
+        commit('DELETE', id) // optimistic delete
+        axios.delete(endpoint + id + '/').then(response => {
+          commit('DELETE', id)
         })
+      },
+      updated ({commit}, entity) {
+        commit('UPSERT', entity)
+      },
+      deleted ({commit}, id) {
+        commit('DELETE', id)
       }
     }
   }

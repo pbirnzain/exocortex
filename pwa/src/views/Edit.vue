@@ -63,7 +63,7 @@ export default {
       this.$store.dispatch('topics/upsert', topic)
     },
     onDelete () {
-      this.$store.dispatch('topics/delete', this.selectedTopic)
+      this.$store.dispatch('topics/delete', this.selectedTopic.id)
       this.$router.push('/')
     }
   }

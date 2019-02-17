@@ -10,8 +10,8 @@ const searchModule = {
     loaded (state, getters, rootState, rootGetters) {
       return rootGetters['topics/loaded']
     },
-    allTopics (state, getters, rootState) {
-      return Object.values(rootState.topics.entities)
+    allTopics (state, getters, rootState, rootGetters) {
+      return Object.values(rootGetters['topics/topics'])
     },
     matchingTopics (state, getters, rootState) {
       const searchText = state.searchText.toLowerCase()
