@@ -48,9 +48,17 @@ export default {
       return this.$store.state.search.filter
     }
   },
+  watch: {
+    filter () {
+      this.updateTitle()
+    }
+  },
   created () {
     if (!this.filter)
       this.$store.dispatch('search/setFilter', 'urgent')
+  },
+  mounted () {
+    this.updateTitle()
   },
   methods: {
     onNewTopic () {
@@ -59,6 +67,11 @@ export default {
     },
     onSelect (topic) {
       this.$router.push(`/edit/${topic.id}`)
+    },
+    updateTitle () {
+      const elem = document.querySelector('title')
+      elem.innerHTML = `Exocortex:
+        ${this.filter[0].toUpperCase() + this.filter.substr(1)}`
     }
   }
 }

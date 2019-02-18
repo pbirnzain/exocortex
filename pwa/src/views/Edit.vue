@@ -38,6 +38,15 @@ export default {
       return this.$store.getters['topics/selectedTopicLoaded']
     }
   },
+  watch: {
+    selectedTopic () {
+      const elem = document.querySelector('title')
+      if (this.selectedTopic)
+        elem.innerHTML = this.selectedTopic.title || 'Exocortex: Edit'
+      else
+        elem.innerHTML = 'Exocortex'
+    }
+  },
   mounted () {
     this.$store.dispatch('topics/select', this.$route.params.id)
   },
