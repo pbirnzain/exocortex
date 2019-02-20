@@ -32,8 +32,6 @@ class DataChunk(models.Model):
 
     title = models.CharField(max_length=100, blank=True)
     text = models.TextField(blank=True)
-    # TODO: use through-Model, add direction, importance float
-    related = models.ManyToManyField("self", blank=True)
 
     added = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
