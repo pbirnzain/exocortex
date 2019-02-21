@@ -1,6 +1,7 @@
 <template lang="pug">
-  topic-form(v-if="topic" :topic="topic" :hideTitle="true"
-            @topic-changed="onTopicChanged")
+  div(v-if="topic")
+    topic-form(:topic="topic" :hideTitle="true"
+              @topic-changed="onTopicChanged")
   empty-state(v-else tagline="Topic not found."
               message="Most likely it has been deleted.")
 </template>

@@ -61,4 +61,7 @@ html
 
   &> *
     flex-grow: 1
+
+  &.vertical
+    flex-direction: column
 </style>

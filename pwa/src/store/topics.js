@@ -2,7 +2,10 @@ import EntityModule from './entity'
 
 const topicModule = {
   namespaced: true,
-  modules: { entities: EntityModule('/api/topics/') },
+  modules: {
+    entities: EntityModule('/api/topics/'),
+    textchunks: EntityModule('/api/textchunks/')
+  },
   state: {
     selectedTopicId: undefined,
     loaded: false
@@ -15,8 +18,23 @@ const topicModule = {
       return rootGetters['topics/entities/entities']
     },
     selectedTopic (state, getters, rootState, rootGetters) {
-      const selectedTopic = rootGetters['topics/entities/entities'][state.selectedTopicId]
-      return state.selectedTopicId ? selectedTopic : undefined
+      if (state.selectedTopicId) {
+        const selectedTopic = getters['entities/entities'][state.selectedTopicId]
+
+        if (selectedTopic) {
+          const textchunks = []
+          // TODO expand entity to create a more efficient data structure
+          const e = getters['textchunks/entities']
+          for (let idx in e) {
+            if (e[idx].topic == state.selectedTopicId)
+              textchunks.push(e[idx])
+          }
+
+          selectedTopic.textchunks = textchunks
+        }
+
+        return selectedTopic
+      }
     },
     selectedTopicLoaded (state, getters) {
       const id = state.selectedTopicId
@@ -40,8 +58,10 @@ const topicModule = {
     },
     select ({commit, dispatch}, id) {
       commit('SELECT', id)
-      if (id)
+      if (id) {
         dispatch('entities/require', { id })
+        dispatch('textchunks/require', { query: `topic=${id}` })
+      }
     },
     upsert ({dispatch}, entity) {
       // if a date field has been cleared (set to empty string), send null

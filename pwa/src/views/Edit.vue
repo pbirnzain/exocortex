@@ -10,25 +10,22 @@
         a(@click="onDelete")
           v-icon(data-e2e="editDelete") delete
 
-    .e-content.e-container(v-if="selectedTopicLoaded")
+    .e-content.e-container.vertical(v-if="selectedTopicLoaded")
       topic(:topic="selectedTopic" :hideTitle="true"
             @topic-changed="onTopicChanged")
+      chunks(v-if="selectedTopic" :chunks="selectedTopic.textchunks")
+
     v-progress-circular(v-else indeterminate color="grey" :size="50" :width="5")
 </template>
 <script>
 import { VBtn, VToolbar, VToolbarTitle, VSpacer, VIcon, VTextField, VProgressCircular } from 'vuetify/lib'
 import Topic from '@/components/topic/Topic'
+import Chunks from '@/components/Chunks'
 
 export default {
   components: {
-    Topic,
-    VBtn,
-    VToolbar,
-    VToolbarTitle,
-    VSpacer,
-    VIcon,
-    VTextField,
-    VProgressCircular
+    VBtn, VToolbar, VToolbarTitle, VSpacer, VIcon, VTextField,
+    VProgressCircular, Topic, Chunks
   },
   computed: {
     selectedTopic () {

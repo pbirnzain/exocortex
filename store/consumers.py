@@ -15,18 +15,18 @@ class UpdateConsumer(WebsocketConsumer):
     def receive(self, text_data):
         print("received via websock:", text_data)
 
-    def topic_changed(self, event):
-        topic = event['message']
+    def entity_changed(self, event):
+        entity_name, payload = event['message']
         frame = {
-            'type': 'update_topic',
-            'payload': topic,
+            'type': f'{entity_name}_updated',
+            'payload': payload
         }
         self.send(text_data=json.dumps(frame))
 
-    def topic_deleted(self, event):
-        id = event['message']
+    def entity_deleted(self, event):
+        entity_name, id = event['message']
         frame = {
-            'type': 'delete_topic',
+            'type': f'{entity_name}_deleted',
             'payload': id,
         }
         self.send(text_data=json.dumps(frame))

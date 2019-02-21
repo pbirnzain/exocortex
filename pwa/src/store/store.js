@@ -31,9 +31,9 @@ const store = new Vuex.Store({
   },
   actions: {
     frameReceived ({dispatch}, frame) {
-      if (frame.type == 'update_topic') {
+      if (frame.type == 'topic_updated') {
         dispatch('topics/updated', frame.payload)
-      } else if (frame.type == 'delete_topic') {
+      } else if (frame.type == 'topic_deleted') {
         dispatch('topics/deleted', frame.payload)
       }
     },
