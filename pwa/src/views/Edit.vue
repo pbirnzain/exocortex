@@ -20,12 +20,19 @@
 <script>
 import { VBtn, VToolbar, VToolbarTitle, VSpacer, VIcon, VTextField, VProgressCircular } from 'vuetify/lib'
 import Topic from '@/components/topic/Topic'
-import Chunks from '@/components/Chunks'
+import Chunks from '@/components/chunks/Chunks'
 
 export default {
   components: {
-    VBtn, VToolbar, VToolbarTitle, VSpacer, VIcon, VTextField,
-    VProgressCircular, Topic, Chunks
+    VBtn,
+    VToolbar,
+    VToolbarTitle,
+    VSpacer,
+    VIcon,
+    VTextField,
+    VProgressCircular,
+    Topic,
+    Chunks
   },
   computed: {
     selectedTopic () {
