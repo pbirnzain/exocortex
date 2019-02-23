@@ -30,7 +30,7 @@ const topicModule = {
               textchunks.push(e[idx])
           }
 
-          selectedTopic.textchunks = textchunks
+          return { ...selectedTopic, textchunks: textchunks }
         }
 
         return selectedTopic
