@@ -10,11 +10,12 @@ v-card
 
     v-textarea(v-if="editing" v-model="template.text" @blur="onBlur" auto-grow autofocus)
     template(v-else)
-      p(v-if="chunk.text" @click="onEdit") {{ chunk.text }}
+      .markdown(v-if="chunk.text" @click="onEdit" v-html="markdown")
 </template>
 
 <script>
 import { VCard, VCardTitle, VCardActions, VTextarea, VTextField, VMenu, VBtn, VIcon, VList, VListTile, VListTileTitle } from 'vuetify/lib'
+import marked from 'marked'
 
 export default {
   props: ['chunk'],
@@ -37,16 +38,18 @@ export default {
   computed: {
     template () {
       return Object.assign({}, this.chunk)
+    },
+    markdown () {
+      return marked(this.template.text)
     }
   },
   methods: {
-    onBlur (event) {
-      const newValue = event.originalTarget.value
+    onBlur () {
+      this.editing = false
 
-      if (newValue != this.template.text)
+      if (this.chunk.text != this.template.text)
         this.$emit('changed', this.template)
 
-      this.editing = false
       this.onChanged()
     },
     onEdit () {
@@ -96,7 +99,7 @@ export default {
 </style>
 
 <style lang="styl" scoped>
-  p
+  .markdown
     padding-top: 12px
     margin-top: 4px
 </style>
