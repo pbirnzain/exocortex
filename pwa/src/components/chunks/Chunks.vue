@@ -12,10 +12,10 @@ export default {
   props: ['chunks'],
   methods: {
     onChunkChanged (chunk) {
-      console.log(chunk)
+      this.$emit('chunk-changed', chunk)
     },
     onChunkDeleted (chunk) {
-      console.log(chunk.id, 'deleted')
+      this.$emit('chunk-deleted', chunk)
     }
   }
 }

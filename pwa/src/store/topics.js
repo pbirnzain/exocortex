@@ -74,6 +74,7 @@ const topicModule = {
       if (entity.ready === '') {
         entity.ready = null
       }
+      delete entity.textchunks
 
       return dispatch('entities/upsert', entity)
     },

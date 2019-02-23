@@ -2,37 +2,61 @@
 v-card
   v-card-title(primary-title)
     .headline
-      h3.headline.mb-0 {{ chunk.title }}
+      v-text-field(v-model="template.title" @change="onChanged" single-line full-width hide-details autofocus)
+      v-btn(icon @click="onEdit")
+        v-icon edit
       v-btn(icon @click="onDelete")
         v-icon delete
 
-    v-textarea(v-if="editing" :value="chunk.text" @blur="onBlur" auto-grow autofocus)
-    p(v-else @click="editing = true") {{ chunk.text }}
+    v-textarea(v-if="editing" v-model="template.text" @blur="onBlur" auto-grow autofocus)
+    template(v-else)
+      p(v-if="chunk.text" @click="onEdit") {{ chunk.text }}
 </template>
 
 <script>
-import { VCard, VCardTitle, VCardActions, VTextarea, VMenu, VBtn, VIcon, VList, VListTile, VListTileTitle } from 'vuetify/lib'
+import { VCard, VCardTitle, VCardActions, VTextarea, VTextField, VMenu, VBtn, VIcon, VList, VListTile, VListTileTitle } from 'vuetify/lib'
 
 export default {
   props: ['chunk'],
-  components: { VCard, VCardTitle, VCardActions, VTextarea,
-                VMenu, VBtn, VIcon, VList, VListTile, VListTileTitle },
+  components: { VCard,
+    VCardTitle,
+    VCardActions,
+    VTextarea,
+    VTextField,
+    VMenu,
+    VBtn,
+    VIcon,
+    VList,
+    VListTile,
+    VListTileTitle },
   data () {
     return {
       editing: false
+    }
+  },
+  computed: {
+    template () {
+      return Object.assign({}, this.chunk)
     }
   },
   methods: {
     onBlur (event) {
       const newValue = event.originalTarget.value
 
-      if (newValue != this.chunk.text)
-        this.$emit('changed', {...this.chunk, text: newValue})
+      if (newValue != this.template.text)
+        this.$emit('changed', this.template)
 
       this.editing = false
+      this.onChanged()
+    },
+    onEdit () {
+      this.editing = true
+    },
+    onChanged () {
+      this.$emit('changed', this.template)
     },
     onDelete () {
-      this.$emit('deleted', this.chunk)
+      this.$emit('deleted', this.template)
     }
   }
 }
@@ -55,13 +79,20 @@ export default {
       justify-content: space-between
 
       .v-btn
-        margin: 0
+        margin-top: 0
+        margin-bottom: 0
 
   .v-input
     flex-grow: 1
 
     *
       height: 100%
+
+    .v-input__slot
+      padding-left: 0
+    .v-input__control
+      padding: 0
+
 </style>
 
 <style lang="styl" scoped>

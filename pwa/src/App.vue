@@ -31,6 +31,9 @@ html
     .score-reasons
       font-size: 11px
 
+    .v-btn--icon
+      margin: 0
+
 .mobile-only
   display: none
   @media(max-width: 460px)

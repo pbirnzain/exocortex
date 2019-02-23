@@ -7,13 +7,19 @@
       template(v-if="selectedTopic")
         v-text-field(ref="tf" :autofocus="true" single-line full-width hide-details
           :value="selectedTopic.title" @change="onTitleChanged" data-e2e="topicTitle")
-        a(@click="onDelete")
+
+        v-btn(icon disabled)
+          v-icon(data-e2e="editCreatePhoto") add_a_photo
+        v-btn(icon @click="onCreateNote")
+          v-icon(data-e2e="editCreateNote") note_add
+        v-btn(icon @click="onTopicDeleted")
           v-icon(data-e2e="editDelete") delete
 
     .e-content.e-container.vertical(v-if="selectedTopicLoaded")
       topic(:topic="selectedTopic" :hideTitle="true"
             @topic-changed="onTopicChanged")
-      chunks(v-if="selectedTopic" :chunks="selectedTopic.textchunks")
+      chunks(v-if="selectedTopic" :chunks="selectedTopic.textchunks"
+             @chunk-changed="onChunkChanged" @chunk-deleted="onChunkDeleted")
 
     v-progress-circular(v-else indeterminate color="grey" :size="50" :width="5")
 </template>
@@ -75,9 +81,18 @@ export default {
     onTopicChanged (topic) {
       this.$store.dispatch('topics/upsert', topic)
     },
-    onDelete () {
+    onTopicDeleted () {
       this.$store.dispatch('topics/delete', this.selectedTopic.id)
       this.$router.push('/')
+    },
+    onCreateNote () {
+      this.$store.dispatch('topics/textchunks/upsert', { topic: this.selectedTopic.id })
+    },
+    onChunkChanged (chunk) {
+      this.$store.dispatch('topics/textchunks/upsert', chunk)
+    },
+    onChunkDeleted (chunk) {
+      this.$store.dispatch('topics/textchunks/delete', chunk.id)
     }
   }
 }
