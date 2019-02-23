@@ -15,7 +15,7 @@
         v-btn(icon @click="onTopicDeleted")
           v-icon(data-e2e="editDelete") delete
 
-    .e-content.e-container.vertical(v-if="selectedTopicLoaded")
+    .e-content.e-container.vertical(v-if="selectedTopicLoaded" :class="{fullsize: !selectedTopic}")
       topic(:topic="selectedTopic" :hideTitle="true"
             @topic-changed="onTopicChanged")
       chunks(v-if="selectedTopic" :chunks="selectedTopic.textchunks"

@@ -67,4 +67,7 @@ html
 
   &.vertical
     flex-direction: column
+
+  &.fullsize
+    flex-grow: 1
 </style>
