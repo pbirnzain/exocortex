@@ -40,7 +40,8 @@ export default {
       return Object.assign({}, this.chunk)
     },
     markdown () {
-      return marked(this.template.text)
+      const html = marked(this.template.text, { breaks: true })
+      return html.replace(/<a /, '<a target="_blank" ')
     }
   },
   methods: {
