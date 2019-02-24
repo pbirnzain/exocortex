@@ -103,7 +103,6 @@ export default {
   width: 100%;
   display: flex;
   flex-direction: column;
-  background: white;
 
   .v-toolbar {
     z-index: 10;
