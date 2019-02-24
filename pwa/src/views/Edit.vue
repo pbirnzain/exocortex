@@ -15,11 +15,14 @@
         v-btn(icon @click="onTopicDeleted")
           v-icon(data-e2e="editDelete") delete
 
-    .e-content.e-container.vertical(v-if="selectedTopicLoaded" :class="{fullsize: !selectedTopic}")
-      topic(:topic="selectedTopic" :hideTitle="true"
-            @topic-changed="onTopicChanged")
-      chunks(v-if="selectedTopic" :chunks="selectedTopic.textchunks"
-             @chunk-changed="onChunkChanged" @chunk-deleted="onChunkDeleted")
+    template(v-if="selectedTopicLoaded")
+      .e-content.e-container.vertical(v-if="selectedTopic" :class="{fullsize: !selectedTopic}")
+        topic(:topic="selectedTopic" :hideTitle="true"
+              @topic-changed="onTopicChanged")
+        chunks(:chunks="selectedTopic.textchunks"
+               @chunk-changed="onChunkChanged" @chunk-deleted="onChunkDeleted")
+      empty-state(v-else tagline="Topic not found."
+                  message="Most likely it has been deleted.")
 
     v-progress-circular(v-else indeterminate color="grey" :size="50" :width="5")
 </template>
@@ -27,6 +30,7 @@
 import { VBtn, VToolbar, VToolbarTitle, VSpacer, VIcon, VTextField, VProgressCircular } from 'vuetify/lib'
 import Topic from '@/components/topic/Topic'
 import Chunks from '@/components/chunks/Chunks'
+import EmptyState from '@/components/EmptyState'
 
 export default {
   components: {
@@ -38,7 +42,8 @@ export default {
     VTextField,
     VProgressCircular,
     Topic,
-    Chunks
+    Chunks,
+    EmptyState
   },
   computed: {
     selectedTopic () {
