@@ -1,7 +1,7 @@
 <template lang="pug">
 v-card(@click.native="onEdit")
   template(v-if="editing")
-    v-textarea(v-model="template.text" @blur="onBlur" auto-grow autofocus)
+    v-textarea(v-model="template.text" @blur="onBlur" auto-grow autofocus clearable)
   template(v-else)
     .markdown(v-if="chunk.text" v-html="markdown" @click="onEdit")
 </template>
