@@ -31,7 +31,6 @@ class DataChunk(models.Model):
     objects = InheritanceManager()
 
     title = models.CharField(max_length=100, blank=True)
-    text = models.TextField(blank=True)
 
     added = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)

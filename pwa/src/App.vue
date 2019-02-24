@@ -55,6 +55,9 @@ html
   position: relative
   padding: 16px
 
+  > *:not(:last-child)
+    margin-bottom: 16px
+
 .e-container
   display: flex
 

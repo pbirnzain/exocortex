@@ -16,8 +16,7 @@ const searchModule = {
     matchingTopics (state, getters, rootState) {
       const searchText = state.searchText.toLowerCase()
       const filtered = getters.allTopics.filter(topic => {
-        return topic.title.toLowerCase().indexOf(searchText) >= 0 ||
-            topic.text.toLowerCase().indexOf(searchText) >= 0
+        return topic.title.toLowerCase().indexOf(searchText) >= 0
       })
       return filtered
     },

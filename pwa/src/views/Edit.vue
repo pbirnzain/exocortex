@@ -97,25 +97,28 @@ export default {
   }
 }
 </script>
-<style lang="scss">
-.edit-topic {
-  height: 100vh;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
+<style lang="styl">
+.edit-topic
+  height: 100vh
+  width: 100%
+  display: flex
+  flex-direction: column
 
-  .v-toolbar {
-    z-index: 10;
+  .v-toolbar
+    z-index: 10
 
-    .v-input__slot {
-      padding: 0 16px;
-    }
-  }
-  .v-toolbar__title {
-    margin-left: 20px;
-  }
-  .v-progress-circular {
-    margin: auto;
-  }
-}
+    .v-input__slot
+      padding: 0 16px
+
+  .v-toolbar__title
+    margin-left: 20px
+
+  .v-progress-circular
+    margin: auto
+
+  .v-card
+    padding: 16px
+
+  .e-content
+    margin-top: 4px // to make more space for box-shadow of toolbar
 </style>

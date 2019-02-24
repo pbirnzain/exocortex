@@ -1,5 +1,5 @@
 <template lang="pug">
-  .topic
+  v-card.topic
     v-text-field(v-if="!hideTitle" v-model="template.title",
                  @change="onChange" ref="title" label="title" :disabled="disabled")
     .md-subhead.score-reasons(v-if="template.score")
@@ -34,22 +34,19 @@
         v-icon today
       v-btn(@click="setReady(1)" small flat icon)
         icon-tomorrow
-
-    v-textarea(v-model="template.text" @change="onChange" auto-grow
-               label="Content" ref="text" :disabled="disabled" data-e2e="topicDescription")
 </template>
 
 <script>
-import { VTextField, VTextarea, VDatePicker, VDialog, VCheckbox, VBtn, VIcon } from 'vuetify/lib'
+import { VCard, VTextField, VDatePicker, VDialog, VCheckbox, VBtn, VIcon } from 'vuetify/lib'
 import IconTomorrow from './IconTomorrow'
 
 export default {
   props: ['topic', 'disabled', 'hideTitle'],
   components: {
+    VCard,
     VTextField,
     VDatePicker,
     VDialog,
-    VTextarea,
     VCheckbox,
     VBtn,
     VIcon,

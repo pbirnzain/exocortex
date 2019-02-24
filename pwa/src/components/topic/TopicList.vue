@@ -5,7 +5,6 @@
                   :color="color(topic)" data-e2e="topicListTile")
         v-list-tile-content
           v-list-tile-title(v-text="topic.title")
-          v-list-tile-sub-title(v-if="showText" v-text="topic.text")
     slot(v-if="topics.length === 0")
 </template>
 
@@ -13,7 +12,7 @@
 import { VList, VDivider, VListTile, VListTileContent, VListTileTitle, VListTileSubTitle } from 'vuetify/lib'
 
 export default {
-  props: ['topics', 'showText'],
+  props: ['topics'],
   components: {
     VList,
     VDivider,

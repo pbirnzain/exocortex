@@ -7,7 +7,6 @@ v-card(@click.native="onEdit")
 </template>
 
 <script>
-import Vue from 'vue'
 import { VCard, VTextarea } from 'vuetify/lib'
 import marked from 'marked'
 
@@ -58,7 +57,6 @@ export default {
 .chunks
   .v-card
     min-width: 16em
-    padding: 16px
 
     .v-btn
       position: absolute
