@@ -85,7 +85,8 @@ export default {
 }
 </script>
 
-<style lang="styl">
+<style lang="styl" scoped>
 svg
-  fill: rgba(0,0,0,0.54)
+  fill: rgba(0,0,0,0.87)
+  shape-rendering: crispEdges
 </style>

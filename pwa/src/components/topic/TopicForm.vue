@@ -124,10 +124,6 @@ export default {
     margin-right: 12px;
   }
 
-  .v-btn {
-    color: rgba(0,0,0,0.54)
-  }
-
   a.v-input__prepend-outer {
     margin-top: 0;
   }
