@@ -1,35 +1,22 @@
 <template lang="pug">
-v-card
-  v-card-title(primary-title)
-    .headline
-      v-text-field(v-model="template.title" @change="onChanged" single-line full-width hide-details autofocus)
-      v-btn(icon @click="onEdit")
-        v-icon edit
-      v-btn(icon @click="onDelete")
-        v-icon delete
-
-    v-textarea(v-if="editing" v-model="template.text" @blur="onBlur" auto-grow autofocus)
-    template(v-else)
-      .markdown(v-if="chunk.text" @click="onEdit" v-html="markdown")
+v-card(@click.native="onEdit")
+  template(v-if="editing")
+    v-textarea(v-model="template.text" @blur="onBlur" auto-grow autofocus)
+  template(v-else)
+    .markdown(v-if="chunk.text" v-html="markdown" @click="onEdit")
 </template>
 
 <script>
-import { VCard, VCardTitle, VCardActions, VTextarea, VTextField, VMenu, VBtn, VIcon, VList, VListTile, VListTileTitle } from 'vuetify/lib'
+import Vue from 'vue'
+import { VCard, VTextarea } from 'vuetify/lib'
 import marked from 'marked'
 
 export default {
   props: ['chunk'],
-  components: { VCard,
-    VCardTitle,
-    VCardActions,
-    VTextarea,
-    VTextField,
-    VMenu,
-    VBtn,
-    VIcon,
-    VList,
-    VListTile,
-    VListTileTitle },
+  components: {
+    VCard,
+    VTextarea
+  },
   data () {
     return {
       editing: false
@@ -48,10 +35,11 @@ export default {
     onBlur () {
       this.editing = false
 
-      if (this.chunk.text != this.template.text)
-        this.$emit('changed', this.template)
+      if (this.template.text && this.chunk.text != this.template.text)
+        this.onChanged()
 
-      this.onChanged()
+      if (!this.template.text)
+        this.onDelete()
     },
     onEdit () {
       this.editing = true
@@ -69,38 +57,29 @@ export default {
 <style lang="styl">
 .chunks
   .v-card
-    min-width: 20em
+    min-width: 16em
+    padding: 16px
 
-  .v-card__title
-    flex-direction: column
-    align-items: stretch
-    flex-grow: 1
-
-    .headline
-      display: flex
-      flex-direction: row
-      align-items: center
-      justify-content: space-between
-
-      .v-btn
-        margin-top: 0
-        margin-bottom: 0
+    .v-btn
+      position: absolute
+      right: 0
+      top: 0
 
   .v-input
-    flex-grow: 1
+    height: 100%
+    margin: 0
+    padding: 0
 
     *
       height: 100%
 
-    .v-input__slot
-      padding-left: 0
-    .v-input__control
+    .v-input__slot, .v-input__control
       padding: 0
+      margin: 0
 
 </style>
 
 <style lang="styl" scoped>
-  .markdown
-    padding-top: 12px
-    margin-top: 4px
+  .markdown :last-child
+    margin-bottom: 0
 </style>
