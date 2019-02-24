@@ -92,5 +92,8 @@ export default {
   .v-progress-circular {
     margin: auto;
   }
+  .v-btn--floating .v-icon {
+    color: white;
+  }
 }
 </style>
