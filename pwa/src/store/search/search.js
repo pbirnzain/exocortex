@@ -21,31 +21,41 @@ const searchModule = {
       return filtered
     },
     urgentTopics (state, getters, rootState) {
-      return getters.matchingTopics.filter(topic => topic.score.sum > 50)
+      return getters.matchingTopics.filter(topic => topic.score.sum > 55)
     },
     readyTopics (state, getters) {
-      return getters.matchingTopics.filter(topic =>
-        topic.score.sum <= 50 && topic.score.sum > 0 && !topic.complete)
+      return getters.matchingTopics.filter(topic => topic.ready &&
+        topic.score.sum > 0 && !topic.complete)
     },
     blockedTopics (state, getters) {
-      return getters.matchingTopics.filter(topic => topic.score.sum < 0 && !topic.complete)
+      return getters.matchingTopics.filter(topic => topic.ready && topic.score.sum < 0 && !topic.complete)
     },
     infoTopics (state, getters) {
-      return getters.matchingTopics.filter(topic => topic.score.sum == 0 && !topic.complete)
+      return getters.matchingTopics.filter(topic => !topic.ready && !topic.complete)
+    },
+    incompleteTopics (state, getters) {
+      return getters.matchingTopics.filter(topic => !topic.complete)
+    },
+    completeTopics (state, getters) {
+      return getters.matchingTopics.filter(topic => topic.complete)
     },
     resultingTopics (state, getters) {
       let result
 
-      if (state.filter === 'all') {
-        result = getters.matchingTopics
+      if (state.filter === 'urgent') {
+        result = getters.urgentTopics
       } else if (state.filter === 'ready') {
         result = getters.readyTopics
       } else if (state.filter === 'blocked') {
         result = getters.blockedTopics
       } else if (state.filter === 'info') {
         result = getters.infoTopics
+      } else if (state.filter === 'complete') {
+        result = getters.completeTopics
+      } else if (state.filter === 'incomplete') {
+        result = getters.incompleteTopics
       } else {
-        result = getters.urgentTopics
+        result = getters.matchingTopics
       }
 
       result = result.sort((a, b) => {

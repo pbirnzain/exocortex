@@ -117,7 +117,7 @@ export default {
   }
 }
 
-@media(min-width: 461px) {
+@media(min-width: 531px) {
   .filter-menu {
     display: none;
   }

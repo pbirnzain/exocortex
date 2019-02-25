@@ -26,17 +26,17 @@ html
   overflow: auto
   height: 100%
 
-@media(max-width: 460px)
+@media(max-width: 530px)
   .app .v-btn--icon
     margin: 0
 
 .mobile-only
   display: none
-  @media(max-width: 460px)
+  @media(max-width: 530px)
     display: inherit
 
 .desktop-only
-  @media(max-width: 460px)
+  @media(max-width: 530px)
     display: none
 
 .v-toolbar a
