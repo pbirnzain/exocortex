@@ -27,12 +27,8 @@ html
   height: 100%
 
 @media(max-width: 460px)
-  .app
-    .score-reasons
-      font-size: 11px
-
-    .v-btn--icon
-      margin: 0
+  .app .v-btn--icon
+    margin: 0
 
 .mobile-only
   display: none

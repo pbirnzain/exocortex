@@ -2,8 +2,8 @@
   v-card.topic
     v-text-field(v-if="!hideTitle" v-model="template.title",
                  @change="onChange" ref="title" label="title" :disabled="disabled")
-    .md-subhead.score-reasons(v-if="template.score")
-      span Urgency: {{ template.score.sum }}
+    .score-reasons(v-if="template.score")
+      span.sum Urgency: {{ template.score.sum }}
       span(v-for="(value, reason, idx) in template.score.reasons",
            :key="idx") ({{reason}}: {{value}})
 
@@ -13,7 +13,7 @@
       v-checkbox(v-model="template.complete" @change="onChange" hide-details
                  label="complete" :disabled="disabled")
       v-slider(v-model="template.importance" always-dirty thumb-label
-               hide-details label="Importance:" :min="-9" :max="9"
+               hide-details label="Importance:" :min="-5" :max="5"
                @change="onChange")
 
     .horizontal
@@ -109,10 +109,15 @@ export default {
 
 <style lang="scss">
 .score-reasons {
-  padding-top: 0.25rem;
+  position: absolute;
+  top: 0px;
+  right: 2px;
 
-  span {
-    margin-right: 0.25rem;
+  font-size: 11px;
+  color: rgba(0,0,0,0.54);
+
+  .sum {
+    padding-right: 4px;
   }
 }
 
@@ -129,16 +134,18 @@ export default {
 
   .modifiers {
     flex-wrap: wrap;
-    margin-bottom: 16px;
+    align-items: center;
 
-    .v-input {
-      padding-right: 16px;
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    > * {
+      padding: 0 8px 8px 0;
     }
   }
 
-  .v-input--slider {
-    padding-top: 4px;
-  }
 
   a.v-input__prepend-outer {
     margin-top: 0;
