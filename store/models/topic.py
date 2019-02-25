@@ -50,6 +50,7 @@ class Topic(DataChunk):
     due = models.DateField(blank=True, null=True)
     ready = models.DateField(blank=True, null=True)
     complete = models.BooleanField(default=False)
+    importance = models.IntegerField(default=0)
 
     def get_absolute_url(self):
         return reverse('topic-detail', args=[self.id])
@@ -57,6 +58,10 @@ class Topic(DataChunk):
     @property
     def score(self):
         score = super().score
+
+        if self.importance != 0:
+            score += ("importance", self.importance)
+
         if self.pinned:
             score += ("pinned", 100)
 

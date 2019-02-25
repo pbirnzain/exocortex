@@ -7,9 +7,14 @@
       span(v-for="(value, reason, idx) in template.score.reasons",
            :key="idx") ({{reason}}: {{value}})
 
-    .horizontal
-      v-checkbox(v-model="template.pinned" @change="onChange" label="pinned" :disabled="disabled")
-      v-checkbox(v-model="template.complete" @change="onChange" label="complete" :disabled="disabled")
+    .modifiers.horizontal
+      v-checkbox(v-model="template.pinned" @change="onChange" hide-details
+                 label="pinned" :disabled="disabled")
+      v-checkbox(v-model="template.complete" @change="onChange" hide-details
+                 label="complete" :disabled="disabled")
+      v-slider(v-model="template.importance" always-dirty thumb-label
+               hide-details label="Importance:" :min="-9" :max="9"
+               @change="onChange")
 
     .horizontal
       a.v-input__prepend-outer(@click="showDuePicker = true")
@@ -37,7 +42,7 @@
 </template>
 
 <script>
-import { VCard, VTextField, VDatePicker, VDialog, VCheckbox, VBtn, VIcon } from 'vuetify/lib'
+import { VCard, VTextField, VDatePicker, VDialog, VCheckbox, VBtn, VIcon, VSlider } from 'vuetify/lib'
 import IconTomorrow from './IconTomorrow'
 
 export default {
@@ -50,6 +55,7 @@ export default {
     VCheckbox,
     VBtn,
     VIcon,
+    VSlider,
     IconTomorrow
   },
   data () {
@@ -119,6 +125,19 @@ export default {
   .v-dialog__container {
     width: 100%;
     margin-right: 12px;
+  }
+
+  .modifiers {
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+
+    .v-input {
+      padding-right: 16px;
+    }
+  }
+
+  .v-input--slider {
+    padding-top: 4px;
   }
 
   a.v-input__prepend-outer {
