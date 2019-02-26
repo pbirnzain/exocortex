@@ -17,10 +17,11 @@
                @change="onChange")
 
     .horizontal
-      v-dialog(v-model="showDuePicker" lazy width="290px" :disabled="disabled")
-        v-date-picker(v-model="template.due" scrollable @change="onChange")
       v-text-field(v-model="template.due" label="Due" @blur="onChange"
                     :clearable="true" :disabled="disabled")
+
+      v-dialog(v-model="showDuePicker" lazy width="290px" :disabled="disabled")
+        v-date-picker(v-model="template.due" scrollable @change="onChange")
       v-btn(@click="showDuePicker = true" small flat icon)
         icon-edit-date
       v-btn(@click="setDue()" small flat icon)
@@ -29,10 +30,11 @@
         icon-tomorrow
 
     .horizontal
-      v-dialog(v-model="showReadyPicker" lazy width="290px" :disabled="disabled")
-        v-date-picker(v-model="template.ready" @change="onChange" scrollable)
       v-text-field(v-model="template.ready"
         label="Ready" :clearable="true" @blur="onChange" :disabled="disabled")
+
+      v-dialog(v-model="showReadyPicker" lazy width="290px" :disabled="disabled")
+        v-date-picker(v-model="template.ready" @change="onChange" scrollable)
       v-btn(@click="showReadyPicker = true" small flat icon)
         icon-edit-date
       v-btn(@click="setReady()" small flat icon)
