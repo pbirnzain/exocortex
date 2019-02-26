@@ -22,21 +22,23 @@ export default {
 </script>
 
 <style lang="styl">
+@import "./styles/variables.styl"
+
 html
   overflow: auto
   height: 100%
 
-@media(max-width: 530px)
+@media(max-width: breakpoint)
   .app .v-btn--icon
     margin: 0
 
 .mobile-only
   display: none
-  @media(max-width: 530px)
+  @media(max-width: breakpoint)
     display: inherit
 
 .desktop-only
-  @media(max-width: 530px)
+  @media(max-width: breakpoint)
     display: none
 
 .v-toolbar a

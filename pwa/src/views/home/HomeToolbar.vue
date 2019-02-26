@@ -101,31 +101,30 @@ export default {
 }
 </script>
 
-<style lang="scss">
-.home-toolbar {
-  .v-toolbar__title {
-    text-transform: capitalize;
-  }
-  .v-toolbar {
-    z-index: 2;
-  }
-  .v-toolbar__content a > .v-icon:not(first-child) {
-    margin-left: 10px;
-  }
-  .v-tabs__bar {
-    background: #f5f5f5;
-  }
-}
+<style lang="styl">
+@import "../../styles/variables.styl"
 
-@media(min-width: 531px) {
-  .filter-menu {
-    display: none;
-  }
-}
+.home-toolbar
+  .v-toolbar__title
+    text-transform: capitalize
 
-.filter-menu {
- .v-list__tile__title {
-   text-transform: capitalize;
- }
-}
+  .v-toolbar
+    z-index: 2
+
+  .v-toolbar__content a > .v-icon:not(first-child)
+    margin-left: 10px
+
+  .v-tabs__bar
+    background: #f5f5f5
+
+  .filter-menu
+    display: none
+
+  @media(max-width: breakpoint)
+    .filter-menu
+      display: show
+
+.filter-menu
+ .v-list__tile__title
+   text-transform: capitalize
 </style>
