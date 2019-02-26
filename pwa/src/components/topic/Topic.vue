@@ -17,24 +17,24 @@
                @change="onChange")
 
     .horizontal
-      a.v-input__prepend-outer(@click="showDuePicker = true")
-        v-icon event
-      v-dialog(v-model="showDuePicker" lazy full-width width="290px" :disabled="disabled")
-        v-text-field(slot="activator" v-model="template.due" readonly
-          label="Due" :clearable="true" @input="onChange" :disabled="disabled")
+      v-dialog(v-model="showDuePicker" lazy width="290px" :disabled="disabled")
         v-date-picker(v-model="template.due" scrollable @change="onChange")
+      v-text-field(v-model="template.due" label="Due" @blur="onChange"
+                    :clearable="true" :disabled="disabled")
+      v-btn(@click="showDuePicker = true" small flat icon)
+        icon-edit-date
       v-btn(@click="setDue()" small flat icon)
         v-icon today
       v-btn(@click="setDue(1)" small flat icon)
         icon-tomorrow
 
     .horizontal
-      a.v-input__prepend-outer(@click="showReadyPicker = true")
-        v-icon event
-      v-dialog(v-model="showReadyPicker" lazy full-width width="290px" :disabled="disabled")
-        v-text-field(slot="activator" v-model="template.ready" readonly
-          label="Ready" :clearable="true" @input="onChange" :disabled="disabled")
+      v-dialog(v-model="showReadyPicker" lazy width="290px" :disabled="disabled")
         v-date-picker(v-model="template.ready" @change="onChange" scrollable)
+      v-text-field(v-model="template.ready"
+        label="Ready" :clearable="true" @blur="onChange" :disabled="disabled")
+      v-btn(@click="showReadyPicker = true" small flat icon)
+        icon-edit-date
       v-btn(@click="setReady()" small flat icon)
         v-icon today
       v-btn(@click="setReady(1)" small flat icon)
@@ -43,7 +43,8 @@
 
 <script>
 import { VCard, VTextField, VDatePicker, VDialog, VCheckbox, VBtn, VIcon, VSlider } from 'vuetify/lib'
-import IconTomorrow from './IconTomorrow'
+import IconTomorrow from '@/components/icons/IconTomorrow'
+import IconEditDate from '@/components/icons/IconEditDate'
 
 export default {
   props: ['topic', 'disabled', 'hideTitle'],
@@ -56,7 +57,8 @@ export default {
     VBtn,
     VIcon,
     VSlider,
-    IconTomorrow
+    IconTomorrow,
+    IconEditDate
   },
   data () {
     return {
@@ -127,11 +129,9 @@ export default {
 }
 
 .topic {
-  .v-dialog__container {
-    width: 100%;
-    margin-right: 12px;
+  .horizontal > .v-text-field:first-child {
+    margin-right: 8px;
   }
-
   .modifiers {
     flex-wrap: wrap;
     align-items: center;
@@ -144,11 +144,6 @@ export default {
     > * {
       padding: 0 8px 8px 0;
     }
-  }
-
-
-  a.v-input__prepend-outer {
-    margin-top: 0;
   }
 }
 </style>

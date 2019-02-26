@@ -47,7 +47,7 @@
        inkscape:window-x="0"
        inkscape:window-y="18"
        inkscape:window-maximized="0"
-       inkscape:current-layer="svg6" />
+       inkscape:currentIconTomorrow-layer="svg6" />
     <path
        d="M0 0h24v24H0z"
        fill="none"
