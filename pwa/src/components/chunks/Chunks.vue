@@ -1,7 +1,7 @@
 <template lang="pug">
 .chunks
   template(v-for="chunk of chunks" )
-    text-chunk(:chunk="chunk" @changed="onChunkChanged" @deleted="onChunkDeleted")
+    text-chunk(:ref="'chunk' + chunk.id" :chunk="chunk" @changed="onChunkChanged" @deleted="onChunkDeleted")
 </template>
 
 <script>
@@ -16,6 +16,9 @@ export default {
     },
     onChunkDeleted (chunk) {
       this.$emit('chunk-deleted', chunk)
+    },
+    focusChunk (id) {
+      this.$refs[`chunk${id}`][0].focus()
     }
   }
 }

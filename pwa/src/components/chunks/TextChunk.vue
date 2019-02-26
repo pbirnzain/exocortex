@@ -48,6 +48,9 @@ export default {
     },
     onDelete () {
       this.$emit('deleted', this.template)
+    },
+    focus () {
+      this.onEdit()
     }
   }
 }

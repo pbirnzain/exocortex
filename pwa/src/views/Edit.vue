@@ -19,7 +19,7 @@
       .e-content.e-container.vertical(v-if="selectedTopic" :class="{fullsize: !selectedTopic}")
         topic(:topic="selectedTopic" :hideTitle="true"
               @topic-changed="onTopicChanged")
-        chunks(:chunks="selectedTopic.textchunks"
+        chunks(:chunks="selectedTopic.textchunks" ref="chunks"
                @chunk-changed="onChunkChanged" @chunk-deleted="onChunkDeleted")
       empty-state(v-else tagline="Topic not found."
                   message="Most likely it has been deleted.")
@@ -91,7 +91,11 @@ export default {
       this.$router.push('/')
     },
     onCreateNote () {
-      this.$store.dispatch('topics/textchunks/upsert', { topic: this.selectedTopic.id })
+      const r = this.$store.dispatch('topics/textchunks/upsert',
+                                     { topic: this.selectedTopic.id })
+      r.then( (chunk) => {
+        this.$refs.chunks.focusChunk(chunk.id)
+      })
     },
     onChunkChanged (chunk) {
       this.$store.dispatch('topics/textchunks/upsert', chunk)
