@@ -2,8 +2,8 @@
   v-card
     v-card-title
       v-autocomplete(v-model="selection" :items="allowedTopics"
-                     item-value="id" item-text="title" autofocus
-                     append-outer-icon="link" @click:append-outer.stop="onLink")
+                     item-value="id" item-text="title" autofocus @change="onLink"
+                     prepend-icon="link")
 </template>
 
 <script>
