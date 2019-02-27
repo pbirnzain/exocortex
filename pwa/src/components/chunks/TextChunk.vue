@@ -78,9 +78,10 @@ export default {
       padding: 0
       margin: 0
 
-</style>
+.markdown :last-child
+  margin-bottom: 0
 
-<style lang="styl" scoped>
-  .markdown :last-child
-    margin-bottom: 0
+.markdown p+ul, p+ol
+  margin-top: -16px
+  margin-bottom: 16px
 </style>
