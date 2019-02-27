@@ -94,8 +94,12 @@ const searchModule = {
     setSearchText ({commit}, searchText) {
       commit('SET_SEARCH_TEXT', searchText)
     },
-    setFilter ({commit, state, getters, dispatch}, filter) {
+    setFilter ({commit, dispatch}, filter) {
       commit('SET_FILTER', filter)
+      dispatch('requireFilter', filter)
+    },
+    requireFilter ({dispatch, getters}, filter) {
+      // TODO do partial load
       if (!getters.loaded)
         dispatch('topics/initialize', undefined, { root: true })
     }

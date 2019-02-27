@@ -1,10 +1,13 @@
 import EntityModule from './entity'
 
+const linksModule = EntityModule('/api/links/')
+
 const topicModule = {
   namespaced: true,
   modules: {
     entities: EntityModule('/api/topics/'),
-    textchunks: EntityModule('/api/textchunks/')
+    textchunks: EntityModule('/api/textchunks/'),
+    links: linksModule
   },
   state: {
     selectedTopicId: undefined,
@@ -30,7 +33,22 @@ const topicModule = {
               textchunks.push(e[idx])
           }
 
-          return { ...selectedTopic, textchunks: textchunks }
+          const links = []
+          const allLinks = getters['links/entities']
+          for (let idx in allLinks) {
+            const l = allLinks[idx]
+            if (l.from_topic == state.selectedTopicId) {
+              const other = getters.topics[l.to_topic]
+              if (other)
+                links.push({ id: l.id, other })
+            } else if (l.to_topic == state.selectedTopicId) {
+              const other = getters.topics[l.from_topic]
+              if (other)
+                links.push({ id: l.id, other })
+            }
+          }
+
+          return { ...selectedTopic, textchunks, links }
         }
 
         return selectedTopic
@@ -61,6 +79,12 @@ const topicModule = {
       if (id) {
         dispatch('entities/require', { id })
         dispatch('textchunks/require', { query: `topic=${id}` })
+        dispatch('links/require', { query: `topic=${id}` }).then(links => {
+          for (let l of links) {
+            dispatch('entities/require', { id: l.to_topic })
+            dispatch('entities/require', { id: l.from_topic })
+          }
+        })
       }
     },
     upsert ({dispatch}, entity) {
@@ -75,6 +99,7 @@ const topicModule = {
         entity.ready = null
       }
       delete entity.textchunks
+      delete entity.links
 
       return dispatch('entities/upsert', entity)
     },

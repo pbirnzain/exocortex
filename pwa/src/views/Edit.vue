@@ -12,6 +12,10 @@
           v-icon(data-e2e="editCreatePhoto") add_a_photo
         v-btn(icon @click="onCreateNote")
           v-icon(data-e2e="editCreateNote") note_add
+        v-btn(@click.stop="showLinkDialog = true" icon)
+          v-icon(data-e2e="editCreateLink") link
+        v-dialog(v-model="showLinkDialog" lazy max-width="600px")
+          create-link-card(:topic="selectedTopic" @link-created="onLink")
         v-btn(icon @click="onTopicDeleted")
           v-icon(data-e2e="editDelete") delete
 
@@ -19,6 +23,7 @@
       .e-content.e-container.vertical(v-if="selectedTopic" :class="{fullsize: !selectedTopic}")
         topic(:topic="selectedTopic" :hideTitle="true"
               @topic-changed="onTopicChanged")
+        links(:topic="selectedTopic" @unlink="onUnlink")
         chunks(:chunks="selectedTopic.textchunks" ref="chunks"
                @chunk-changed="onChunkChanged" @chunk-deleted="onChunkDeleted")
       empty-state(v-else tagline="Topic not found."
@@ -26,15 +31,19 @@
 
     v-progress-circular(v-else indeterminate color="grey" :size="50" :width="5")
 </template>
+
 <script>
-import { VBtn, VToolbar, VToolbarTitle, VSpacer, VIcon, VTextField, VProgressCircular } from 'vuetify/lib'
+import { VBtn, VDialog, VToolbar, VToolbarTitle, VSpacer, VIcon, VTextField, VProgressCircular } from 'vuetify/lib'
 import Topic from '@/components/topic/Topic'
 import Chunks from '@/components/chunks/Chunks'
+import Links from '@/components/chunks/Links'
+import CreateLinkCard from './edit/CreateLinkCard'
 import EmptyState from '@/components/EmptyState'
 
 export default {
   components: {
     VBtn,
+    VDialog,
     VToolbar,
     VToolbarTitle,
     VSpacer,
@@ -43,7 +52,12 @@ export default {
     VProgressCircular,
     Topic,
     Chunks,
+    Links,
+    CreateLinkCard,
     EmptyState
+  },
+  data() {
+    return { showLinkDialog: false }
   },
   computed: {
     selectedTopic () {
@@ -102,6 +116,13 @@ export default {
     },
     onChunkDeleted (chunk) {
       this.$store.dispatch('topics/textchunks/delete', chunk.id)
+    },
+    onLink (link) {
+      this.showLinkDialog = false
+      this.$store.dispatch('topics/links/upsert', link)
+    },
+    onUnlink (linkId) {
+      this.$store.dispatch('topics/links/delete', linkId)
     }
   }
 }
