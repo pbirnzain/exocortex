@@ -1,8 +1,9 @@
 <template lang="pug">
   v-card(v-if="links")
     .link(v-for="link of links")
-      router-link(:to="{ name: 'edit', params: { id: link.other.id}}") {{ link.other.title }}
-      v-btn(icon @click.stop="onUnlink(link)")
+      router-link(:to="{ name: 'edit', params: { id: link.other.id}}"
+                  :class="{'line-through': link.other.complete}") {{ link.other.title }}
+      v-btn(icon small @click.stop="onUnlink(link)")
         v-icon link_off
 </template>
 
@@ -15,7 +16,16 @@ export default {
   computed: {
     links() {
       if (this.topic && this.topic.links && this.topic.links.length) {
-        return this.topic.links
+        const links = [...this.topic.links]
+        links.sort( (a,b) => {
+          if (a.other.score.sum > b.other.score.sum)
+            return 1
+          else if (a.other.score.sum < b.other.score.sum)
+            return -1
+          else
+            return 0
+        })
+        return links
       }
     }
   },
@@ -34,5 +44,9 @@ export default {
   justify-content: space-between
 
   button
-    margin: -6px 0
+    margin-top: -6px
+    margin-bottom: -6px
+
+.line-through
+  text-decoration: line-through
 </style>
