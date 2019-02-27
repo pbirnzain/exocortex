@@ -19,9 +19,25 @@ export default {
     allowedTopics() {
       // This *intentionally* includes filtering according to the search field
       const existingLinkIds = new Set(this.topic.links.map( t => t.other.id))
-      return this.$store.getters['search/incompleteTopics'].filter( (t) => {
+      let result = this.$store.getters['search/incompleteTopics'].filter( (t) => {
         return t.id != this.topic.id && !existingLinkIds.has(t.id)
       })
+      result = result.sort((a, b) => {
+        if (a.score.sum < b.score.sum) {
+          return 1
+        } else if (a.score.sum > b.score.sum) {
+          return -1
+        }
+
+        if (a.ready < b.ready) {
+          return -1
+        } else if (a.ready > b.ready) {
+          return 1
+        } else {
+          return 0
+        }
+      })
+      return result
     }
   },
   mounted() {

@@ -11,7 +11,7 @@ const searchModule = {
       return rootGetters['topics/loaded']
     },
     allTopics (state, getters, rootState, rootGetters) {
-      return Object.values(rootGetters['topics/topics'])
+      return Object.values(rootGetters['topics/topics']).filter(t => !topicIsEmpty(t))
     },
     matchingTopics (state, getters, rootState) {
       const searchText = state.searchText.toLowerCase()
@@ -79,7 +79,7 @@ const searchModule = {
         }
       })
 
-      return result.filter(t => !topicIsEmpty(t))
+      return result
     }
   },
   mutations: {
