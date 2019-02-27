@@ -2,10 +2,11 @@
   v-card.topic
     v-text-field(v-if="!hideTitle" v-model="template.title",
                  @change="onChange" ref="title" label="title" :disabled="disabled")
-    .score-reasons(v-if="template.score")
+    .score-reasons(v-if="template.score && template.score.sum")
       span.sum Urgency: {{ template.score.sum }}
       span(v-for="(value, reason, idx) in template.score.reasons",
-           :key="idx") ({{reason}}: {{value}})
+           :key="idx") {{reason}}: {{value}}
+
 
     .modifiers.horizontal
       v-checkbox(v-model="template.pinned" @change="onChange" hide-details
@@ -114,13 +115,18 @@ export default {
 <style lang="scss">
 .score-reasons {
   position: absolute;
-  top: 0px;
-  right: 2px;
+  top: -1px;
+  left: 0;
+  transform: translateY(-100%);
 
   font-size: 11px;
-  color: rgba(0,0,0,0.54);
+  color: rgba(0,0,0,0.29);
 
   .sum {
+    padding-right: 12px;
+  }
+
+  > *:not(first-child) {
     padding-right: 4px;
   }
 }
