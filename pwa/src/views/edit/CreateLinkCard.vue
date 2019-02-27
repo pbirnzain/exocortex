@@ -1,8 +1,8 @@
 <template lang="pug">
   v-card
     v-card-title
-      v-autocomplete(v-model="selection" :items="allowedTopics"
-                     item-value="id" item-text="title" autofocus @change="onLink"
+      v-autocomplete(v-model="selection" :items="allowedTopics" ref="otherInput"
+                     item-value="id" item-text="title" @change="onLink"
                      prepend-icon="link")
 </template>
 
@@ -44,6 +44,9 @@ export default {
     this.$store.dispatch('search/requireFilter', 'incomplete')
   },
   methods: {
+    focus() {
+      this.$refs.otherInput.focus()
+    },
     onLink() {
       const link = { from_topic: this.topic.id, to_topic: this.selection }
       this.$emit('link-created', link)

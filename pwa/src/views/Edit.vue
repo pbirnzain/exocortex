@@ -15,7 +15,7 @@
         v-btn(@click.stop="showLinkDialog = true" icon)
           v-icon(data-e2e="editCreateLink") link
         v-dialog(v-model="showLinkDialog" lazy max-width="600px")
-          create-link-card(:topic="selectedTopic" @link-created="onLink")
+          create-link-card(ref="linkCard" :topic="selectedTopic" @link-created="onLink")
         v-btn(icon @click="onTopicDeleted")
           v-icon(data-e2e="editDelete") delete
 
@@ -33,6 +33,7 @@
 </template>
 
 <script>
+import Vue from 'vue'
 import { VBtn, VDialog, VToolbar, VToolbarTitle, VSpacer, VIcon, VTextField, VProgressCircular } from 'vuetify/lib'
 import Topic from '@/components/topic/Topic'
 import Chunks from '@/components/chunks/Chunks'
@@ -74,6 +75,10 @@ export default {
         elem.innerHTML = this.selectedTopic.title || 'Exocortex: Edit'
       else
         elem.innerHTML = 'Exocortex'
+    },
+    showLinkDialog() {
+      if (this.showLinkDialog)
+        Vue.nextTick(() => this.$refs.linkCard.focus())
     }
   },
   mounted () {
