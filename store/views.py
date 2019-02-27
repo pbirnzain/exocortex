@@ -1,9 +1,10 @@
+from django.db.models import Q
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
 from rest_framework import viewsets
 
-from store.models import Topic, TextChunk
-from store.serializers import TopicSerializer, TextChunkSerializer
+from store.models import Topic, TextChunk, Link
+from store.serializers import TopicSerializer, TextChunkSerializer, LinkSerializer
 
 
 class WebsocketUpdateMixin:
@@ -56,5 +57,19 @@ class TextChunkViewSet(WebsocketUpdateMixin, viewsets.ModelViewSet):
         topic = self.request.query_params.get('topic', None)
         if topic:
             queryset = queryset.filter(topic=topic)
+
+        return queryset
+
+
+class LinkViewSet(WebsocketUpdateMixin, viewsets.ModelViewSet):
+    serializer_class = LinkSerializer
+    entity_name = 'link'
+
+    def get_queryset(self):
+        queryset = Link.objects.all()
+
+        topic = self.request.query_params.get('topic', None)
+        if topic:
+            queryset = queryset.filter(Q(from_topic__exact=topic) | Q(to_topic__exact=topic))
 
         return queryset

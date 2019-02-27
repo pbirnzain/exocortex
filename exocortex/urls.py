@@ -18,11 +18,12 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import include, path
 from rest_framework import routers
 
-from store.views import TopicViewSet, TextChunkViewSet
+from store.views import TopicViewSet, TextChunkViewSet, LinkViewSet
 
 router = routers.DefaultRouter()
 router.register('topics', TopicViewSet)
 router.register('textchunks', TextChunkViewSet, basename='textchunks')
+router.register('links', LinkViewSet, basename='links')
 
 urlpatterns = [
     path('admin/', admin.site.urls),

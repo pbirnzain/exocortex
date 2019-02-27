@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from store.models import Topic, TextChunk
+from store.models import Topic, TextChunk, Link
 
 
 class TopicSerializer(serializers.ModelSerializer):
@@ -18,4 +18,10 @@ class TopicSerializer(serializers.ModelSerializer):
 class TextChunkSerializer(serializers.ModelSerializer):
     class Meta:
         model = TextChunk
+        fields = ('__all__')
+
+
+class LinkSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Link
         fields = ('__all__')
