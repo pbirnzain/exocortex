@@ -19,7 +19,7 @@ export default {
     allowedTopics() {
       // This *intentionally* includes filtering according to the search field
       const existingLinkIds = new Set(this.topic.links.map( t => t.other.id))
-      let result = this.$store.getters['search/matchingTopics'].filter( (t) => {
+      let result = this.$store.getters['search/allTopics'].filter( (t) => {
         return t.id != this.topic.id && !existingLinkIds.has(t.id)
       })
       result = result.sort((a, b) => {
