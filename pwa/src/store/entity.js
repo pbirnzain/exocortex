@@ -49,6 +49,9 @@ export default function (endpoint) {
 
         return axios.get(url).then(response => {
           commit('UPSERT', response.data)
+          return new Promise((resolve, reject) => {
+            resolve(response.data)
+          })
         })
       },
       upsert ({commit, state}, entity) {
