@@ -19,9 +19,9 @@ export default {
         const links = [...this.topic.links]
         links.sort( (a,b) => {
           if (a.other.score.sum > b.other.score.sum)
-            return 1
-          else if (a.other.score.sum < b.other.score.sum)
             return -1
+          else if (a.other.score.sum < b.other.score.sum)
+            return 1
           else
             return 0
         })
