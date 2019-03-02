@@ -21,11 +21,11 @@
 
     template(v-if="selectedTopicLoaded")
       .e-content.e-container.vertical(v-if="selectedTopic" :class="{fullsize: !selectedTopic}")
-        topic(:topic="selectedTopic" :hideTitle="true"
-              @topic-changed="onTopicChanged")
-        links(:topic="selectedTopic" @unlink="onUnlink")
         chunks(:chunks="selectedTopic.textchunks" ref="chunks"
                @chunk-changed="onChunkChanged" @chunk-deleted="onChunkDeleted")
+          topic(:topic="selectedTopic" :hideTitle="true"
+                @topic-changed="onTopicChanged")
+          links(:topic="selectedTopic" @unlink="onUnlink")
       empty-state(v-else tagline="Topic not found."
                   message="Most likely it has been deleted.")
 
@@ -154,9 +154,6 @@ export default {
 
   .v-progress-circular
     margin: auto
-
-  .v-card
-    padding: 16px
 
   .e-content
     margin-top: 4px // to make more space for box-shadow of toolbar

@@ -1,7 +1,10 @@
 <template lang="pug">
 .chunks
-  template(v-for="chunk of chunks" )
-    text-chunk(:ref="'chunk' + chunk.id" :chunk="chunk" @changed="onChunkChanged" @deleted="onChunkDeleted")
+  .chunk-list
+    slot
+  .chunk-list
+    template(v-for="chunk of chunks")
+      text-chunk(:ref="'chunk' + chunk.id" :chunk="chunk" @changed="onChunkChanged" @deleted="onChunkDeleted")
 </template>
 
 <script>
@@ -25,15 +28,22 @@ export default {
 </script>
 
 <style lang="styl">
-.chunks
+.chunk-list
   margin: -8px
 
   &> *
     margin: 8px
 
-.chunks
+  .v-card
+    padding: 16px
+
+.chunk-list:not(:last-child)
+  margin-bottom: 8px
+
+.chunk-list
   display: flex
   flex-wrap: wrap
+  justify-content: center;
 
   &> *
     flex-grow: 1

@@ -1,5 +1,6 @@
 <template lang="pug">
-  v-card(v-if="links")
+  v-card.links(v-if="links")
+    h1 References
     .link(v-for="link of links")
       router-link(:to="{ name: 'edit', params: { id: link.other.id}}"
                   :class="{'line-through': link.other.complete}") {{ link.other.title }}
@@ -38,10 +39,14 @@ export default {
 </script>
 
 <style lang="styl" scoped>
+
 .link
   display: flex
   align-items: center
   justify-content: space-between
+
+  a
+    margin-right: 16px
 
   button
     margin-top: -6px

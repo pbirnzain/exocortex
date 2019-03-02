@@ -1,5 +1,5 @@
 <template lang="pug">
-v-card(@click.native="onEdit")
+v-card.textchunk(@click.native="onEdit")
   template(v-if="editing")
     v-textarea(v-model="template.text" @blur="onBlur" auto-grow autofocus clearable)
   template(v-else)
@@ -57,14 +57,9 @@ export default {
 </script>
 
 <style lang="styl">
-.chunks
+.textchunk
   .v-card
     min-width: 16em
-
-    .v-btn
-      position: absolute
-      right: 0
-      top: 0
 
   .v-input
     height: 100%

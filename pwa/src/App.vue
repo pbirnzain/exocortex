@@ -30,6 +30,7 @@ html
 
 .app
   overflow-wrap: break-word
+  word-break: break-word
 
 @media(max-width: breakpoint)
   .app .v-btn--icon
@@ -63,8 +64,6 @@ html
   display: flex
 
   margin: 0 auto
-  width: 100%
-  max-width: 900px
 
   &> *
     flex-grow: 1

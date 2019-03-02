@@ -115,8 +115,8 @@ export default {
 <style lang="scss">
 .score-reasons {
   position: absolute;
-  top: -1px;
-  left: 0;
+  bottom: -16px;
+  right: 2px;
   transform: translateY(-100%);
 
   font-size: 11px;
@@ -144,7 +144,11 @@ export default {
   .modifiers {
     display: flex;
     flex-wrap: wrap;
-    margin: -16px 0 8px 0;
+
+    > * {
+      margin-top: 0;
+      margin-right: 16px;
+    }
 
     .v-input__slot {
       margin-bottom: 0;
