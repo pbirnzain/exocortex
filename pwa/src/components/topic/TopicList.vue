@@ -36,6 +36,9 @@ export default {
       if (topic.complete) {
         return 'success'
       }
+      if (topic.score.reasons['blocked']) {
+        return '#AAA'
+      }
     }
   }
 }
