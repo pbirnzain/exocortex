@@ -17,6 +17,11 @@ const topicModule = {
     loaded (state) {
       return state.loaded
     },
+    loading (state, getters, rootState, rootGetters) {
+      return getters['entities/loading'] ||
+             getters['textchunks/loading'] ||
+             getters['links/loading']
+    },
     topics (state, getters, rootState, rootGetters) {
       return rootGetters['topics/entities/entities']
     },

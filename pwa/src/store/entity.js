@@ -6,11 +6,17 @@ export default function (endpoint) {
     endpoint,
     namespaced: true,
     state () {
-      return { entities: {} }
+      return {
+        entities: {},
+        requests: 0
+      }
     },
     getters: {
       entities (state) {
         return state.entities
+      },
+      loading (state) {
+        return state.requests > 0
       }
     },
     mutations: {
@@ -32,6 +38,9 @@ export default function (endpoint) {
       },
       DELETE (state, id) {
         Vue.delete(state.entities, id)
+      },
+      REQUEST (state, nRequests) {
+        state.requests = state.requests !== null ? state.requests + nRequests : nRequests
       }
     },
     actions: {
@@ -47,7 +56,9 @@ export default function (endpoint) {
         else if ('query' in filter)
           url = endpoint + `?${filter.query}`
 
+        commit('REQUEST', 1)
         return axios.get(url).then(response => {
+          commit('REQUEST', -1)
           commit('UPSERT', response.data)
           return new Promise((resolve, reject) => {
             resolve(response.data)
@@ -56,7 +67,9 @@ export default function (endpoint) {
       },
       upsert ({commit, state}, entity) {
         if (entity.id === undefined) {
+          commit('REQUEST', 1)
           return axios.post(endpoint, entity).then(response => {
+            commit('REQUEST', -1)
             commit('UPSERT', response.data)
             return new Promise((resolve, reject) => {
               resolve(response.data)
@@ -73,7 +86,9 @@ export default function (endpoint) {
 
           if (Object.keys(delta).length) {
             commit('UPSERT', entity) // optimistic update
+            commit('REQUEST', 1)
             return axios.patch(endpoint + entity.id + '/', delta).then(response => {
+              commit('REQUEST', -1)
               commit('UPSERT', response.data)
               return new Promise((resolve, reject) => {
                 resolve(response.data)
@@ -84,7 +99,9 @@ export default function (endpoint) {
       },
       delete ({commit}, id) {
         commit('DELETE', id) // optimistic delete
+        commit('REQUEST', 1)
         axios.delete(endpoint + id + '/').then(response => {
+          commit('REQUEST', -1)
           commit('DELETE', id)
         })
       },

@@ -1,6 +1,7 @@
 <template lang="pug">
   .app
     error-snackbar
+    v-progress-linear(v-if="loading" indeterminate :height="2")
 
     v-app
       v-content
@@ -8,7 +9,7 @@
 </template>
 
 <script>
-import { VApp, VContent } from 'vuetify/lib'
+import { VApp, VContent, VProgressLinear } from 'vuetify/lib'
 import ErrorSnackbar from '@/components/ErrorSnackbar'
 
 export default {
@@ -16,7 +17,13 @@ export default {
   components: {
     VApp,
     VContent,
+    VProgressLinear,
     ErrorSnackbar
+  },
+  computed: {
+    loading () {
+      return this.$store.getters['loading']
+    }
   }
 }
 </script>
@@ -31,6 +38,11 @@ html
 .app
   overflow-wrap: break-word
   word-break: break-word
+
+  > .v-progress-linear
+    margin: 0
+    position: fixed
+    z-index: 1000
 
 @media(max-width: breakpoint)
   .app .v-btn--icon

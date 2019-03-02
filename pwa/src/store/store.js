@@ -21,6 +21,11 @@ const store = new Vuex.Store({
   state: {
     errors: null
   },
+  getters: {
+    loading (state, getters, rootState, rootGetters) {
+      return rootGetters['topics/loading']
+    }
+  },
   mutations: {
     SET_ERRORS (state, error) {
       state.errors = error
