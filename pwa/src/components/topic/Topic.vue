@@ -17,31 +17,41 @@
                hide-details label="Importance:" :min="-5" :max="5"
                @change="onChange")
 
-    .date
-      v-text-field(v-model="template.due" label="Due" @blur="onChange"
-                    :clearable="true" :disabled="disabled")
+    .dates
+      .input-fields
+        v-text-field(v-model="template.due" label="Due" @blur="onChange"
+                        hide-details :clearable="true" :disabled="disabled")
 
-      v-dialog(v-model="showDuePicker" lazy width="290px" :disabled="disabled")
-        v-date-picker(v-model="template.due" scrollable @change="onChange")
-      v-btn(@click="showDuePicker = true" small flat icon)
-        icon-edit-date
-      v-btn(@click="setDue()" small flat icon)
-        v-icon today
-      v-btn(@click="setDue(1)" small flat icon)
-        icon-tomorrow
+        .copy-buttons
+          a(@click.stop="onCopyUp")
+            v-icon expand_less
+          a(@click.stop="onCopyDown")
+            v-icon expand_more
 
-    .date
-      v-text-field(v-model="template.ready" hide-details
-        label="Ready" :clearable="true" @blur="onChange" :disabled="disabled")
+        v-text-field(v-model="template.ready" hide-details
+          label="Ready" :clearable="true" @blur="onChange" :disabled="disabled")
 
-      v-dialog(v-model="showReadyPicker" lazy width="290px" :disabled="disabled")
-        v-date-picker(v-model="template.ready" @change="onChange" scrollable)
-      v-btn(@click="showReadyPicker = true" small flat icon)
-        icon-edit-date
-      v-btn(@click="setReady()" small flat icon)
-        v-icon today
-      v-btn(@click="setReady(1)" small flat icon)
-        icon-tomorrow
+      .buttons
+        .due
+          v-btn(@click="showDuePicker = true" small flat icon)
+            icon-edit-date
+          v-btn(@click="setDue()" small flat icon)
+            v-icon today
+          v-btn(@click="setDue(1)" small flat icon)
+            icon-tomorrow
+
+        .ready
+          v-btn(@click="showReadyPicker = true" small flat icon)
+            icon-edit-date
+          v-btn(@click="setReady()" small flat icon)
+            v-icon today
+          v-btn(@click="setReady(1)" small flat icon)
+            icon-tomorrow
+
+    v-dialog(v-model="showDuePicker" lazy width="290px" :disabled="disabled")
+      v-date-picker(v-model="template.due" scrollable @change="onChange")
+    v-dialog(v-model="showReadyPicker" lazy width="290px" :disabled="disabled")
+      v-date-picker(v-model="template.ready" @change="onChange" scrollable)
 </template>
 
 <script>
@@ -95,6 +105,14 @@ export default {
       date.setDate(date.getDate() + offset)
       this.template.ready = date.toISOString().split('T')[0]
       this.onChange()
+    },
+    onCopyUp () {
+      this.template.due = this.template.ready
+      this.$emit('topic-changed', this.template)
+    },
+    onCopyDown () {
+      this.template.ready = this.template.due
+      this.$emit('topic-changed', this.template)
     }
   },
   beforeDestroy () {
@@ -131,16 +149,12 @@ export default {
   }
 }
 
-.topic {
-  .date {
-    display: flex;
-    &> .v-text-field:first-child {
-      margin-right: 8px;
-    }
-    button {
-      margin-top: 18px;
-    }
+@media(max-width: 600px) {
+  .topic .dates .input-fields {
+    margin-right: 8px!important;
   }
+}
+.topic {
   .modifiers {
     display: flex;
     flex-wrap: wrap;
@@ -149,9 +163,41 @@ export default {
       margin-top: 0;
       margin-right: 16px;
     }
+  }
 
-    .v-input__slot {
-      margin-bottom: 0;
+  .dates {
+    display: flex;
+
+    .input-fields {
+      flex-grow: 1;
+      margin-right: 16px;
+
+      .date {
+        flex-grow: 1;
+        flex-shrink: 1;
+      }
+
+      .copy-buttons {
+        display: flex;
+        justify-content: center;
+        margin-top: 8px;
+
+        a {
+          height: 24px;
+        }
+      }
+    }
+
+    .buttons {
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      button {
+        margin-top: 18px;
+        margin-bottom: 2px;
+      }
     }
   }
 }
