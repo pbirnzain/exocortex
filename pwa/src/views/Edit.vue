@@ -14,7 +14,7 @@
           v-icon(data-e2e="editCreateNote") note_add
         v-btn(@click.stop="showLinkDialog = true" icon)
           v-icon(data-e2e="editCreateLink") link
-        v-dialog(v-model="showLinkDialog" lazy max-width="600px")
+        v-dialog(v-model="showLinkDialog" lazy max-width="600px" @keydown="onDialogKeydown")
           create-link-card(ref="linkCard" :topic="selectedTopic" @link-created="onLink")
         v-btn(icon @click="onTopicDeleted")
           v-icon(data-e2e="editDelete") delete
@@ -128,6 +128,10 @@ export default {
     },
     onUnlink (linkId) {
       this.$store.dispatch('topics/links/delete', linkId)
+    },
+    onDialogKeydown (event) {
+      if(event.key == "Escape")
+        this.showLinkDialog = false
     }
   }
 }
