@@ -1,17 +1,18 @@
 <template lang="pug">
-  v-card
+  v-card.create-link-card
     v-card-title
       v-autocomplete(v-model="selection" :items="allowedTopics" ref="otherInput"
                      item-value="id" item-text="title" @change="onLink"
                      prepend-icon="link")
+      v-btn(flat @click="onLinkToNew") New Topic
 </template>
 
 <script>
-import { VBtn, VIcon, VCard, VCardTitle, VCardActions, VAutocomplete } from 'vuetify/lib'
+import { VBtn, VSpacer, VIcon, VCard, VCardTitle, VCardActions, VAutocomplete } from 'vuetify/lib'
 
 export default {
   props: ['topic'],
-  components: { VBtn, VIcon, VCard, VCardTitle, VCardActions, VAutocomplete },
+  components: { VBtn, VSpacer, VIcon, VCard, VCardTitle, VCardActions, VAutocomplete },
   data() {
     return { selection: undefined }
   },
@@ -51,6 +52,9 @@ export default {
       const link = { from_topic: this.topic.id, to_topic: this.selection }
       this.$emit('link-created', link)
       this.selection = null
+    },
+    onLinkToNew() {
+      this.$emit('link-to-new')
     }
   }
 }

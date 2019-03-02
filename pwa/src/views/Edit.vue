@@ -15,7 +15,8 @@
         v-btn(@click.stop="showLinkDialog = true" icon)
           v-icon(data-e2e="editCreateLink") link
         v-dialog(v-model="showLinkDialog" lazy max-width="600px" @keydown="onDialogKeydown")
-          create-link-card(ref="linkCard" :topic="selectedTopic" @link-created="onLink")
+          create-link-card(ref="linkCard" :topic="selectedTopic"
+          @link-created="onLink" @link-to-new="onLinkToNew")
         v-btn(icon @click="onTopicDeleted")
           v-icon(data-e2e="editDelete") delete
 
@@ -86,6 +87,7 @@ export default {
   },
   beforeRouteUpdate (to, from, next) {
     this.$store.dispatch('topics/select', to.params.id)
+    this.$refs.tf.focus()
     next()
   },
   beforeRouteLeave (to, from, next) {
@@ -125,6 +127,17 @@ export default {
     onLink (link) {
       this.showLinkDialog = false
       this.$store.dispatch('topics/links/upsert', link)
+    },
+    onLinkToNew () {
+      this.showLinkDialog = false
+      // FIXME create an endpoint to make this an atomic operation
+      // FIXME add error handling
+      const newTopic = { pinned: true, title: this.$store.state.search.searchText }
+      this.$store.dispatch('topics/upsert', newTopic).then((topic) => {
+        const link = { from_topic: this.selectedTopic.id, to_topic: topic.id }
+        this.$store.dispatch('topics/links/upsert', link)
+        this.$router.push(`/edit/${topic.id}`)
+      })
     },
     onUnlink (linkId) {
       this.$store.dispatch('topics/links/delete', linkId)
