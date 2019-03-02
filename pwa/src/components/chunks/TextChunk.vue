@@ -27,7 +27,7 @@ export default {
     },
     markdown () {
       const html = marked(this.template.text, { breaks: true })
-      return html.replace(/<a /, '<a target="_blank" ')
+      return html.replace(/<a /g, '<a target="_blank" ')
     }
   },
   methods: {
