@@ -8,7 +8,7 @@
            :key="idx") {{reason}}: {{value}}
 
 
-    .modifiers.horizontal
+    .modifiers
       v-checkbox(v-model="template.pinned" @change="onChange" hide-details
                  label="pinned" :disabled="disabled")
       v-checkbox(v-model="template.complete" @change="onChange" hide-details
@@ -17,7 +17,7 @@
                hide-details label="Importance:" :min="-5" :max="5"
                @change="onChange")
 
-    .horizontal
+    .date
       v-text-field(v-model="template.due" label="Due" @blur="onChange"
                     :clearable="true" :disabled="disabled")
 
@@ -30,8 +30,8 @@
       v-btn(@click="setDue(1)" small flat icon)
         icon-tomorrow
 
-    .horizontal
-      v-text-field(v-model="template.ready"
+    .date
+      v-text-field(v-model="template.ready" hide-details
         label="Ready" :clearable="true" @blur="onChange" :disabled="disabled")
 
       v-dialog(v-model="showReadyPicker" lazy width="290px" :disabled="disabled")
@@ -131,26 +131,23 @@ export default {
   }
 }
 
-.horizontal {
-  display: flex;
-  align-items: center;
-}
-
 .topic {
-  .horizontal > .v-text-field:first-child {
-    margin-right: 8px;
+  .date {
+    display: flex;
+    &> .v-text-field:first-child {
+      margin-right: 8px;
+    }
+    button {
+      margin-top: 18px;
+    }
   }
   .modifiers {
+    display: flex;
     flex-wrap: wrap;
-    align-items: center;
+    margin: -16px 0 8px 0;
 
-    * {
-      margin: 0;
-      padding: 0;
-    }
-
-    > * {
-      padding: 0 8px 8px 0;
+    .v-input__slot {
+      margin-bottom: 0;
     }
   }
 }
