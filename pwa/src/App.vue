@@ -28,6 +28,9 @@ html
   overflow: auto
   height: 100%
 
+.app
+  overflow-wrap: break-word
+
 @media(max-width: breakpoint)
   .app .v-btn--icon
     margin: 0
