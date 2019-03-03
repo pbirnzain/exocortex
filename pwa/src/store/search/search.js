@@ -1,4 +1,3 @@
-import { topicIsEmpty } from '@/store/topic.model'
 
 const searchModule = {
   namespaced: true,
@@ -11,7 +10,7 @@ const searchModule = {
       return rootGetters['topics/loaded']
     },
     allTopics (state, getters, rootState, rootGetters) {
-      return Object.values(rootGetters['topics/topics']).filter(t => !topicIsEmpty(t))
+      return Object.values(rootGetters['topics/topics']).filter(t => t.title)
     },
     matchingTopics (state, getters, rootState) {
       const searchText = state.searchText.toLowerCase()

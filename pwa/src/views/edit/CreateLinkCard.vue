@@ -13,14 +13,14 @@ import { VBtn, VSpacer, VIcon, VCard, VCardTitle, VCardActions, VAutocomplete } 
 export default {
   props: ['topic'],
   components: { VBtn, VSpacer, VIcon, VCard, VCardTitle, VCardActions, VAutocomplete },
-  data() {
+  data () {
     return { selection: undefined }
   },
   computed: {
-    allowedTopics() {
+    allowedTopics () {
       // This *intentionally* includes filtering according to the search field
-      const existingLinkIds = new Set(this.topic.links.map( t => t.other.id))
-      let result = this.$store.getters['search/allTopics'].filter( (t) => {
+      const existingLinkIds = new Set(this.topic.links.map(t => t.other.id))
+      let result = this.$store.getters['search/allTopics'].filter((t) => {
         return t.id != this.topic.id && !existingLinkIds.has(t.id)
       })
       result = result.sort((a, b) => {
@@ -41,19 +41,19 @@ export default {
       return result
     }
   },
-  mounted() {
+  mounted () {
     this.$store.dispatch('search/requireFilter', 'incomplete')
   },
   methods: {
-    focus() {
+    focus () {
       this.$refs.otherInput.focus()
     },
-    onLink() {
+    onLink () {
       const link = { from_topic: this.topic.id, to_topic: this.selection }
       this.$emit('link-created', link)
       this.selection = null
     },
-    onLinkToNew() {
+    onLinkToNew () {
       this.$emit('link-to-new')
     }
   }

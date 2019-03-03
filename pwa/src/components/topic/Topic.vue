@@ -7,7 +7,6 @@
       span(v-for="(value, reason, idx) in template.score.reasons",
            :key="idx") {{reason}}: {{value}}
 
-
     .modifiers
       v-checkbox(v-model="template.pinned" @change="onChange" hide-details
                  label="pinned" :disabled="disabled")

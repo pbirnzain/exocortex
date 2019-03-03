@@ -15,10 +15,10 @@ export default {
   props: ['topic'],
   components: { VCard, VBtn, VIcon },
   computed: {
-    links() {
+    links () {
       if (this.topic && this.topic.links && this.topic.links.length) {
         const links = [...this.topic.links]
-        links.sort( (a,b) => {
+        links.sort((a, b) => {
           if (a.other.score.sum > b.other.score.sum)
             return -1
           else if (a.other.score.sum < b.other.score.sum)
@@ -31,7 +31,7 @@ export default {
     }
   },
   methods: {
-    onUnlink(link) {
+    onUnlink (link) {
       this.$emit('unlink', link.id)
     }
   }

@@ -1,0 +1,51 @@
+
+@import "./variables.styl"
+
+html
+  overflow: auto
+  height: 100%
+
+  overflow-wrap: break-word
+  word-break: break-word
+
+@media(max-width: breakpoint)
+  .app .v-btn--icon
+    margin: 0
+
+.mobile-only
+  display: none
+  @media(max-width: breakpoint)
+    display: inherit
+
+.desktop-only
+  @media(max-width: breakpoint)
+    display: none
+
+.v-toolbar a
+  text-decoration: none
+
+.app .add-button
+  position: fixed
+  right: 1em
+  bottom: 1em
+
+.e-content
+  position: relative
+  padding: 16px
+
+  > *:not(:last-child)
+    margin-bottom: 16px
+
+.e-container
+  display: flex
+
+  margin: 0 auto
+
+  &> *
+    flex-grow: 1
+
+  &.vertical
+    flex-direction: column
+
+  &.fullsize
+    flex-grow: 1

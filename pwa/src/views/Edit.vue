@@ -58,7 +58,7 @@ export default {
     CreateLinkCard,
     EmptyState
   },
-  data() {
+  data () {
     return { showLinkDialog: false }
   },
   computed: {
@@ -77,7 +77,7 @@ export default {
       else
         elem.innerHTML = 'Exocortex'
     },
-    showLinkDialog() {
+    showLinkDialog () {
       if (this.showLinkDialog)
         Vue.nextTick(() => this.$refs.linkCard.focus())
     }
@@ -113,8 +113,8 @@ export default {
     },
     onCreateNote () {
       const r = this.$store.dispatch('topics/textchunks/upsert',
-                                     { topic: this.selectedTopic.id })
-      r.then( (chunk) => {
+        { topic: this.selectedTopic.id })
+      r.then((chunk) => {
         this.$refs.chunks.focusChunk(chunk.id)
       })
     },
@@ -143,7 +143,7 @@ export default {
       this.$store.dispatch('topics/links/delete', linkId)
     },
     onDialogKeydown (event) {
-      if(event.key == "Escape")
+      if (event.key == 'Escape')
         this.showLinkDialog = false
     }
   }
