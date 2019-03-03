@@ -1,5 +1,5 @@
 <template lang="pug">
-v-card.textchunk(@click.native="onEdit")
+v-card.textchunk(@click.native="onEdit" draggable="true" @dragstart="onDragStart")
   template(v-if="editing")
     v-textarea(v-model="template.text" @blur="onBlur" auto-grow autofocus clearable)
   template(v-else)
@@ -48,6 +48,9 @@ export default {
     },
     onDelete () {
       this.$emit('deleted', this.template)
+    },
+    onDragStart (event) {
+      event.dataTransfer.setData("text/plain", `textchunk-${this.template.id}`);
     },
     focus () {
       this.onEdit()

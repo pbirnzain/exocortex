@@ -26,7 +26,7 @@
                @chunk-changed="onChunkChanged" @chunk-deleted="onChunkDeleted")
           topic(:topic="selectedTopic" :hideTitle="true"
                 @topic-changed="onTopicChanged")
-          links(:topic="selectedTopic" @unlink="onUnlink")
+          link-chunk(:topic="selectedTopic")
       empty-state(v-else tagline="Topic not found."
                   message="Most likely it has been deleted.")
 
@@ -38,7 +38,7 @@ import Vue from 'vue'
 import { VBtn, VDialog, VToolbar, VToolbarTitle, VSpacer, VIcon, VTextField, VProgressCircular } from 'vuetify/lib'
 import Topic from '@/components/topic/Topic'
 import Chunks from '@/components/chunks/Chunks'
-import Links from '@/components/chunks/Links'
+import LinkChunk from '@/components/chunks/LinkChunk/LinkChunk'
 import CreateLinkCard from './edit/CreateLinkCard'
 import EmptyState from '@/components/EmptyState'
 
@@ -54,7 +54,7 @@ export default {
     VProgressCircular,
     Topic,
     Chunks,
-    Links,
+    LinkChunk,
     CreateLinkCard,
     EmptyState
   },
@@ -138,9 +138,6 @@ export default {
         this.$store.dispatch('topics/links/upsert', link)
         this.$router.push(`/edit/${topic.id}`)
       })
-    },
-    onUnlink (linkId) {
-      this.$store.dispatch('topics/links/delete', linkId)
     },
     onDialogKeydown (event) {
       if (event.key == 'Escape')
