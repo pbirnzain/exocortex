@@ -76,6 +76,8 @@ export default {
       margin: 0
 
 .markdown-body
+  font-size: 14px
+
   code::before, code::after
     content: none
   code
