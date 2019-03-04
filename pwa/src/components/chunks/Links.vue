@@ -1,5 +1,5 @@
 <template lang="pug">
-  v-card.links(v-if="links")
+  v-card.links.markdown-body(v-if="links")
     h1 References
     .link(v-for="link of links")
       router-link(:to="{ name: 'edit', params: { id: link.other.id}}"
