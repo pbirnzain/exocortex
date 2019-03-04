@@ -3,7 +3,7 @@ v-card.textchunk(@click.native="onEdit")
   template(v-if="editing")
     v-textarea(v-model="template.text" @blur="onBlur" auto-grow autofocus clearable)
   template(v-else)
-    .markdown(v-if="chunk.text" v-html="markdown" @click="onEdit")
+    .markdown-body(v-if="chunk.text" v-html="markdown" @click="onEdit")
 </template>
 
 <script>
@@ -57,6 +57,8 @@ export default {
 </script>
 
 <style lang="styl">
+@import "../../assets/github-markdown.css"
+
 .textchunk
   .v-card
     min-width: 16em
@@ -73,10 +75,9 @@ export default {
       padding: 0
       margin: 0
 
-.markdown :last-child
-  margin-bottom: 0
-
-.markdown p+ul, p+ol
-  margin-top: -16px
-  margin-bottom: 16px
+.markdown-body
+  code::before, code::after
+    content: none
+  code
+    box-shadow: none
 </style>
