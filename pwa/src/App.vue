@@ -1,5 +1,5 @@
 <template lang="pug">
-  .app
+  .app(:class="{'dragging': dragging}")
     error-snackbar
     v-progress-linear(v-if="loading" indeterminate :height="2")
 
@@ -20,10 +20,25 @@ export default {
     VProgressLinear,
     ErrorSnackbar
   },
+  data() {
+    return {
+      dragging: false,
+    }
+  },
   computed: {
     loading () {
       return this.$store.getters['loading']
     }
+  },
+  mounted () {
+    this.start = () => { this.dragging = true }
+    this.end = () => { this.dragging = false }
+    window.addEventListener('dragstart', this.start)
+    window.addEventListener('dragend', this.end)
+  },
+  beforeDestroy () {
+    window.removeEventListener('dragstart', this.start)
+    window.removeEventListener('dragend', this.end)
   }
 }
 </script>

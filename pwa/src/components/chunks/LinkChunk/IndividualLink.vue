@@ -1,5 +1,7 @@
 <template lang="pug">
-  .link(@dragover.prevent="onDragOver" @drop="onDrop")
+  .link(@dragover.prevent="onDragOver" @dragenter="onDragEnter"
+        @dragleave="onDragLeave" @drop.prevent="onDrop"
+        :class="{'can-drop': dragover}")
     router-link(:to="{ name: 'edit', params: { id: link.other.id}}"
                 :class="{'line-through': link.other.complete}") {{ link.other.title }}
     v-btn(icon small @click.stop="onUnlink(link)")
@@ -12,11 +14,23 @@ import { VBtn, VIcon } from 'vuetify/lib'
 export default {
   components: { VBtn, VIcon },
   props: ['link'],
+  data () {
+    return {
+      dragover: false
+    }
+  },
   methods: {
     onDragOver (event) {
     },
+    onDragEnter (event) {
+      this.dragover = true
+    },
+    onDragLeave (event) {
+      this.dragover = false
+    },
     onDrop (event) {
-      const source = event.dataTransfer.getData("text/plain");
+      this.dragover = false
+      const source = event.dataTransfer.getData('text/plain')
       console.log(`Move ${source} to topic ${this.link.other.title}`)
     },
     onUnlink (linkId) {
@@ -27,6 +41,9 @@ export default {
 </script>
 
 <style lang="styl" scoped>
+  .dragging .link *
+    pointer-events: none
+
   .link
     display: flex
     align-items: center
@@ -38,6 +55,9 @@ export default {
     button
       margin-top: -6px
       margin-bottom: -6px
+
+    &.can-drop a
+      color: red
 
   .line-through
     text-decoration: line-through

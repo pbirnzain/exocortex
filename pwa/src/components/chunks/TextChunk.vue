@@ -50,7 +50,7 @@ export default {
       this.$emit('deleted', this.template)
     },
     onDragStart (event) {
-      event.dataTransfer.setData("text/plain", `textchunk-${this.template.id}`);
+      event.dataTransfer.setData('text/plain', `textchunk-${this.template.id}`)
     },
     focus () {
       this.onEdit()
