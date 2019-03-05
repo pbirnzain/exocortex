@@ -1,5 +1,8 @@
 <template lang="pug">
-v-card.textchunk(@click.native="onEdit" draggable="true" @dragstart="onDragStart")
+v-card.textchunk(@click.native="onEdit" draggable="true" @dragstart="onDragStart"
+                 @dragover.prevent="onDragOver" @dragenter="onDragEnter"
+                 @dragleave="onDragLeave" @drop.prevent="onDrop"
+                 :class="{'drop-before': dropBefore, 'drop-after': dropAfter}")
   template(v-if="editing")
     v-textarea(v-model="template.text" @blur="onBlur" auto-grow autofocus clearable)
   template(v-else)
@@ -18,7 +21,8 @@ export default {
   },
   data () {
     return {
-      editing: false
+      editing: false,
+      dragover: false
     }
   },
   computed: {
@@ -28,7 +32,13 @@ export default {
     markdown () {
       const html = marked(this.template.text, { breaks: true })
       return html.replace(/<a /g, '<a target="_blank" ')
-    }
+    },
+    dropBefore () {
+      return this.dragover
+    },
+    dropAfter () {
+      return this.dragover
+    },
   },
   methods: {
     onBlur () {
@@ -52,6 +62,19 @@ export default {
     onDragStart (event) {
       event.dataTransfer.setData('text/plain', `textchunk-${this.template.id}`)
     },
+    onDragOver (event) {
+    },
+    onDragEnter (event) {
+      this.dragover = true
+    },
+    onDragLeave (event) {
+      this.dragover = false
+    },
+    onDrop (event) {
+      this.dragover = false
+      const source = event.dataTransfer.getData('text/plain')
+      console.log(`Move ${source} next to chunk ${this.chunk.id}`)
+    },
     focus () {
       this.onEdit()
     }
@@ -61,10 +84,21 @@ export default {
 
 <style lang="styl">
 @import "../../assets/github-markdown.css"
+.dragging .textchunk *
+  pointer-events: none
 
 .textchunk
-  .v-card
+  &.v-card
     min-width: 16em
+    padding: 16px 12px;
+    border-left: 4px solid rgba(0,0,0,0)
+    border-right: 4px solid rgba(0,0,0,0)
+
+    &.drop-before
+      border-left: 4px solid blue
+
+    &.drop-after
+      border-right: 4px solid blue
 
   .v-input
     height: 100%
