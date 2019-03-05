@@ -58,22 +58,20 @@ export default function (endpoint) {
 
         commit('REQUEST', 1)
         return axios.get(url).then(response => {
-          commit('REQUEST', -1)
           commit('UPSERT', response.data)
           return new Promise((resolve, reject) => {
             resolve(response.data)
           })
-        })
+        }).finally(() => commit('REQUEST', -1))
       },
       upsert ({commit, state}, entity) {
         if (entity.id === undefined) {
           commit('REQUEST', 1)
           return axios.post(endpoint, entity).then(response => {
-            commit('REQUEST', -1)
             commit('UPSERT', response.data)
             return new Promise((resolve, reject) => {
               resolve(response.data)
-            })
+            }).finally(() => commit('REQUEST', -1))
           })
         } else {
           const oldEntity = state.entities[entity.id]
@@ -88,11 +86,10 @@ export default function (endpoint) {
             commit('UPSERT', entity) // optimistic update
             commit('REQUEST', 1)
             return axios.patch(endpoint + entity.id + '/', delta).then(response => {
-              commit('REQUEST', -1)
               commit('UPSERT', response.data)
               return new Promise((resolve, reject) => {
                 resolve(response.data)
-              })
+              }).finally(() => commit('REQUEST', -1))
             })
           }
         }
@@ -101,9 +98,8 @@ export default function (endpoint) {
         commit('DELETE', id) // optimistic delete
         commit('REQUEST', 1)
         axios.delete(endpoint + id + '/').then(response => {
-          commit('REQUEST', -1)
           commit('DELETE', id)
-        })
+        }).finally(() => commit('REQUEST', -1))
       },
       updated ({commit}, entity) {
         commit('UPSERT', entity)

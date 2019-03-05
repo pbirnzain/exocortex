@@ -1,13 +1,12 @@
+import axios from 'axios'
 import EntityModule from './entity'
-
-const linksModule = EntityModule('/api/links/')
 
 const topicModule = {
   namespaced: true,
   modules: {
     entities: EntityModule('/api/topics/'),
     textchunks: EntityModule('/api/textchunks/'),
-    links: linksModule
+    links: EntityModule('/api/links/')
   },
   state: {
     selectedTopicId: undefined,
@@ -124,4 +123,16 @@ const topicModule = {
   }
 }
 
+const textchunkModule = topicModule.modules.textchunks
+const moveTextChunk = ({commit}, {sourceId, destinationId}) => {
+  commit('REQUEST', 1)
+  return axios.patch(textchunkModule.endpoint + sourceId + '/', {topic: destinationId}).then(response => {
+    commit('UPSERT', response.data)
+    return new Promise((resolve, reject) => {
+      resolve(response.data)
+    })
+  }).finally(() => commit('REQUEST', -1))
+}
+
+textchunkModule.actions.move = moveTextChunk
 export default topicModule

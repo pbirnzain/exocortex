@@ -31,10 +31,12 @@ export default {
     onDrop (event) {
       this.dragover = false
       const source = event.dataTransfer.getData('text/plain')
-      console.log(`Move ${source} to topic ${this.link.other.title}`)
+      const sourceId = parseInt(source.split('-')[1])
+      this.$store.dispatch('topics/textchunks/move',
+        { sourceId, destinationId: this.link.other.id })
     },
-    onUnlink (linkId) {
-      this.$store.dispatch('topics/links/delete', linkId)
+    onUnlink (link) {
+      this.$store.dispatch('topics/links/delete', link.id)
     },
   }
 }
