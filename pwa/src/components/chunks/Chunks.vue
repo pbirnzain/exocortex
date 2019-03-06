@@ -28,10 +28,10 @@ export default {
 
       const destinationIndex = this.$refs[`chunk${destination.id}`][0].$attrs['data-index']
       let newWeight
-      if (destinationIndex >= this.chunks.length-1)
-        newWeight = destination.weight + 1
+      if (destinationIndex == 0)
+        newWeight = destination.weight - 1
       else {
-        newWeight = (this.chunks[destinationIndex].weight + this.chunks[destinationIndex+1].weight) / 2
+        newWeight = (this.chunks[destinationIndex-1].weight + this.chunks[destinationIndex].weight) / 2
       }
 
       this.$store.dispatch('topics/textchunks/upsert', {id: source.id, weight: newWeight})

@@ -1,7 +1,7 @@
 <template lang="pug">
-  .link(@dragover.prevent="onDragOver" @dragenter="onDragEnter"
-        @dragleave="onDragLeave" @drop.prevent="onDrop"
-        :class="{'can-drop': dragover}")
+  .link.drop-target(@dragover.prevent="onDragOver" @dragenter="onDragEnter"
+                    @dragleave="onDragLeave" @drop.prevent="onDrop"
+                    :class="{'drop': dragOver}")
     router-link(:to="{ name: 'edit', params: { id: link.other.id}}"
                 :class="{'line-through': link.other.complete}") {{ link.other.title }}
     v-btn(icon small @click.stop="onUnlink(link)")
@@ -16,20 +16,20 @@ export default {
   props: ['link'],
   data () {
     return {
-      dragover: false
+      dragOver: false
     }
   },
   methods: {
     onDragOver (event) {
     },
     onDragEnter (event) {
-      this.dragover = true
+      this.dragOver = true
     },
     onDragLeave (event) {
-      this.dragover = false
+      this.dragOver = false
     },
     onDrop (event) {
-      this.dragover = false
+      this.dragOver = false
       const source = JSON.parse(event.dataTransfer.getData('application/json'))
       this.$store.dispatch('topics/textchunks/move',
         { sourceId: source.id, destinationId: this.link.other.id })
@@ -56,9 +56,6 @@ export default {
     button
       margin-top: -6px
       margin-bottom: -6px
-
-    &.can-drop a
-      color: red
 
   .line-through
     text-decoration: line-through

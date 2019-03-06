@@ -1,8 +1,10 @@
 <template lang="pug">
-v-card.textchunk(@click.native="onEdit" draggable="true" @dragstart="onDragStart"
-                 @dragover.prevent="onDragOver" @dragenter="onDragEnter"
-                 @dragleave="onDragLeave" @drop.prevent="onDrop"
-                 :class="{'drop-before': dropBefore, 'drop-after': dropAfter}")
+v-card.textchunk.drop-target(
+      @click.native="onEdit" draggable="true"
+      @dragstart="onDragStart" @dragend="onDragEnd"
+      @dragover.prevent="onDragOver" @drop.prevent="onDrop"
+      @dragenter="onDragEnter" @dragleave="onDragLeave"
+      :class="{'drop': dragOver, 'being-dragged': beingDragged}")
   template(v-if="editing")
     v-textarea(v-model="template.text" @blur="onBlur" auto-grow autofocus clearable)
   template(v-else)
@@ -22,7 +24,8 @@ export default {
   data () {
     return {
       editing: false,
-      dragover: false
+      dragOver: false,
+      beingDragged: false
     }
   },
   computed: {
@@ -32,13 +35,7 @@ export default {
     markdown () {
       const html = marked(this.template.text, { breaks: true })
       return html.replace(/<a /g, '<a target="_blank" ')
-    },
-    dropBefore () {
-      return this.dragover
-    },
-    dropAfter () {
-      return this.dragover
-    },
+    }
   },
   methods: {
     onBlur () {
@@ -62,17 +59,21 @@ export default {
     onDragStart (event) {
       event.dataTransfer.setData('application/json', JSON.stringify(this.template))
       event.dataTransfer.setData('text/plain', this.template.text)
+      this.beingDragged = true
+    },
+    onDragEnd (event) {
+      this.beingDragged = false
     },
     onDragOver (event) {
     },
     onDragEnter (event) {
-      this.dragover = true
+      this.dragOver = true
     },
     onDragLeave (event) {
-      this.dragover = false
+      this.dragOver = false
     },
     onDrop (event) {
-      this.dragover = false
+      this.dragOver = false
       const source = JSON.parse(event.dataTransfer.getData('application/json'))
       this.$emit('drop', {source, destination: this.chunk})
     },
@@ -92,14 +93,6 @@ export default {
   &.v-card
     min-width: 16em
     padding: 16px 12px;
-    border-left: 4px solid rgba(0,0,0,0)
-    border-right: 4px solid rgba(0,0,0,0)
-
-    &.drop-before
-      border-left: 4px solid blue
-
-    &.drop-after
-      border-right: 4px solid blue
 
   .v-input
     height: 100%
