@@ -10,5 +10,7 @@ class TextChunk(models.Model):
     added = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
 
+    weight = models.FloatField()
+
     def get_absolute_url(self):
         return reverse('textchunk-detail', args=[self.id])

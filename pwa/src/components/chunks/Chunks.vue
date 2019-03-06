@@ -3,8 +3,10 @@
   .chunk-list
     slot
   .chunk-list
-    template(v-for="chunk of chunks")
-      text-chunk(:ref="'chunk' + chunk.id" :chunk="chunk" @changed="onChunkChanged" @deleted="onChunkDeleted")
+    text-chunk(v-for="(chunk, index) of chunks" :data-index="index"
+               :ref="'chunk' + chunk.id" :chunk="chunk"
+               @changed="onChunkChanged" @deleted="onChunkDeleted"
+               @drop="onDropReceived")
 </template>
 
 <script>
@@ -19,6 +21,20 @@ export default {
     },
     onChunkDeleted (chunk) {
       this.$emit('chunk-deleted', chunk)
+    },
+    onDropReceived ({source, destination}) {
+      if (source.id == destination.id)
+        return
+
+      const destinationIndex = this.$refs[`chunk${destination.id}`][0].$attrs['data-index']
+      let newWeight
+      if (destinationIndex >= this.chunks.length-1)
+        newWeight = destination.weight + 1
+      else {
+        newWeight = (this.chunks[destinationIndex].weight + this.chunks[destinationIndex+1].weight) / 2
+      }
+
+      this.$store.dispatch('topics/textchunks/upsert', {id: source.id, weight: newWeight})
     },
     focusChunk (id) {
       this.$refs[`chunk${id}`][0].focus()

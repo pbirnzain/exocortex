@@ -60,7 +60,8 @@ export default {
       this.$emit('deleted', this.template)
     },
     onDragStart (event) {
-      event.dataTransfer.setData('text/plain', `textchunk-${this.template.id}`)
+      event.dataTransfer.setData('application/json', JSON.stringify(this.template))
+      event.dataTransfer.setData('text/plain', this.template.text)
     },
     onDragOver (event) {
     },
@@ -72,8 +73,8 @@ export default {
     },
     onDrop (event) {
       this.dragover = false
-      const source = event.dataTransfer.getData('text/plain')
-      console.log(`Move ${source} next to chunk ${this.chunk.id}`)
+      const source = JSON.parse(event.dataTransfer.getData('application/json'))
+      this.$emit('drop', {source, destination: this.chunk})
     },
     focus () {
       this.onEdit()

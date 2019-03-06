@@ -36,6 +36,7 @@ const topicModule = {
             if (e[idx].topic == state.selectedTopicId)
               textchunks.push(e[idx])
           }
+          textchunks.sort((a, b) => a.weight - b.weight)
 
           const links = []
           const allLinks = getters['links/entities']

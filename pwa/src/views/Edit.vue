@@ -112,8 +112,10 @@ export default {
       this.$router.push('/')
     },
     onCreateNote () {
+      const tc = this.selectedTopic.textchunks
+      const weight = tc && tc.length && tc[tc.length-1].weight + 1 || 100
       const r = this.$store.dispatch('topics/textchunks/upsert',
-        { topic: this.selectedTopic.id })
+        { topic: this.selectedTopic.id, weight })
       r.then((chunk) => {
         this.$refs.chunks.focusChunk(chunk.id)
       })

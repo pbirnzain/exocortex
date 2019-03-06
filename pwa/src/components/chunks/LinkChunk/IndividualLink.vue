@@ -30,10 +30,9 @@ export default {
     },
     onDrop (event) {
       this.dragover = false
-      const source = event.dataTransfer.getData('text/plain')
-      const sourceId = parseInt(source.split('-')[1])
+      const source = JSON.parse(event.dataTransfer.getData('application/json'))
       this.$store.dispatch('topics/textchunks/move',
-        { sourceId, destinationId: this.link.other.id })
+        { sourceId: source.id, destinationId: this.link.other.id })
     },
     onUnlink (link) {
       this.$store.dispatch('topics/links/delete', link.id)
