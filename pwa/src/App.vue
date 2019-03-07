@@ -35,10 +35,12 @@ export default {
     this.end = () => { this.dragging = false }
     window.addEventListener('dragstart', this.start)
     window.addEventListener('dragend', this.end)
+    window.addEventListener('drop', this.end) // workaround for bug in chrome <= 71
   },
   beforeDestroy () {
     window.removeEventListener('dragstart', this.start)
     window.removeEventListener('dragend', this.end)
+    window.addEventListener('drop', this.end)
   }
 }
 </script>
