@@ -46,7 +46,7 @@ export default function (endpoint) {
     actions: {
       require ({state, commit}, filter) {
         if (filter && filter.id && filter.id in state.entities)
-          return new Promise((resolve, reject) => { resolve(state.entities[filter.id]) })
+          return Promise.resolve(state.entities[filter.id])
 
         let url
         if (!filter)
@@ -57,22 +57,22 @@ export default function (endpoint) {
           url = endpoint + `?${filter.query}`
 
         commit('REQUEST', 1)
-        return axios.get(url).then(response => {
-          commit('UPSERT', response.data)
-          return new Promise((resolve, reject) => {
-            resolve(response.data)
+        return axios.get(url)
+          .then(response => {
+            commit('UPSERT', response.data)
+            return Promise.resolve(response.data)
           })
-        }).finally(() => commit('REQUEST', -1))
+          .finally(() => commit('REQUEST', -1))
       },
       upsert ({commit, state}, entity) {
         if (entity.id === undefined) {
           commit('REQUEST', 1)
-          return axios.post(endpoint, entity).then(response => {
-            commit('UPSERT', response.data)
-            return new Promise((resolve, reject) => {
-              resolve(response.data)
-            }).finally(() => commit('REQUEST', -1))
-          })
+          return axios.post(endpoint, entity)
+            .then(response => {
+              commit('UPSERT', response.data)
+              return Promise.resolve(response.data)
+            })
+            .finally(() => commit('REQUEST', -1))
         } else {
           const oldEntity = state.entities[entity.id]
           const delta = {}
@@ -85,21 +85,24 @@ export default function (endpoint) {
           if (Object.keys(delta).length) {
             commit('UPSERT', {...oldEntity, ...entity}) // optimistic update
             commit('REQUEST', 1)
-            return axios.patch(endpoint + entity.id + '/', delta).then(response => {
-              commit('UPSERT', response.data)
-              return new Promise((resolve, reject) => {
-                resolve(response.data)
-              }).finally(() => commit('REQUEST', -1))
-            })
+            return axios.patch(endpoint + entity.id + '/', delta)
+              .then(response => {
+                commit('UPSERT', response.data)
+                return Promise.resolve(response.data)
+              })
+              .finally(() => commit('REQUEST', -1))
           }
         }
       },
       delete ({commit}, id) {
         commit('DELETE', id) // optimistic delete
         commit('REQUEST', 1)
-        axios.delete(endpoint + id + '/').then(response => {
-          commit('DELETE', id)
-        }).finally(() => commit('REQUEST', -1))
+        return axios.delete(endpoint + id + '/')
+          .then(response => {
+            commit('DELETE', id)
+            return Promise.resolve(id)
+          })
+          .finally(() => commit('REQUEST', -1))
       },
       updated ({commit}, entity) {
         commit('UPSERT', entity)
