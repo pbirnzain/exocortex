@@ -41,7 +41,6 @@ import Chunks from '@/components/chunks/Chunks'
 import LinkChunk from '@/components/chunks/LinkChunk/LinkChunk'
 import CreateLinkCard from './edit/CreateLinkCard'
 import EmptyState from '@/components/EmptyState'
-import DragDropTouch from '@/assets/DragDropTouch'
 
 export default {
   components: {
