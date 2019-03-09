@@ -67,10 +67,7 @@ export default {
     },
     updateTitle () {
       const elem = document.querySelector('title')
-      if (this.filter == 'urgent' && this.resultingTopics.length == 0)
-        elem.innerHTML = 'Nothing Urgent'
-      else
-        elem.innerHTML = `${this.filter[0].toUpperCase() + this.filter.substr(1)}`
+      elem.innerHTML = `${this.filter[0].toUpperCase() + this.filter.substr(1)}`
     }
   }
 }
