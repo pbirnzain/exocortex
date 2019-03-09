@@ -1,7 +1,7 @@
 <template lang="pug">
   .app(:class="{'dragging': dragging}")
     error-snackbar
-    v-progress-linear(v-if="loading" indeterminate :height="2")
+    v-progress-linear(v-if="loading" indeterminate :height="4")
 
     v-app
       v-content
