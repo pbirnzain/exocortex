@@ -93,14 +93,26 @@ const searchModule = {
     setSearchText ({commit}, searchText) {
       commit('SET_SEARCH_TEXT', searchText)
     },
-    setFilter ({commit, dispatch}, filter) {
-      commit('SET_FILTER', filter)
-      dispatch('requireFilter', filter)
+    async setFilter ({state, getters, commit, dispatch}, filter) {
+      if (filter) {
+        commit('SET_FILTER', filter)
+        dispatch('requireFilter', filter)
+      } else if (!state.filter) {
+        // find optimal filter
+        commit('SET_FILTER', 'pinned')
+        await dispatch('requireFilter', 'pinned')
+
+        if (getters.resultingTopics.length > 0)
+          return
+
+        commit('SET_FILTER', 'urgent')
+        await dispatch('requireFilter', 'urgent')
+      }
     },
     requireFilter ({dispatch, getters}, filter) {
       // TODO do partial load
       if (!getters.loaded)
-        dispatch('topics/initialize', undefined, { root: true })
+        return dispatch('topics/initialize', undefined, { root: true })
     }
   }
 }

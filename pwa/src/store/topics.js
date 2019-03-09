@@ -74,7 +74,7 @@ const topicModule = {
   },
   actions: {
     initialize ({dispatch, commit, state}) {
-      dispatch('entities/require', null).then(() => {
+      return dispatch('entities/require', null).then(() => {
         if (!state.loaded)
           commit('INITIALIZED')
       })
@@ -82,14 +82,18 @@ const topicModule = {
     select ({commit, dispatch}, id) {
       commit('SELECT', id)
       if (id) {
-        dispatch('entities/require', { id })
-        dispatch('textchunks/require', { query: `topic=${id}` })
-        dispatch('links/require', { query: `topic=${id}` }).then(links => {
-          for (let l of links) {
-            dispatch('entities/require', { id: l.to_topic })
-            dispatch('entities/require', { id: l.from_topic })
-          }
-        })
+        return Promise.all([
+          dispatch('entities/require', { id }),
+          dispatch('textchunks/require', { query: `topic=${id}` }),
+          dispatch('links/require', { query: `topic=${id}` }).then(async links => {
+            let promises = []
+            for (let l of links) {
+              promises.push(dispatch('entities/require', { id: l.to_topic }))
+              promises.push(dispatch('entities/require', { id: l.from_topic }))
+            }
+            return Promise.all(promises)
+          })
+        ])
       }
     },
     upsert ({dispatch}, entity) {

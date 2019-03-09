@@ -52,7 +52,7 @@ export default {
   },
   created () {
     if (!this.filter)
-      this.$store.dispatch('search/setFilter', 'urgent')
+      this.$store.dispatch('search/setFilter')
   },
   mounted () {
     this.updateTitle()
