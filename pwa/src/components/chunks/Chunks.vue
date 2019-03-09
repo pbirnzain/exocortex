@@ -31,7 +31,7 @@ export default {
       if (destinationIndex == 0)
         newWeight = destination.weight - 1
       else {
-        newWeight = (this.chunks[destinationIndex-1].weight + this.chunks[destinationIndex].weight) / 2
+        newWeight = (this.chunks[destinationIndex - 1].weight + this.chunks[destinationIndex].weight) / 2
       }
 
       this.$store.dispatch('topics/textchunks/upsert', {id: source.id, weight: newWeight})

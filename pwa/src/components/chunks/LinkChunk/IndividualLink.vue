@@ -36,7 +36,7 @@ export default {
     },
     onUnlink (link) {
       this.$store.dispatch('topics/links/delete', link.id)
-    },
+    }
   }
 }
 </script>

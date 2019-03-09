@@ -20,9 +20,9 @@ export default {
     VProgressLinear,
     ErrorSnackbar
   },
-  data() {
+  data () {
     return {
-      dragging: false,
+      dragging: false
     }
   },
   computed: {
