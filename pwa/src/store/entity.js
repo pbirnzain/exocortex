@@ -83,7 +83,7 @@ export default function (endpoint) {
           }
 
           if (Object.keys(delta).length) {
-            commit('UPSERT', entity) // optimistic update
+            commit('UPSERT', {...oldEntity, ...entity}) // optimistic update
             commit('REQUEST', 1)
             return axios.patch(endpoint + entity.id + '/', delta).then(response => {
               commit('UPSERT', response.data)
