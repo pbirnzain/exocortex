@@ -1,5 +1,5 @@
 <template lang="pug">
-v-card.textchunk.drop-target(
+v-card.textchunk.drop-target(ref="card"
       @click.native="onEdit" :draggable="!editing"
       @dragstart="onDragStart" @dragend="onDragEnd"
       @dragover.prevent="onDragOver" @drop.prevent="onDrop"
@@ -35,6 +35,17 @@ export default {
     markdown () {
       const html = marked(this.template.text, { breaks: true })
       return html.replace(/<a /g, '<a target="_blank" ')
+    }
+  },
+  watch: {
+    editing () {
+      // When editing already filled chunks, keep the card size identical
+      if (this.editing) {
+        const width = this.$refs.card.$el.clientWidth - 32 - 16 + "px"
+        this.$refs.card.$el.style.width = width
+      } else {
+        this.$refs.card.$el.style.width = null
+      }
     }
   },
   methods: {
