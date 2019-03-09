@@ -1,6 +1,6 @@
 <template lang="pug">
 v-card.textchunk.drop-target(
-      @click.native="onEdit" draggable="true"
+      @click.native="onEdit" :draggable="!editing"
       @dragstart="onDragStart" @dragend="onDragEnd"
       @dragover.prevent="onDragOver" @drop.prevent="onDrop"
       @dragenter="onDragEnter" @dragleave="onDragLeave"
