@@ -35,10 +35,10 @@ const searchModule = {
     infoTopics (state, getters) {
       return getters.matchingTopics.filter(topic => !topic.ready && !topic.complete)
     },
-    incompleteTopics (state, getters) {
+    openTopics (state, getters) {
       return getters.matchingTopics.filter(topic => !topic.complete)
     },
-    completeTopics (state, getters) {
+    archivedTopics (state, getters) {
       return getters.matchingTopics.filter(topic => topic.complete)
     },
     resultingTopics (state, getters) {
@@ -54,10 +54,10 @@ const searchModule = {
         result = getters.blockedTopics
       } else if (state.filter === 'info') {
         result = getters.infoTopics
-      } else if (state.filter === 'complete') {
-        result = getters.completeTopics
-      } else if (state.filter === 'incomplete') {
-        result = getters.incompleteTopics
+      } else if (state.filter === 'open') {
+        result = getters.openTopics
+      } else if (state.filter === 'archived') {
+        result = getters.archivedTopics
       } else {
         result = getters.matchingTopics
       }

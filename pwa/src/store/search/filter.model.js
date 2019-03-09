@@ -1,4 +1,4 @@
 
 const filters = ['pinned', 'urgent', 'ready', 'info', 'blocked',
-  'incomplete', 'complete']
+  'open', 'archived']
 export { filters }

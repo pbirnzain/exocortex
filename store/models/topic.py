@@ -66,7 +66,7 @@ class Topic(DataChunk):
             score += ("pinned", 100)
 
         if self.complete:
-            score += ("complete", -20)
+            score += ("archived", -20)
             return score
 
         if self.ready:

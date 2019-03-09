@@ -11,7 +11,7 @@
       v-checkbox(v-model="template.pinned" @change="onChange" hide-details
                  label="pinned" :disabled="disabled")
       v-checkbox(v-model="template.complete" @change="onChange" hide-details
-                 label="complete" :disabled="disabled")
+                 label="archived" :disabled="disabled")
       v-slider(v-model="template.importance" always-dirty thumb-label
                hide-details label="Importance:" :min="-5" :max="5"
                @change="onChange")
