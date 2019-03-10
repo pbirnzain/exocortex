@@ -56,7 +56,7 @@ axios.interceptors.response.use(function (response) {
   return response
 }, function (error) {
   console.log(error)
-  if (error.response.status === 403) {
+  if (error.response && error.response.status === 403) {
     window.location.href = '/login/'
   } else {
     store.dispatch('setErrors', [error.message])
