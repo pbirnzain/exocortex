@@ -119,6 +119,7 @@ export default {
 
 .markdown-body
   font-size: 14px
+  font-family: Roboto,sans-serif
 
   code::before, code::after
     content: none
