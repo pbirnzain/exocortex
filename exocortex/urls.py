@@ -21,7 +21,7 @@ from rest_framework import routers
 from store.views import TopicViewSet, TextChunkViewSet, LinkViewSet
 
 router = routers.DefaultRouter()
-router.register('topics', TopicViewSet)
+router.register('topics', TopicViewSet, basename='topics')
 router.register('textchunks', TextChunkViewSet, basename='textchunks')
 router.register('links', LinkViewSet, basename='links')
 

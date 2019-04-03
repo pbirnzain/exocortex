@@ -42,9 +42,18 @@ class WebsocketUpdateMixin:
 
 
 class TopicViewSet(WebsocketUpdateMixin, viewsets.ModelViewSet):
-    queryset = Topic.objects.all().select_subclasses()
     serializer_class = TopicSerializer
     entity_name = 'topic'
+
+    def get_queryset(self):
+        queryset = Topic.objects.all().select_subclasses()
+
+        if 'complete' in self.request.query_params:
+            return queryset.filter(complete=True)
+        elif 'incomplete' in self.request.query_params:
+            return queryset.filter(complete=False)
+
+        return queryset
 
 
 class TextChunkViewSet(WebsocketUpdateMixin, viewsets.ModelViewSet):
