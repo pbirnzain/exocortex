@@ -9,13 +9,9 @@ const topicModule = {
     links: EntityModule('/api/links/')
   },
   state: {
-    selectedTopicId: undefined,
-    loaded: false
+    selectedTopicId: undefined
   },
   getters: {
-    loaded (state) {
-      return state.loaded
-    },
     loading (state, getters, rootState, rootGetters) {
       return getters['entities/loading'] ||
              getters['textchunks/loading'] ||
@@ -67,17 +63,11 @@ const topicModule = {
   mutations: {
     SELECT (state, id) {
       state.selectedTopicId = id
-    },
-    INITIALIZED (state) {
-      state.loaded = true
     }
   },
   actions: {
-    initialize ({dispatch, commit, state}) {
-      return dispatch('entities/require', null).then(() => {
-        if (!state.loaded)
-          commit('INITIALIZED')
-      })
+    require ({dispatch, commit, state}, filter) {
+      return dispatch('entities/require', filter)
     },
     select ({commit, dispatch}, id) {
       commit('SELECT', id)
@@ -86,6 +76,7 @@ const topicModule = {
           dispatch('entities/require', { id }),
           dispatch('textchunks/require', { query: `topic=${id}` }),
           dispatch('links/require', { query: `topic=${id}` }).then(async links => {
+            // TODO get links from state instead
             let promises = []
             for (let l of links) {
               promises.push(dispatch('entities/require', { id: l.to_topic }))

@@ -8,6 +8,7 @@ export default function (endpoint) {
     state () {
       return {
         entities: {},
+        completedQueries: [],
         requests: 0
       }
     },
@@ -41,12 +42,23 @@ export default function (endpoint) {
       },
       REQUEST (state, nRequests) {
         state.requests = state.requests !== null ? state.requests + nRequests : nRequests
+      },
+      COMPLETEDQUERY (state, query) {
+        state.completedQueries.push(query)
       }
     },
     actions: {
       require ({state, commit}, filter) {
         if (filter && filter.id && filter.id in state.entities)
           return Promise.resolve(state.entities[filter.id])
+
+        if (filter && filter.query) {
+          if (state.completedQueries.indexOf(filter.query) >= 0) {
+            return Promise.resolve([]) // TODO?
+          } else {
+            commit('COMPLETEDQUERY', filter.query) // TODO
+          }
+        }
 
         let url
         if (!filter)

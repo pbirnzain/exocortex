@@ -3,11 +3,14 @@ const searchModule = {
   namespaced: true,
   state: {
     searchText: '',
-    filter: undefined
+    filter: undefined,
+    completeLoaded: false,
+    incompleteLoaded: false
   },
   getters: {
     loaded (state, getters, rootState, rootGetters) {
-      return rootGetters['topics/loaded']
+      return (state.filter == 'archived' && state.completeLoaded) ||
+             (state.filter != 'archived' && state.incompleteLoaded)
     },
     allTopics (state, getters, rootState, rootGetters) {
       return Object.values(rootGetters['topics/topics']).filter(t => t.title)
@@ -87,6 +90,12 @@ const searchModule = {
     },
     SET_FILTER (state, filter) {
       state.filter = filter
+    },
+    LOADED (state, filter) {
+      if (filter == 'complete')
+        state.completeLoaded = true
+      else
+        state.incompleteLoaded = true
     }
   },
   actions: {
@@ -109,10 +118,12 @@ const searchModule = {
         await dispatch('requireFilter', 'urgent')
       }
     },
-    requireFilter ({dispatch, getters}, filter) {
+    requireFilter ({commit, dispatch, getters}, filter) {
       // TODO do partial load
-      if (!getters.loaded)
-        return dispatch('topics/initialize', undefined, { root: true })
+      const r = filter == 'archived' ? 'complete' : 'incomplete'
+      return dispatch('topics/require', {query: r}, { root: true }).then(
+        () => commit('LOADED', r)
+      )
     }
   }
 }
