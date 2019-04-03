@@ -73,7 +73,7 @@ const topicModule = {
       commit('SELECT', id)
       if (id) {
         return Promise.all([
-          dispatch('entities/require', { id }),
+          dispatch('entities/require', { id }).catch(() => commit('SELECT', null)),
           dispatch('textchunks/require', { query: `topic=${id}` }),
           dispatch('links/require', { query: `topic=${id}` }).then(async links => {
             // TODO get links from state instead
