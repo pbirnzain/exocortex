@@ -85,8 +85,8 @@ class Topic(DataChunk):
                 score += ("is overdue", 200)
             elif due_in_days <= warn_days_before:
                 progress = (warn_days_before+1-due_in_days)/warn_days_before
-                score += ("due soon", int(50 + 30*progress))
+                score += ("due soon", int(0 + 30*progress))
             else:
-                score += ("has due date", 50)
+                score += ("has due date", 10)
 
         return score

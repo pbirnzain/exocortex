@@ -26,7 +26,7 @@ const searchModule = {
       return getters.matchingTopics.filter(topic => topic.pinned)
     },
     urgentTopics (state, getters, rootState) {
-      return getters.matchingTopics.filter(topic => topic.score.sum > 55)
+      return getters.matchingTopics.filter(topic => topic.score.sum >= 15)
     },
     readyTopics (state, getters) {
       return getters.matchingTopics.filter(topic => topic.ready &&
