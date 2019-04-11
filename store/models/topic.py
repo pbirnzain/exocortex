@@ -66,12 +66,12 @@ class Topic(DataChunk):
             score += ("pinned", 100)
 
         if self.complete:
-            score += ("archived", -20)
+            score += ("archived", -40)
             return score
 
         if self.ready:
             if self.ready > timezone.now().date():
-                score += ("blocked", -10)
+                score += ("blocked", -20)
                 return score
             else:
                 if not self.due:
