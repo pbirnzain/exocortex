@@ -30,7 +30,7 @@ export default {
       if (topic.score.reasons['is overdue']) {
         return 'error'
       }
-      if (topic.score.sum > 60) {
+      if (topic.score.sum > 50) {
         return 'warning'
       }
       if (topic.complete) {
