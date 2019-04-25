@@ -14,7 +14,7 @@
 </template>
 <script>
 import { VBtn, VIcon, VContent, VProgressCircular } from 'vuetify/lib'
-import HomeToolbar from './home/HomeToolbar'
+import HomeToolbar from './HomeToolbar'
 import TopicList from '@/components/topic/TopicList'
 import FilterSelection from '@/components/FilterSelection'
 import EmptyState from '@/components/EmptyState'

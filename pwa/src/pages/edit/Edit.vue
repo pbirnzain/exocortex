@@ -39,7 +39,7 @@ import { VBtn, VDialog, VToolbar, VToolbarTitle, VSpacer, VIcon, VTextField, VPr
 import Topic from '@/components/topic/Topic'
 import Chunks from '@/components/chunks/Chunks'
 import LinkChunk from '@/components/chunks/LinkChunk/LinkChunk'
-import CreateLinkCard from './edit/CreateLinkCard'
+import CreateLinkCard from './CreateLinkCard'
 import EmptyState from '@/components/EmptyState'
 
 export default {
