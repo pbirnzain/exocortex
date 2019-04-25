@@ -39,12 +39,14 @@ export default {
   },
   watch: {
     editing () {
-      // When editing already filled chunks, keep the card size identical
+      // When editing already filled chunks, keep the card width identical
+      // and don't shrink vertically
       if (this.editing) {
-        const width = this.$refs.card.$el.clientWidth - 32 - 16 + "px"
-        this.$refs.card.$el.style.width = width
+        this.$refs.card.$el.style.width = this.$refs.card.$el.offsetWidth + "px"
+        this.$refs.card.$el.style.minHeight = this.$refs.card.$el.offsetHeight + "px"
       } else {
         this.$refs.card.$el.style.width = null
+        this.$refs.card.$el.style.minHeight = null
       }
     }
   },
