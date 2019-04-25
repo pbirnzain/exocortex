@@ -6,14 +6,7 @@
 </template>
 
 <script>
-import { VToolbar, VContainer, VProgressCircular } from 'vuetify/lib'
-
 export default {
-  components: {
-    VToolbar,
-    VContainer,
-    VProgressCircular
-  },
   mounted () {
     const elem = document.querySelector('title')
     elem.innerHTML = 'Exocortex: New'

@@ -9,10 +9,7 @@
 </template>
 
 <script>
-import { VBtn, VIcon } from 'vuetify/lib'
-
 export default {
-  components: { VBtn, VIcon },
   props: ['link'],
   data () {
     return {

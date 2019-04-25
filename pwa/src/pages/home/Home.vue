@@ -13,7 +13,6 @@
     v-progress-circular(v-else indeterminate color="grey" :size="50" :width="5")
 </template>
 <script>
-import { VBtn, VIcon, VContent, VProgressCircular } from 'vuetify/lib'
 import HomeToolbar from './HomeToolbar'
 import TopicList from '@/components/topic/TopicList'
 import FilterSelection from '@/components/FilterSelection'
@@ -22,14 +21,10 @@ import EmptyState from '@/components/EmptyState'
 export default {
   name: 'home',
   components: {
-    VBtn,
-    VContent,
-    VIcon,
     HomeToolbar,
     TopicList,
     FilterSelection,
-    EmptyState,
-    VProgressCircular
+    EmptyState
   },
   computed: {
     topicsLoaded () {

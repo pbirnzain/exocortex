@@ -35,7 +35,7 @@
 
 <script>
 import Vue from 'vue'
-import { VBtn, VDialog, VToolbar, VToolbarTitle, VSpacer, VIcon, VTextField, VProgressCircular } from 'vuetify/lib'
+import { VDialog } from 'vuetify/lib'
 import Topic from '@/components/topic/Topic'
 import Chunks from '@/components/chunks/Chunks'
 import LinkChunk from '@/components/chunks/LinkChunk/LinkChunk'
@@ -44,14 +44,7 @@ import EmptyState from '@/components/EmptyState'
 
 export default {
   components: {
-    VBtn,
     VDialog,
-    VToolbar,
-    VToolbarTitle,
-    VSpacer,
-    VIcon,
-    VTextField,
-    VProgressCircular,
     Topic,
     Chunks,
     LinkChunk,

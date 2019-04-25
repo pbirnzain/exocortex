@@ -31,18 +31,12 @@
 
 <script>
 import Vue from 'vue'
-import { VToolbar, VToolbarTitle, VIcon, VSpacer, VTextField,
-  VMenu, VList, VListTile, VListTileTitle } from 'vuetify/lib'
+import { VMenu, VList, VListTile, VListTileTitle } from 'vuetify/lib'
 import { filters } from '@/store/search/filter.model'
 import FilterSelection from '@/components/FilterSelection'
 
 export default {
   components: {
-    VToolbar,
-    VToolbarTitle,
-    VIcon,
-    VSpacer,
-    VTextField,
     VMenu,
     VList,
     VListTile,

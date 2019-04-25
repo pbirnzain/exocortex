@@ -54,7 +54,7 @@
 </template>
 
 <script>
-import { VCard, VTextField, VDatePicker, VDialog, VCheckbox, VBtn, VIcon, VSlider } from 'vuetify/lib'
+import { VCard, VDatePicker, VDialog, VCheckbox, VSlider } from 'vuetify/lib'
 import IconTomorrow from '@/components/icons/IconTomorrow'
 import IconEditDate from '@/components/icons/IconEditDate'
 
@@ -62,12 +62,9 @@ export default {
   props: ['topic', 'disabled', 'hideTitle'],
   components: {
     VCard,
-    VTextField,
     VDatePicker,
     VDialog,
     VCheckbox,
-    VBtn,
-    VIcon,
     VSlider,
     IconTomorrow,
     IconEditDate

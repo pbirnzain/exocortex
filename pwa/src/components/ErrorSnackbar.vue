@@ -6,13 +6,10 @@
 </template>
 
 <script>
-import { VSnackbar, VBtn } from 'vuetify/lib'
+import { VSnackbar } from 'vuetify/lib'
 
 export default {
-  components: {
-    VSnackbar,
-    VBtn
-  },
+  components: { VSnackbar },
   data () {
     return {
       showErrors: false

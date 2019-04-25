@@ -8,11 +8,11 @@
 </template>
 
 <script>
-import { VBtn, VSpacer, VIcon, VCard, VCardTitle, VCardActions, VAutocomplete } from 'vuetify/lib'
+import { VCard, VCardTitle, VCardActions, VAutocomplete } from 'vuetify/lib'
 
 export default {
   props: ['topic'],
-  components: { VBtn, VSpacer, VIcon, VCard, VCardTitle, VCardActions, VAutocomplete },
+  components: { VCard, VCardTitle, VCardActions, VAutocomplete },
   data () {
     return { selection: undefined }
   },
