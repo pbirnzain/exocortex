@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from './views/Home.vue'
+import Home from './pages/Home.vue'
 
 Vue.use(Router)
 
@@ -14,17 +14,17 @@ export default new Router({
     {
       path: '/new',
       name: 'new',
-      component: () => import('./views/New.vue')
+      component: () => import('./pages/New.vue')
     },
     {
       path: '/new/:title',
       name: 'new_title',
-      component: () => import('./views/New.vue')
+      component: () => import('./pages/New.vue')
     },
     {
       path: '/edit/:id',
       name: 'edit',
-      component: () => import('./views/Edit.vue')
+      component: () => import('./pages/Edit.vue')
     }
   ]
 })
