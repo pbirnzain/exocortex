@@ -22,7 +22,7 @@ describe('Home view', () => {
 
   it('should allow editing topics', () => {
     cy.get(e('filterpinned')).click()
-    cy.get(e('topicListTile')).first().click()
+    cy.get(e('topicListTile')).contains('my topic title').click()
 
     cy.get(e('topicTitle')).should('have.value', 'my topic title')
 
@@ -37,11 +37,39 @@ describe('Home view', () => {
     cy.get(e('topicListTile')).contains('my topic titleModified').should('not.exist')
   })
 
+  it('should allow editing textchunks', () => {
+    // open topic
+    cy.get(e('filterpinned')).click()
+    cy.get(e('topicListTile')).contains('my topic title').click()
+
+    // create textchunks
+    cy.get(e('editCreateNote')).click()
+    cy.get(e('textChunk')).get('textarea').type('my textchunk text')
+    cy.get(e('editCreateNote')).click()
+    cy.get(e('textChunk')).last().get('textarea').type('my second textchunk text')
+
+    // unfocus last textchunk
+    cy.get(e('topicTitle')).click()
+
+    cy.get(e('textChunk')).should(t => expect(t.length).to.equal(2))
+      .first().contains('my textchunk text')
+
+    cy.get(e('textChunk')).last().click()
+    cy.get(e('textChunk')).last().get('textarea').type('moretext')
+    cy.get(e('textChunk')).last().get('.v-input__append-inner i.v-icon').contains('clear').click()
+
+    cy.get(e('topicTitle')).click()
+    cy.get(e('textChunk')).should(t => expect(t.length).to.equal(1))
+
+    cy.get(e('editBack')).click()
+  })
+
   it('should allow deleting topics', () => {
     // delete the topic
     cy.get(e('topicListTile')).contains('my topic title').click()
     cy.get(e('editDelete')).click()
 
+    cy.get(e('topicListTile')).should('not.exist')
     cy.get(e('emptyState')).should('be.visible')
   })
 })
