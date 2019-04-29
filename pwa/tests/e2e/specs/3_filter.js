@@ -38,7 +38,7 @@ describe('Home view', () => {
     cy.get(e('emptyState')).should('be.visible')
 
     cy.get(e('searchText')).clear()
-
     cy.get(e('topicListTile')).should(t => expect(t.length).to.equal(1))
+    cy.get(e('emptyState')).should('not.be.visible')
   })
 })
