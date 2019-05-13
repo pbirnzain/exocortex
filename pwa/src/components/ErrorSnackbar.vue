@@ -10,14 +10,9 @@ import { VSnackbar } from 'vuetify/lib'
 
 export default {
   components: { VSnackbar },
-  data () {
-    return {
-      showErrors: false
-    }
-  },
   computed: {
     errors () {
-      return this.$store.state.errors
+      return this.$store.state.error.errors
     }
   },
   methods: {
