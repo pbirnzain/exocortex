@@ -34,6 +34,10 @@ const store = new Vuex.Store({
         dispatch('topics/textchunks/updated', frame.payload)
       } else if (frame.type == 'textchunk_deleted') {
         dispatch('topics/textchunks/deleted', frame.payload)
+      } else if (frame.type == 'link_updated') {
+        dispatch('topics/links/updated', frame.payload)
+      } else if (frame.type == 'link_deleted') {
+        dispatch('topics/links/deleted', frame.payload)
       }
     }
   }
