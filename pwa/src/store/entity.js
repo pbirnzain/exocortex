@@ -1,15 +1,17 @@
 import Vue from 'vue'
 import axios from 'axios'
+import store from './store'
 
-export default function (endpoint) {
-  return {
+export default function (endpoint, modulePath) {
+  // vuex module
+  const module = {
     endpoint,
     namespaced: true,
     state () {
       return {
         entities: {},
         completedQueries: [],
-        requests: 0
+        pendingRequests: 0
       }
     },
     getters: {
@@ -17,7 +19,7 @@ export default function (endpoint) {
         return state.entities
       },
       loading (state) {
-        return state.requests > 0
+        return state.pendingRequests > 0
       }
     },
     mutations: {
@@ -41,7 +43,7 @@ export default function (endpoint) {
         Vue.delete(state.entities, id)
       },
       REQUEST (state, nRequests) {
-        state.requests = state.requests !== null ? state.requests + nRequests : nRequests
+        state.pendingRequests = state.pendingRequests !== null ? state.pendingRequests + nRequests : nRequests
       },
       COMPLETEDQUERY (state, query) {
         state.completedQueries.push(query)
@@ -68,23 +70,19 @@ export default function (endpoint) {
         else if ('query' in filter)
           url = endpoint + `?${filter.query}`
 
-        commit('REQUEST', 1)
         return axios.get(url)
           .then(response => {
             commit('UPSERT', response.data)
             return Promise.resolve(response.data)
           })
-          .finally(() => commit('REQUEST', -1))
       },
       upsert ({commit, state}, entity) {
         if (entity.id === undefined) {
-          commit('REQUEST', 1)
           return axios.post(endpoint, entity)
             .then(response => {
               commit('UPSERT', response.data)
               return Promise.resolve(response.data)
             })
-            .finally(() => commit('REQUEST', -1))
         } else {
           const oldEntity = state.entities[entity.id]
           const delta = {}
@@ -96,25 +94,22 @@ export default function (endpoint) {
 
           if (Object.keys(delta).length) {
             commit('UPSERT', {...oldEntity, ...entity}) // optimistic update
-            commit('REQUEST', 1)
+
             return axios.patch(endpoint + entity.id + '/', delta)
               .then(response => {
                 commit('UPSERT', response.data)
                 return Promise.resolve(response.data)
               })
-              .finally(() => commit('REQUEST', -1))
           }
         }
       },
       delete ({commit}, id) {
         commit('DELETE', id) // optimistic delete
-        commit('REQUEST', 1)
         return axios.delete(endpoint + id + '/')
           .then(response => {
             commit('DELETE', id)
             return Promise.resolve(id)
           })
-          .finally(() => commit('REQUEST', -1))
       },
       updated ({commit}, entity) {
         commit('UPSERT', entity)
@@ -124,4 +119,31 @@ export default function (endpoint) {
       }
     }
   }
+
+  // axios interceptors
+  function changePendingRequestCount (path, delta) {
+    if (modulePath && path.startsWith(endpoint)) {
+      store.commit(modulePath + '/REQUEST', delta)
+    }
+  }
+  function requestStarted (path) { changePendingRequestCount(path, 1) }
+  function requestEnded (path) { changePendingRequestCount(path, -1) }
+
+  axios.interceptors.request.use(function (config) {
+    requestStarted(new URL(config.url, 'https://dummy').pathname)
+    return config
+  }, function (error) {
+    requestEnded(new URL(error.url, 'https://dummy').pathname)
+    return Promise.reject(error)
+  })
+
+  axios.interceptors.response.use(function (response) {
+    requestEnded(new URL(response.request.responseURL).pathname)
+    return response
+  }, function (error) {
+    requestEnded(new URL(error.request.responseURL).pathname)
+    return Promise.reject(error)
+  })
+
+  return module
 }

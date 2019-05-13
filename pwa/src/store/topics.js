@@ -4,9 +4,9 @@ import EntityModule from './entity'
 const topicModule = {
   namespaced: true,
   modules: {
-    entities: EntityModule('/api/topics/'),
-    textchunks: EntityModule('/api/textchunks/'),
-    links: EntityModule('/api/links/')
+    entities: EntityModule('/api/topics/', 'topics/entities'),
+    textchunks: EntityModule('/api/textchunks/', 'topics/textchunks'),
+    links: EntityModule('/api/links/', 'topics/links')
   },
   state: {
     selectedTopicId: undefined
