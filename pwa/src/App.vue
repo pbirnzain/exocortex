@@ -1,7 +1,7 @@
 <template lang="pug">
   .app(:class="{'dragging': dragging}")
     error-snackbar
-    v-progress-linear(v-if="loading" indeterminate :height="2")
+    global-loading-indicator
 
     v-app
       v-content
@@ -9,25 +9,21 @@
 </template>
 
 <script>
-import { VApp, VContent, VProgressLinear } from 'vuetify/lib'
+import { VApp, VContent } from 'vuetify/lib'
 import ErrorSnackbar from '@/components/ErrorSnackbar'
+import GlobalLoadingIndicator from '@/components/GlobalLoadingIndicator'
 
 export default {
   name: 'app',
   components: {
     VApp,
     VContent,
-    VProgressLinear,
-    ErrorSnackbar
+    ErrorSnackbar,
+    GlobalLoadingIndicator
   },
   data () {
     return {
       dragging: false
-    }
-  },
-  computed: {
-    loading () {
-      return this.$store.getters['loading']
     }
   },
   mounted () {

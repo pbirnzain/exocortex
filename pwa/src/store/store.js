@@ -5,6 +5,7 @@ import axios from 'axios'
 import topicModule from './topics'
 import searchModule from './search/search'
 import errorModule from './error'
+import loadingModule from './loading'
 
 axios.defaults.xsrfCookieName = 'csrftoken'
 axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN'
@@ -17,12 +18,8 @@ const store = new Vuex.Store({
   modules: {
     topics: topicModule,
     search: searchModule,
-    error: errorModule
-  },
-  getters: {
-    loading (state, getters, rootState, rootGetters) {
-      return rootGetters['topics/loading']
-    }
+    error: errorModule,
+    loading: loadingModule
   },
   actions: {
     frameReceived ({dispatch}, frame) {
