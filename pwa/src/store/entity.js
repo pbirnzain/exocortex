@@ -107,10 +107,6 @@ export default function (endpoint, modulePath) {
       delete ({commit}, id) {
         commit('DELETE', id) // optimistic delete
         return axios.delete(endpoint + id + '/')
-          .then(response => {
-            commit('DELETE', id)
-            return Promise.resolve(id)
-          })
       },
       // call when a newer, already persisted version of an entity has become
       // available, e.g. via websocket, or while querying another endpoint
