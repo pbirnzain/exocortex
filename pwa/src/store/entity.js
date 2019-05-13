@@ -76,6 +76,7 @@ export default function (endpoint, modulePath) {
             return Promise.resolve(response.data)
           })
       },
+      // call to persist a given entity
       upsert ({commit, state}, entity) {
         if (entity.id === undefined) {
           return axios.post(endpoint, entity)
@@ -111,6 +112,8 @@ export default function (endpoint, modulePath) {
             return Promise.resolve(id)
           })
       },
+      // call when a newer, already persisted version of an entity has become
+      // available, e.g. via websocket, or while querying another endpoint
       updated ({commit}, entity) {
         commit('UPSERT', entity)
       },
