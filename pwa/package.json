@@ -57,7 +57,8 @@
     ],
     "rules": {
       "eqeqeq": 0,
-      "curly": 0
+      "curly": 0,
+      "object-curly-spacing": 0
     },
     "parserOptions": {
       "parser": "babel-eslint"
