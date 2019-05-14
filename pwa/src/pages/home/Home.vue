@@ -67,22 +67,20 @@ export default {
   }
 }
 </script>
-<style lang="scss">
-.home {
-  height: 100vh;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
+<style lang="sass">
+.home
+  height: 100vh
+  width: 100%
+  display: flex
+  flex-direction: column
 
-  .topic-list {
-    flex-grow: 1;
-    overflow-y: auto;
-  }
-  .v-progress-circular {
-    margin: auto;
-  }
-  .v-btn--floating .v-icon {
-    color: white;
-  }
-}
+  .topic-list
+    flex-grow: 1
+    overflow-y: auto
+
+  .v-progress-circular
+    margin: auto
+
+  .v-btn--floating .v-icon
+    color: white
 </style>

@@ -43,7 +43,7 @@ export default {
 }
 </script>
 
-<style lang="styl">
+<style lang="sass">
 .chunk-list
   margin: -8px
 
@@ -59,7 +59,7 @@ export default {
 .chunk-list
   display: flex
   flex-wrap: wrap
-  justify-content: center;
+  justify-content: center
 
   &> *
     flex-grow: 1

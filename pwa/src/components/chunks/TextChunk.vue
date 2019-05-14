@@ -97,7 +97,7 @@ export default {
 }
 </script>
 
-<style lang="styl">
+<style lang="sass">
 @import "../../assets/github-markdown.css"
 .dragging .textchunk *
   pointer-events: none
@@ -105,7 +105,7 @@ export default {
 .textchunk
   &.v-card
     min-width: 16em
-    padding: 16px 12px;
+    padding: 16px 12px
 
   .v-input
     height: 100%

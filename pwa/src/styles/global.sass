@@ -1,5 +1,5 @@
 
-@import "./variables.styl"
+@import "./variables.sass"
 
 html
   overflow: auto
@@ -17,26 +17,21 @@ html
   .being-dragged
     border-color: blue!important
 
-@media(max-width: breakpoint)
+@media(max-width: $breakpoint)
   .app .v-btn--icon
     margin: 0
 
 .mobile-only
   display: none
-  @media(max-width: breakpoint)
+  @media(max-width: $breakpoint)
     display: inherit
 
 .desktop-only
-  @media(max-width: breakpoint)
+  @media(max-width: $breakpoint)
     display: none
 
 .v-toolbar a
   text-decoration: none
-
-.app .add-button
-  position: fixed
-  right: 1em
-  bottom: 1em
 
 .e-content
   position: relative

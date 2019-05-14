@@ -95,8 +95,8 @@ export default {
 }
 </script>
 
-<style lang="styl">
-@import "../../styles/variables.styl"
+<style lang="sass">
+@import ../../styles/variables.sass
 
 .home-toolbar
   .v-toolbar__title
@@ -111,12 +111,12 @@ export default {
   .v-tabs__bar
     background: #f5f5f5
 
-  .filter-menu
-    display: none
+.filter-menu
+  display: none
 
-  @media(max-width: breakpoint)
-    .filter-menu
-      display: show
+@media(max-width: $breakpoint)
+  .filter-menu
+    display: inline-block
 
 .filter-menu
  .v-list__tile__title

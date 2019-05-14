@@ -141,7 +141,7 @@ export default {
   }
 }
 </script>
-<style lang="styl">
+<style lang="sass">
 .edit-topic
   min-height: 100vh
   width: 100%

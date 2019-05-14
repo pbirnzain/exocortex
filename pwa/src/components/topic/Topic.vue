@@ -126,75 +126,62 @@ export default {
 }
 </script>
 
-<style lang="scss">
-.score-reasons {
-  position: absolute;
-  bottom: -16px;
-  right: 2px;
-  transform: translateY(-100%);
+<style lang="sass">
+.score-reasons
+  position: absolute
+  bottom: -16px
+  right: 2px
+  transform: translateY(-100%)
 
-  font-size: 11px;
-  color: rgba(0,0,0,0.29);
+  font-size: 11px
+  color: rgba(0,0,0,0.29)
 
-  .sum {
-    padding-right: 12px;
-  }
+  .sum
+    padding-right: 12px
 
-  > *:not(first-child) {
-    padding-right: 4px;
-  }
-}
+  > *:not(first-child)
+    padding-right: 4px
 
-@media(max-width: 600px) {
-  .topic .dates .input-fields {
-    margin-right: 8px!important;
-  }
-}
-.topic {
-  .modifiers {
-    display: flex;
-    flex-wrap: wrap;
+@media(max-width: 600px)
+  .topic .dates .input-fields
+    margin-right: 8px!important
 
-    > * {
-      margin-top: 0;
-      margin-right: 16px;
-    }
-  }
 
-  .dates {
-    display: flex;
+.topic
+  .modifiers
+    display: flex
+    flex-wrap: wrap
 
-    .input-fields {
-      flex-grow: 1;
-      margin-right: 16px;
+    > *
+      margin-top: 0
+      margin-right: 16px
 
-      .date {
-        flex-grow: 1;
-        flex-shrink: 1;
-      }
+  .dates
+    display: flex
 
-      .copy-buttons {
-        display: flex;
-        justify-content: center;
-        margin-top: 8px;
+    .input-fields
+      flex-grow: 1
+      margin-right: 16px
 
-        a {
-          height: 24px;
-        }
-      }
-    }
+      .date
+        flex-grow: 1
+        flex-shrink: 1
 
-    .buttons {
-      flex-shrink: 0;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
+      .copy-buttons
+        display: flex
+        justify-content: center
+        margin-top: 8px
 
-      button {
-        margin-top: 18px;
-        margin-bottom: 2px;
-      }
-    }
-  }
-}
+        a
+          height: 24px
+
+    .buttons
+      flex-shrink: 0
+      display: flex
+      flex-direction: column
+      justify-content: space-between
+
+      button
+        margin-top: 18px
+        margin-bottom: 2px
 </style>

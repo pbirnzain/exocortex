@@ -51,15 +51,13 @@ export default {
 }
 </script>
 
-<style lang="scss">
-.topic-list {
-  position: relative;
-  .v-list {
-    position: relative;
-    padding-bottom: 0;
-  }
-  .v-list__tile__action {
-    min-width: 36px;
-  }
-}
+<style lang="sass">
+.topic-list
+  position: relative
+  .v-list
+    position: relative
+    padding-bottom: 0
+
+  .v-list__tile__action
+    min-width: 36px
 </style>

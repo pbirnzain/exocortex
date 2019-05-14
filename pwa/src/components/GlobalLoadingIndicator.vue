@@ -47,3 +47,11 @@ export default {
 }
 
 </script>
+
+<style lang="sass">
+.app
+  > .v-progress-linear
+    margin: 0
+    position: fixed
+    z-index: 1000
+</style>

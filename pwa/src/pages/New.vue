@@ -21,20 +21,17 @@ export default {
   }
 }
 </script>
-<style lang="scss">
-.new-topic {
-  height: 100vh;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
+<style lang="sass">
+.new-topic
+  height: 100vh
+  width: 100%
+  display: flex
+  flex-direction: column
+  flex-grow: 1
 
-  .v-toolbar__title {
-    margin-left: 20px;
-  }
+  .v-toolbar__title
+    margin-left: 20px
 
-  .v-progress-circular {
-    margin: auto;
-  }
-}
+  .v-progress-circular
+    margin: auto
 </style>

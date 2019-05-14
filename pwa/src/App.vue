@@ -41,12 +41,6 @@ export default {
 }
 </script>
 
-<style lang="styl">
-@import "./styles/global.styl"
-
-.app
-  > .v-progress-linear
-    margin: 0
-    position: fixed
-    z-index: 1000
+<style lang="sass">
+@import ./styles/global.sass
 </style>
