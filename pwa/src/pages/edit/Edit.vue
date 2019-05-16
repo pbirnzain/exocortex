@@ -1,5 +1,6 @@
 <template lang="pug">
   .edit-topic
+
     v-toolbar
       router-link(:to="{ name: 'home', params: {}}")
         v-icon(data-e2e="editBack") arrow_back
@@ -24,9 +25,10 @@
       .e-content.e-container.vertical(v-if="selectedTopic" :class="{fullsize: !selectedTopic}")
         chunks(:chunks="selectedTopic.textchunks" ref="chunks"
                @chunk-changed="onChunkChanged" @chunk-deleted="onChunkDeleted")
-          topic-metadata-chunk(:topic="selectedTopic" :hideTitle="true"
-                @topic-changed="onTopicChanged")
+          topic-metadata-chunk(:topic="selectedTopic"
+                               @topic-changed="onTopicChanged")
           link-chunk(:topic="selectedTopic")
+
       empty-state(v-else tagline="Topic not found."
                   message="Most likely it has been deleted.")
 
