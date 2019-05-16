@@ -24,7 +24,7 @@
       .e-content.e-container.vertical(v-if="selectedTopic" :class="{fullsize: !selectedTopic}")
         chunks(:chunks="selectedTopic.textchunks" ref="chunks"
                @chunk-changed="onChunkChanged" @chunk-deleted="onChunkDeleted")
-          topic(:topic="selectedTopic" :hideTitle="true"
+          topic-metadata-chunk(:topic="selectedTopic" :hideTitle="true"
                 @topic-changed="onTopicChanged")
           link-chunk(:topic="selectedTopic")
       empty-state(v-else tagline="Topic not found."
@@ -36,8 +36,8 @@
 <script>
 import Vue from 'vue'
 import { VDialog } from 'vuetify/lib'
-import Topic from '@/components/topic/Topic'
 import Chunks from '@/components/chunks/Chunks'
+import TopicMetadataChunk from '@/components/chunks/TopicMetadataChunk'
 import LinkChunk from '@/components/chunks/LinkChunk/LinkChunk'
 import CreateLinkCard from './CreateLinkCard'
 import EmptyState from '@/components/EmptyState'
@@ -45,8 +45,8 @@ import EmptyState from '@/components/EmptyState'
 export default {
   components: {
     VDialog,
-    Topic,
     Chunks,
+    TopicMetadataChunk,
     LinkChunk,
     CreateLinkCard,
     EmptyState

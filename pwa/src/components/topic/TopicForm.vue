@@ -1,5 +1,5 @@
 <template lang="pug">
-  v-card.topic
+  .topic-form
     v-text-field(v-if="!hideTitle" v-model="template.title",
                  @change="onChange" ref="title" label="title" :disabled="disabled")
     .score-reasons(v-if="template.score && template.score.sum")
@@ -54,14 +54,13 @@
 </template>
 
 <script>
-import { VCard, VDatePicker, VDialog, VCheckbox, VSlider } from 'vuetify/lib'
+import { VDatePicker, VDialog, VCheckbox, VSlider } from 'vuetify/lib'
 import IconTomorrow from '@/components/icons/IconTomorrow'
 import IconEditDate from '@/components/icons/IconEditDate'
 
 export default {
   props: ['topic', 'disabled', 'hideTitle'],
   components: {
-    VCard,
     VDatePicker,
     VDialog,
     VCheckbox,
@@ -147,7 +146,7 @@ export default {
     margin-right: 8px!important
 
 
-.topic
+.topic-form
   .modifiers
     display: flex
     flex-wrap: wrap
