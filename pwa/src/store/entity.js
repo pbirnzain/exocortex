@@ -2,6 +2,17 @@ import Vue from 'vue'
 import axios from 'axios'
 import store from './store'
 
+// this function creates a vuex module for an API model / entity.
+// it can transparently handle retrieval, local storage and synchronisation
+
+// TODO
+// Features to implement:
+// [x] API integration
+// [x] caching
+// [x] loading status
+// [ ] offline storage
+// [ ] background sync
+
 export default function (endpoint, modulePath) {
   // vuex module
   const module = {
@@ -108,7 +119,7 @@ export default function (endpoint, modulePath) {
         commit('DELETE', id) // optimistic delete
         return axios.delete(endpoint + id + '/')
       },
-      // call when a newer, already persisted version of an entity has become
+      // call this when a newer, already persisted version of an entity has become
       // available, e.g. via websocket, or while querying another endpoint
       updated ({commit}, entity) {
         commit('UPSERT', entity)
@@ -120,27 +131,25 @@ export default function (endpoint, modulePath) {
   }
 
   // axios interceptors
-  function changePendingRequestCount (path, delta) {
+  function changePendingRequestCounter (path, delta) {
     if (modulePath && path.startsWith(endpoint)) {
       store.commit(modulePath + '/REQUEST', delta)
     }
   }
-  function requestStarted (path) { changePendingRequestCount(path, 1) }
-  function requestEnded (path) { changePendingRequestCount(path, -1) }
 
   axios.interceptors.request.use(function (config) {
-    requestStarted(new URL(config.url, 'https://dummy').pathname)
+    changePendingRequestCounter(new URL(config.url, 'https://dummy').pathname, +1)
     return config
   }, function (error) {
-    requestEnded(new URL(error.url, 'https://dummy').pathname)
+    changePendingRequestCounter(new URL(error.url, 'https://dummy').pathname, -1)
     return Promise.reject(error)
   })
 
   axios.interceptors.response.use(function (response) {
-    requestEnded(new URL(response.request.responseURL).pathname)
+    changePendingRequestCounter(new URL(response.request.responseURL).pathname, -1)
     return response
   }, function (error) {
-    requestEnded(new URL(error.request.responseURL).pathname)
+    changePendingRequestCounter(new URL(error.request.responseURL).pathname, -1)
     return Promise.reject(error)
   })
 
