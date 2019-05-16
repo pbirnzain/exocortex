@@ -36,9 +36,9 @@
 <script>
 import Vue from 'vue'
 import { VDialog } from 'vuetify/lib'
-import Chunks from '@/components/chunks/Chunks'
-import TopicMetadataChunk from '@/components/chunks/TopicMetadataChunk'
-import LinkChunk from '@/components/chunks/LinkChunk/LinkChunk'
+import Chunks from './chunks/Chunks'
+import TopicMetadataChunk from './chunks/TopicMetadataChunk'
+import LinkChunk from './chunks/LinkChunk/LinkChunk'
 import CreateLinkCard from './CreateLinkCard'
 import EmptyState from '@/components/EmptyState'
 

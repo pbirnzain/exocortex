@@ -98,7 +98,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../../assets/github-markdown.css"
+@import "../../../assets/github-markdown.css"
 .dragging .textchunk *
   pointer-events: none
 

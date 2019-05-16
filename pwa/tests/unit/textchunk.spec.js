@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils'
-import TextChunk from '@/components/chunks/TextChunk.vue'
+import TextChunk from '@/pages/edit/chunks/TextChunk.vue'
 
 describe('TextChunk.vue', () => {
   it('renders markdown', () => {
