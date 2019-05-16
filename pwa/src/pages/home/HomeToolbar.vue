@@ -33,7 +33,7 @@
 import Vue from 'vue'
 import { VMenu, VList, VListTile, VListTileTitle } from 'vuetify/lib'
 import { filters } from '@/store/search/filter.model'
-import FilterSelection from '@/components/FilterSelection'
+import FilterSelection from './FilterSelection'
 
 export default {
   components: {

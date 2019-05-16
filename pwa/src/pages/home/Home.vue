@@ -15,7 +15,6 @@
 <script>
 import HomeToolbar from './HomeToolbar'
 import TopicList from '@/components/topic/TopicList'
-import FilterSelection from '@/components/FilterSelection'
 import EmptyState from '@/components/EmptyState'
 
 export default {
@@ -23,7 +22,6 @@ export default {
   components: {
     HomeToolbar,
     TopicList,
-    FilterSelection,
     EmptyState
   },
   computed: {
