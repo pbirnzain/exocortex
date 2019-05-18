@@ -1,31 +1,27 @@
 <template lang="pug">
-v-card.textchunk.drop-target(ref="card" data-e2e="textChunk"
-      @click.native="onEdit" :draggable="!editing"
-      @dragstart="onDragStart" @dragend="onDragEnd"
-      @dragover.prevent="onDragOver" @drop.prevent="onDrop"
-      @dragenter="onDragEnter" @dragleave="onDragLeave"
-      :class="{'drop': dragOver, 'being-dragged': beingDragged}")
-  template(v-if="editing")
-    v-textarea(v-model="template.text" @blur="onBlur" auto-grow autofocus clearable)
-  template(v-else)
-    a.markdown-body(v-if="chunk.text" v-html="markdown" @click="onEdit")
+drag-drop.textchunk(ref="card" @drag="onDrag" @drop="onDrop" :draggable="!editing")
+  v-card(data-e2e="textChunk" @click.native="onEdit")
+    template(v-if="editing")
+      v-textarea(v-model="template.text" @blur="onBlur" auto-grow autofocus clearable)
+    template(v-else)
+      a.markdown-body(v-if="chunk.text" v-html="markdown" @click="onEdit")
 </template>
 
 <script>
 import { VCard, VTextarea } from 'vuetify/lib'
 import marked from 'marked'
+import DragDrop from '@/components/DragDrop'
 
 export default {
   props: ['chunk'],
   components: {
     VCard,
-    VTextarea
+    VTextarea,
+    DragDrop
   },
   data () {
     return {
-      editing: false,
-      dragOver: false,
-      beingDragged: false
+      editing: false
     }
   },
   computed: {
@@ -42,15 +38,20 @@ export default {
       // When editing already filled chunks, keep the card width identical
       // and don't shrink vertically
       if (this.editing) {
-        this.$refs.card.$el.style.width = this.$refs.card.$el.offsetWidth + "px"
+        this.$refs.card.$el.style.maxWidth = this.$refs.card.$el.offsetWidth + "px"
+        this.$refs.card.$el.style.minWidth = this.$refs.card.$el.offsetWidth + "px"
         this.$refs.card.$el.style.minHeight = this.$refs.card.$el.offsetHeight + "px"
       } else {
-        this.$refs.card.$el.style.width = null
+        this.$refs.card.$el.style.maxWidth = null
+        this.$refs.card.$el.style.minWidth = null
         this.$refs.card.$el.style.minHeight = null
       }
     }
   },
   methods: {
+    focus () {
+      this.onEdit()
+    },
     onBlur () {
       this.editing = false
 
@@ -69,29 +70,15 @@ export default {
     onDelete () {
       this.$emit('deleted', this.template)
     },
-    onDragStart (event) {
+    onDrag (event) {
+      // the entire textchunk entity for drop targets within the application
+      // (i.e. other textchunks for now, later other reorderable chunk types)
       event.dataTransfer.setData('application/json', JSON.stringify(this.template))
+      // markdown content as plain text for drop targets outside the application
       event.dataTransfer.setData('text/plain', this.template.text)
-      this.beingDragged = true
     },
-    onDragEnd (event) {
-      this.beingDragged = false
-    },
-    onDragOver (event) {
-    },
-    onDragEnter (event) {
-      this.dragOver = true
-    },
-    onDragLeave (event) {
-      this.dragOver = false
-    },
-    onDrop (event) {
-      this.dragOver = false
-      const source = JSON.parse(event.dataTransfer.getData('application/json'))
+    onDrop (source) {
       this.$emit('drop', {source, destination: this.chunk})
-    },
-    focus () {
-      this.onEdit()
     }
   }
 }
@@ -103,8 +90,9 @@ export default {
   pointer-events: none
 
 .textchunk
-  &.v-card
+  .v-card
     min-width: 16em
+    height: 100%
     padding: 16px 12px
 
   .v-input
