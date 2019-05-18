@@ -8,8 +8,8 @@
 <script>
 export default {
   mounted () {
-    const elem = document.querySelector('title')
-    elem.innerHTML = 'Exocortex: New'
+    document.querySelector('title').innerHTML = 'Exocortex: New'
+
     let newTopic = { pinned: true }
     if (this.$route.params.title) {
       newTopic.title = this.$route.params.title

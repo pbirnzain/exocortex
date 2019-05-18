@@ -44,6 +44,7 @@ export default {
     }
   },
   created () {
+    // if no filter has been selected yet, tell the store to load the default
     if (!this.filter)
       this.$store.dispatch('search/setFilter')
   },

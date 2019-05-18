@@ -119,7 +119,6 @@ const searchModule = {
       }
     },
     requireFilter ({commit, dispatch, getters}, filter) {
-      // TODO do partial load
       const r = filter == 'archived' ? 'complete' : 'incomplete'
       return dispatch('topics/require', {query: r}, { root: true }).then(
         () => commit('LOADED', r)

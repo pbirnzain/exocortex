@@ -66,11 +66,11 @@ export default {
   },
   watch: {
     selectedTopic () {
-      const elem = document.querySelector('title')
+      const title = document.querySelector('title')
       if (this.selectedTopic)
-        elem.innerHTML = this.selectedTopic.title || 'Exocortex: Edit'
+        title.innerHTML = this.selectedTopic.title || 'Exocortex: Edit'
       else
-        elem.innerHTML = 'Exocortex'
+        title.innerHTML = 'Exocortex'
     },
     showLinkDialog () {
       if (this.showLinkDialog)
