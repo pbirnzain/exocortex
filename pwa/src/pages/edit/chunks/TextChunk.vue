@@ -2,8 +2,11 @@
 drag-drop.textchunk(ref="card" @drag="onDrag" @drop="onDrop" :draggable="!editing")
   v-card(data-e2e="textChunk" @click.native="onEdit")
     template(v-if="editing")
-      v-textarea(v-model="template.text" @blur="onBlur" auto-grow autofocus clearable)
+      //- textarea for editing markdown
+      v-textarea(v-model="template.text" @blur="onEditComplete"
+                 auto-grow autofocus clearable)
     template(v-else)
+      //- rendered markdown
       a.markdown-body(v-if="chunk.text" v-html="markdown" @click="onEdit")
 </template>
 
@@ -52,17 +55,18 @@ export default {
     focus () {
       this.onEdit()
     },
-    onBlur () {
+    onEdit () {
+      this.editing = true
+    },
+    onEditComplete () {
       this.editing = false
+
+      // delete the (now empty) chunk if the text was cleared
+      if (!this.template.text)
+        this.onDelete()
 
       if (this.template.text && this.chunk.text != this.template.text)
         this.onChanged()
-
-      if (!this.template.text)
-        this.onDelete()
-    },
-    onEdit () {
-      this.editing = true
     },
     onChanged () {
       this.$emit('changed', this.template)
