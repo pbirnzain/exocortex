@@ -8,7 +8,7 @@ v-card.textchunk.drop-target(ref="card" data-e2e="textChunk"
   template(v-if="editing")
     v-textarea(v-model="template.text" @blur="onBlur" auto-grow autofocus clearable)
   template(v-else)
-    .markdown-body(v-if="chunk.text" v-html="markdown" @click="onEdit")
+    a.markdown-body(v-if="chunk.text" v-html="markdown" @click="onEdit")
 </template>
 
 <script>
