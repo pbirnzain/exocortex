@@ -7,7 +7,8 @@ drag-drop.textchunk(ref="card" @drag="onDrag" @drop="onDrop" :draggable="!editin
                  auto-grow autofocus clearable)
     template(v-else)
       //- rendered markdown
-      a.markdown-body(v-if="chunk.text" v-html="markdown" @click="onEdit")
+      a.markdown-body(v-if="chunk.text" :id="markdownId"
+                      v-html="markdown" @click="onEdit")
 </template>
 
 <script>
@@ -34,6 +35,9 @@ export default {
     markdown () {
       const html = marked(this.template.text, { breaks: true })
       return html.replace(/<a /g, '<a target="_blank" ')
+    },
+    markdownId () {
+      return `md-${this.chunk.id}`
     }
   },
   watch: {
@@ -51,7 +55,35 @@ export default {
       }
     }
   },
+  mounted () {
+    this.attachMarkdownCheckboxListeners()
+  },
+  updated () {
+    this.attachMarkdownCheckboxListeners()
+  },
   methods: {
+    attachMarkdownCheckboxListeners () {
+      const checkboxElems = document.querySelectorAll(`#${this.markdownId} input[type="checkbox"]`)
+      for (const [idx, checkbox] of checkboxElems.entries()) {
+        checkbox.removeAttribute('disabled')
+        checkbox.onclick = (event) => {
+          event.stopPropagation()
+          this.toggleCheckbox(idx)
+        }
+      }
+    },
+    toggleCheckbox (idx) {
+      const text = this.template.text
+      let pos = 0
+      for (var i = 0; i < idx+1; i++) {
+        pos = text.indexOf('- [', pos)+3
+      }
+
+      this.template.text = text.substring(0, pos) +
+                           (text.charAt(pos) === ' ' ? 'X' : ' ') +
+                           text.substring(pos+1)
+      this.onChanged()
+    },
     focus () {
       this.onEdit()
     },
