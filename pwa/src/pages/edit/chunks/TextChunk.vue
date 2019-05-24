@@ -1,43 +1,25 @@
 <template lang="pug">
 drag-drop.textchunk(ref="card" @drag="onDrag" @drop="onDrop" :draggable="!editing")
-  v-card(data-e2e="textChunk" @click.native="onEdit")
-    template(v-if="editing")
-      //- textarea for editing markdown
-      v-textarea(v-model="template.text" @blur="onEditComplete"
-                 auto-grow autofocus clearable)
-    template(v-else)
-      //- rendered markdown
-      a.markdown-body(v-if="chunk.text" :id="markdownId"
-                      v-html="markdown" @click="onEdit")
+  v-card(data-e2e="textChunk" @click.native="focus()")
+    markdown-field(:value='this.chunk.text' ref="mdfield"
+                   @changed='onChanged' @editing="editing=$event")
 </template>
 
 <script>
-import { VCard, VTextarea } from 'vuetify/lib'
-import marked from 'marked'
+import { VCard } from 'vuetify/lib'
 import DragDrop from '@/components/DragDrop'
+import MarkdownField from '@/components/MarkdownField'
 
 export default {
   props: ['chunk'],
   components: {
     VCard,
-    VTextarea,
-    DragDrop
+    DragDrop,
+    MarkdownField
   },
   data () {
     return {
       editing: false
-    }
-  },
-  computed: {
-    template () {
-      return Object.assign({}, this.chunk)
-    },
-    markdown () {
-      const html = marked(this.template.text, { breaks: true })
-      return html.replace(/<a /g, '<a target="_blank" ')
-    },
-    markdownId () {
-      return `md-${this.chunk.id}`
     }
   },
   watch: {
@@ -55,63 +37,24 @@ export default {
       }
     }
   },
-  mounted () {
-    this.attachMarkdownCheckboxListeners()
-  },
-  updated () {
-    this.attachMarkdownCheckboxListeners()
-  },
   methods: {
-    attachMarkdownCheckboxListeners () {
-      const checkboxElems = document.querySelectorAll(`#${this.markdownId} input[type="checkbox"]`)
-      for (const [idx, checkbox] of checkboxElems.entries()) {
-        checkbox.removeAttribute('disabled')
-        checkbox.onclick = (event) => {
-          event.stopPropagation()
-          this.toggleCheckbox(idx)
-        }
-      }
-    },
-    toggleCheckbox (idx) {
-      const text = this.template.text
-      let pos = 0
-      for (var i = 0; i < idx+1; i++) {
-        pos = text.indexOf('- [', pos)+3
-      }
-
-      this.template.text = text.substring(0, pos) +
-                           (text.charAt(pos) === ' ' ? 'X' : ' ') +
-                           text.substring(pos+1)
-      this.onChanged()
-    },
     focus () {
-      this.onEdit()
+      this.$refs['mdfield'].focus()
     },
-    onEdit () {
-      this.editing = true
-    },
-    onEditComplete () {
-      this.editing = false
-
+    onChanged (newValue) {
       // delete the (now empty) chunk if the text was cleared
-      if (!this.template.text)
-        this.onDelete()
+      if (!newValue)
+        this.$emit('deleted', this.chunk)
 
-      if (this.template.text && this.chunk.text != this.template.text)
-        this.onChanged()
-    },
-    onChanged () {
-      this.$emit('changed', this.template)
-    },
-    onDelete () {
-      this.$emit('deleted', this.template)
+      if (newValue && newValue != this.chunk.text)
+        this.$emit('changed', {...this.chunk, text: newValue})
     },
     onDrag (event) {
       // the entire textchunk entity for drop targets within the application
       // (i.e. other textchunks for now, later other reorderable chunk types)
-      event.dataTransfer.setData('application/json', JSON.stringify(this.template))
+      event.dataTransfer.setData('application/json', JSON.stringify(this.chunk))
       // markdown content as plain text for drop targets outside the application
-      event.dataTransfer.setData('text/plain', this.template.text)
+      event.dataTransfer.setData('text/plain', this.chunk.text)
     },
     onDrop (source) {
       this.$emit('drop', {source, destination: this.chunk})
@@ -121,7 +64,6 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../../../assets/github-markdown.css"
 .dragging .textchunk *
   pointer-events: none
 
@@ -131,24 +73,7 @@ export default {
     height: 100%
     padding: 16px 12px
 
-  .v-input
-    height: 100%
-    margin: 0
-    padding: 0
-
-    *
+    > *
       height: 100%
 
-    .v-input__slot, .v-input__control
-      padding: 0
-      margin: 0
-
-.markdown-body
-  font-size: 14px
-  font-family: Roboto,sans-serif
-
-  code::before, code::after
-    content: none
-  code
-    box-shadow: none
 </style>
