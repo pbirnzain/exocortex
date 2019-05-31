@@ -82,8 +82,8 @@ export default {
       this.editing = true
     },
     onEditingComplete () {
-      this.editing = false
       this.emitChanges()
+      this.editing = false
     },
     emitChanges () {
       if (this.text !== this.value)

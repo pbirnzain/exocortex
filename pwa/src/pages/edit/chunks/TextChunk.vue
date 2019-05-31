@@ -1,8 +1,7 @@
 <template lang="pug">
 drag-drop.textchunk(ref="card" @drag="onDrag" @drop="onDrop" :draggable="!editing")
   v-card(data-e2e="textChunk" @click.native="focus()")
-    markdown-field(:value='this.chunk.text' ref="mdfield"
-                   @changed='onChanged' @editing="editing=$event")
+    markdown-field(v-model='text' ref="mdfield" @editing="onEditing")
 </template>
 
 <script>
@@ -19,30 +18,42 @@ export default {
   },
   data () {
     return {
-      editing: false
+      editing: false,
+      text: ''
     }
   },
   watch: {
-    editing () {
-      // When editing already filled chunks, keep the card width identical
-      // and don't shrink vertically
-      if (this.editing) {
-        this.$refs.card.$el.style.maxWidth = this.$refs.card.$el.offsetWidth + "px"
-        this.$refs.card.$el.style.minWidth = this.$refs.card.$el.offsetWidth + "px"
-        this.$refs.card.$el.style.minHeight = this.$refs.card.$el.offsetHeight + "px"
-      } else {
-        this.$refs.card.$el.style.maxWidth = null
-        this.$refs.card.$el.style.minWidth = null
-        this.$refs.card.$el.style.minHeight = null
-      }
+    chunk () {
+      this.text = this.chunk.text
     }
+  },
+  mounted () {
+    this.text = this.chunk.text
   },
   methods: {
     focus () {
       this.$refs['mdfield'].focus()
     },
-    onChanged (newValue) {
-      // delete the (now empty) chunk if the text was cleared
+    onEditing (editing) {
+      this.editing = editing
+      if (!editing) {
+        this.onEdited(this.text)
+      }
+
+      // When editing already filled chunks, keep the card width identical
+      // and don't shrink vertically
+      const card = this.$refs.card.$el
+      if (editing) {
+        card.style.maxWidth = card.offsetWidth + "px"
+        card.style.minWidth = card.offsetWidth + "px"
+        card.style.minHeight = card.offsetHeight + "px"
+      } else {
+        card.style.maxWidth = null
+        card.style.minWidth = null
+        card.style.minHeight = null
+      }
+    },
+    onEdited (newValue) {
       if (!newValue)
         this.$emit('deleted', this.chunk)
 
