@@ -6,6 +6,7 @@ import './registerServiceWorker'
 import 'roboto-fontface/css/roboto/roboto-fontface.css'
 import App from './App.vue'
 import { wsEndpoint } from './wsConfig'
+import i18n from './i18n'
 
 Vue.config.productionTip = false
 
@@ -13,9 +14,13 @@ new Vue({
   store,
   router,
   render: h => h(App),
+
   created () {
     this.connect()
   },
+
+  i18n,
+
   methods: {
     connect () {
       this.$ws = new WebSocket(wsEndpoint)

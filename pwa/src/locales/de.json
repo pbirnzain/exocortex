@@ -1,0 +1,11 @@
+{
+  "filters": {
+    "pinned": "markiert",
+    "urgent": "dringend",
+    "ready": "bereit",
+    "info": "info",
+    "blocked": "blockiert",
+    "open": "offen",
+    "archived": "archiviert"
+  }
+}

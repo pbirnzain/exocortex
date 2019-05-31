@@ -3,13 +3,13 @@
 
     v-toolbar.mobile-only
       template(v-if="!showSearchInput")
-        v-toolbar-title {{ filter }}
+        v-toolbar-title {{ $t('filters.' + filter) }}
         v-spacer
         a(@click="showSearchInput = true")
           v-icon search
       template(v-else)
         v-text-field(:value="searchText" @input="onSearchTextChanged"
-          ref="search" placeholder="Search")
+          ref="search" :placeholder="$t('search')")
         a(@click="onClearSearchText")
           v-icon clear
       v-menu(content-class="filter-menu")
@@ -18,11 +18,11 @@
         v-list
           v-list-tile(v-for="filter in filters" :key="filter"
                       @click="onFilterChanged(filter)")
-            v-list-tile-title(v-text="filter")
+            v-list-tile-title(v-text="$t('filters.' + filter)")
 
     v-toolbar.desktop-only(tabs)
       v-text-field(:value="searchText" @input="onSearchTextChanged"
-                   placeholder="Search" data-e2e="searchText")
+                   :placeholder="$t('search')" data-e2e="searchText")
       a(v-if="searchText" @click="onClearSearchText")
         v-icon clear
       filter-selection.desktop-only(slot="extension" :selection="filter"
@@ -122,3 +122,14 @@ export default {
  .v-list__tile__title
    text-transform: capitalize
 </style>
+
+<i18n>
+{
+  "en": {
+    "search": "Search"
+  },
+  "de": {
+    "search": "Suche"
+  }
+}
+</i18n>

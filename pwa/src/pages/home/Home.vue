@@ -7,9 +7,9 @@
     topic-list(v-if="topicsLoaded" :topics="resultingTopics" @topic-selected="onSelect")
       empty-state(v-if="!searchText && filter === 'urgent'"
         img="/img/empty_state_background.svg"
-        tagline="No urgent tasks." message="Go do something fun!")
-      empty-state(v-else tagline="No tasks found."
-        message="Try using a different filter, search text, or add new topics.")
+        :tagline="$t('nourgent.tagline')" :message="$t('nourgent.message')")
+      empty-state(v-else :tagline="$t('nofilter.tagline')"
+        :message="$t('nofilter.message')")
     v-progress-circular(v-else indeterminate color="grey" :size="50" :width="5")
 </template>
 <script>
@@ -83,3 +83,27 @@ export default {
   .v-btn--floating .v-icon
     color: white
 </style>
+<i18n>
+{
+  "en": {
+    "nourgent": {
+      "tagline": "No urgent tasks.",
+      "message": "Go do something fun!"
+    },
+    "nofilter": {
+      "tagline": "No tasks found.",
+      "message": "Try using a different filter, search text, or add new topics."
+    }
+  },
+  "de": {
+    "nourgent": {
+      "tagline": "Keine dringenden Themen.",
+      "message": "Zeit für Entspannung!"
+    },
+    "nofilter": {
+      "tagline": "Keine Themen gefunden.",
+      "message": " "
+    }
+  }
+}
+</i18n>
