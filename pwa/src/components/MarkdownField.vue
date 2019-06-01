@@ -25,8 +25,19 @@ export default {
   },
   computed: {
     markdown () {
-      const html = marked(this.text, { breaks: true })
-      return html.replace(/<a /g, '<a target="_blank" ')
+      const renderer = new marked.Renderer()
+      renderer.checkbox = function (checked) {
+        return '<i aria-hidden="true" class="v-icon material-icons theme--light accent--text">' +
+               (checked ? 'check_box' : 'check_box_outline_blank') +
+               '</i>'
+      }
+      renderer.listitem = function (text, task, checked) {
+        return '<li>' + text + '</li>'
+      }
+      renderer.link = function (href, title, text) {
+        return `<a target="_blank" href="${href}" title="${title}">${text}</a>`
+      }
+      return marked(this.text, { breaks: true, renderer })
     },
     markdownId () {
       return `md-${this._uid}`
@@ -49,7 +60,7 @@ export default {
   },
   methods: {
     attachMarkdownCheckboxListeners () {
-      const checkboxElems = document.querySelectorAll(`#${this.markdownId} input[type="checkbox"]`)
+      const checkboxElems = document.querySelectorAll(`#${this.markdownId} li i`)
       for (const [idx, checkbox] of checkboxElems.entries()) {
         checkbox.removeAttribute('disabled')
         checkbox.onclick = (event) => {
@@ -112,6 +123,16 @@ export default {
 .markdown-body
   font-size: 14px
   font-family: Roboto,sans-serif
+
+  ul li
+    display: flex
+    align-items: center
+
+    i
+      margin-right: 8px
+
+  ul
+    padding-left: 0
 
   code::before, code::after
     content: none
