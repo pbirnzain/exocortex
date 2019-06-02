@@ -3,7 +3,7 @@
   .chunk-list
     slot
   .chunk-list
-    text-chunk(v-for="(chunk, index) of chunks" :data-index="index"
+    text-chunk(v-for="(chunk, index) of chunks" :data-index="index" :key="chunk.id"
                :ref="'chunk' + chunk.id" :chunk="chunk"
                @changed="onChunkChanged" @deleted="onChunkDeleted"
                @drop="onDropReceived")
