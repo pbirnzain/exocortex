@@ -4,7 +4,7 @@
       v-autocomplete(v-model="selection" :items="allowedTopics" ref="otherInput"
                      item-value="id" item-text="title" @change="onLink"
                      prepend-icon="link")
-      v-btn(flat @click="onLinkToNew") New Topic
+      v-btn(flat @click="onLinkToNew") {{ $t('newtopic') }}
 </template>
 
 <script>
@@ -59,3 +59,11 @@ export default {
   }
 }
 </script>
+<i18n>
+en:
+  newtopic: "New Topic"
+
+de:
+  newtopic: "Neues Thema"
+
+</i18n>

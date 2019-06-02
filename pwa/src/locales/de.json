@@ -7,5 +7,12 @@
     "blocked": "blockiert",
     "open": "offen",
     "archived": "archiviert"
+  },
+  "topic": {
+    "pinned": "markiert",
+    "archived": "archiviert",
+    "importance": "Priorität",
+    "dueDate": "Fällig bis",
+    "readyDate": "Bereit ab"
   }
 }

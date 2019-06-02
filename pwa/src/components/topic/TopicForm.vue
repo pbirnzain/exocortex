@@ -9,16 +9,16 @@
 
     .modifiers
       v-checkbox(v-model="template.pinned" @change="onChange" hide-details
-                 label="pinned" :disabled="disabled")
+                 :label="$t('topic.pinned')" :disabled="disabled")
       v-checkbox(v-model="template.complete" @change="onChange" hide-details
-                 label="archived" :disabled="disabled")
+                 :label="$t('topic.archived')" :disabled="disabled")
       v-slider(v-model="template.importance" always-dirty thumb-label
-               hide-details label="Importance:" :min="-5" :max="5"
+               hide-details :label="$t('topic.importance') + ':'" :min="-5" :max="5"
                @change="onChange")
 
     .dates
       .input-fields
-        v-text-field(v-model="template.due" label="Due" @blur="onChange"
+        v-text-field(v-model="template.due" :label="$t('topic.dueDate')" @blur="onChange"
                         hide-details :clearable="true" :disabled="disabled")
 
         .copy-buttons
@@ -28,7 +28,7 @@
             v-icon expand_more
 
         v-text-field(v-model="template.ready" hide-details
-          label="Ready" :clearable="true" @blur="onChange" :disabled="disabled")
+          :label="$t('topic.readyDate')" :clearable="true" @blur="onChange" :disabled="disabled")
 
       .buttons
         .due
