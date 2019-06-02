@@ -72,13 +72,13 @@ export default {
     toggleCheckbox (idx) {
       // FIXME POC; surely there is some unhandled corner case
       let pos = 0
-      for (var i = 0; i < idx+1; i++) {
-        pos = this.text.indexOf('- [', pos)+3
+      for (var i = 0; i < idx + 1; i++) {
+        pos = this.text.indexOf('- [', pos) + 3
       }
 
       this.text = this.text.substring(0, pos) +
                            (this.text.charAt(pos) === ' ' ? 'X' : ' ') +
-                           this.text.substring(pos+1)
+                           this.text.substring(pos + 1)
       this.onInput(this.text)
       this.emitChanges()
     },
