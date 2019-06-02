@@ -1,5 +1,5 @@
 {
-  "filters": {
+  "filter": {
     "pinned": "pinned",
     "urgent": "urgent",
     "ready": "ready",

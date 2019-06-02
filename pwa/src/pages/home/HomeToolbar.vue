@@ -3,7 +3,7 @@
 
     v-toolbar.mobile-only
       template(v-if="!showSearchInput")
-        v-toolbar-title {{ $t('filters.' + filter) }}
+        v-toolbar-title {{ $t('filter.' + filter) }}
         v-spacer
         a(@click="showSearchInput = true")
           v-icon search
@@ -18,7 +18,7 @@
         v-list
           v-list-tile(v-for="filter in filters" :key="filter"
                       @click="onFilterChanged(filter)")
-            v-list-tile-title(v-text="$t('filters.' + filter)")
+            v-list-tile-title(v-text="$t('filter.' + filter)")
 
     v-toolbar.desktop-only(tabs)
       v-text-field(:value="searchText" @input="onSearchTextChanged"

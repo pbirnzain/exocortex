@@ -1,5 +1,5 @@
 {
-  "filters": {
+  "filter": {
     "pinned": "markiert",
     "urgent": "dringend",
     "ready": "bereit",
