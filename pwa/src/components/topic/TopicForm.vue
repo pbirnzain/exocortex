@@ -151,8 +151,9 @@ export default {
     display: flex
     flex-wrap: wrap
 
+    margin-top: -16px
+
     > *
-      margin-top: 0
       margin-right: 16px
 
   .dates
