@@ -23,14 +23,14 @@ export default {
     }
   },
   created () {
-    this.requestInterceptor = axios.interceptors.request.use( config => {
+    this.requestInterceptor = axios.interceptors.request.use(config => {
       this.nRequests += 1
       return config
     }, error => {
       this.nRequests -= 1
       return Promise.reject(error)
     })
-    this.responseInterceptor = axios.interceptors.response.use( response => {
+    this.responseInterceptor = axios.interceptors.response.use(response => {
       this.nRequests -= 1
       return response
     }, error => {

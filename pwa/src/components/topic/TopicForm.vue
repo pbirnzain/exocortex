@@ -145,7 +145,6 @@ export default {
   .topic .dates .input-fields
     margin-right: 8px!important
 
-
 .topic-form
   .modifiers
     display: flex

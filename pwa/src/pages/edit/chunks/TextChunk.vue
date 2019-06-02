@@ -44,9 +44,9 @@ export default {
       // and don't shrink vertically
       const card = this.$refs.card.$el
       if (editing) {
-        card.style.maxWidth = card.offsetWidth + "px"
-        card.style.minWidth = card.offsetWidth + "px"
-        card.style.minHeight = card.offsetHeight + "px"
+        card.style.maxWidth = card.offsetWidth + 'px'
+        card.style.minWidth = card.offsetWidth + 'px'
+        card.style.minHeight = card.offsetHeight + 'px'
       } else {
         card.style.maxWidth = null
         card.style.minWidth = null

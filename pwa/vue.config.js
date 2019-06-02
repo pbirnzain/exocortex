@@ -38,10 +38,10 @@ module.exports = {
       .resourceQuery(/blockType=i18n/)
       .type('javascript/auto')
       .use('i18n')
-        .loader('@kazupon/vue-i18n-loader')
-        .end()
+      .loader('@kazupon/vue-i18n-loader')
+      .end()
       .use('yaml')
-        .loader('yaml-loader')
-        .end()
+      .loader('yaml-loader')
+      .end()
   }
 }

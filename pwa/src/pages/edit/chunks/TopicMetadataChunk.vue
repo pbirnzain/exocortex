@@ -11,7 +11,7 @@ export default {
   props: ['topic', 'disabled'],
   components: { VCard, TopicForm },
   methods: {
-    onTopicChanged(topic) {
+    onTopicChanged (topic) {
       this.$emit('topic-changed', topic)
     }
   }
