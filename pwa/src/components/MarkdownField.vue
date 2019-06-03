@@ -105,7 +105,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../assets/github-markdown.css"
+@import "../styles/markdown.sass"
 
 .markdown-field
   .v-input
@@ -121,21 +121,8 @@ export default {
       margin: 0
 
 .markdown-body
-  font-size: 14px
-  font-family: Roboto,sans-serif
-
   ul li
-    display: flex
-    align-items: center
-
     i
       margin-right: 8px
-
-  ul
-    padding-left: 0
-
-  code::before, code::after
-    content: none
-  code
-    box-shadow: none
+      transform: translateY(4px)
 </style>
