@@ -13,6 +13,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "marked": "^0.6.2",
+    "mobile-drag-drop": "^2.3.0-rc.1",
     "register-service-worker": "^1.6.2",
     "roboto-fontface": "*",
     "vue": "^2.6.10",

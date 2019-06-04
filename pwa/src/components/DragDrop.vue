@@ -8,6 +8,17 @@
 </template>
 
 <script>
+import {polyfill} from "mobile-drag-drop";
+
+import {scrollBehaviourDragImageTranslateOverride} from "mobile-drag-drop/scroll-behaviour";
+
+// options are optional ;)
+polyfill({
+    // use this to make use of the scroll behaviour
+    dragImageTranslateOverride: scrollBehaviourDragImageTranslateOverride,
+    holdToDrag: 500,
+});
+
 export default {
   props: ['draggable'],
   data () {
@@ -42,12 +53,14 @@ export default {
 </script>
 
 <style lang="sass">
-  .drop-target
-    border: 2px dashed rgba(0,0,0,0)
+@import "~mobile-drag-drop/default.css"
 
-  .drop
-    border-color: red!important
+.drop-target
+  border: 2px dashed rgba(0,0,0,0)
 
-  .being-dragged
-    border-color: blue!important
+.drop
+  border-color: red!important
+
+.being-dragged
+  border-color: blue!important
 </style>
