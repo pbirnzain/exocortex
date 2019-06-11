@@ -115,7 +115,13 @@ export default function (endpoint, modulePath) {
           }
         }
       },
-      delete ({commit}, id) {
+      delete ({commit, state}, id) {
+        // trying to delete nonexistent entities
+        if (state.entities[id] === undefined) {
+          console.warn(`${endpoint}: trying to delete unknown entity with id ${id}`)
+          return
+        }
+
         commit('DELETE', id) // optimistic delete
         return axios.delete(endpoint + id + '/')
       },
