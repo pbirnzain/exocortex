@@ -1,7 +1,8 @@
 <template lang="pug">
 drag-drop.textchunk(ref="card" @drag="onDrag" @drop="onDrop" :draggable="!editing")
   v-card(data-e2e="textChunk" @click.native="focus()")
-    markdown-field(v-model='text' ref="mdfield" @editing="onEditing")
+    markdown-field(v-model='text' ref="mdfield"
+                   @focus="onFocus" @blur="onBlur" @change="onChange")
 </template>
 
 <script>
@@ -19,7 +20,8 @@ export default {
   data () {
     return {
       editing: false,
-      text: ''
+      text: '',
+      oldText: this.chunk.text
     }
   },
   watch: {
@@ -34,26 +36,29 @@ export default {
     focus () {
       this.$refs['mdfield'].focus()
     },
-    onEditing (editing) {
-      this.editing = editing
-      if (!editing) {
-        this.onEdited(this.text)
-      }
+    onFocus () {
+      this.oldText = this.text
 
       // When editing already filled chunks, keep the card width identical
       // and don't shrink vertically
       const card = this.$refs.card.$el
-      if (editing) {
-        card.style.maxWidth = card.offsetWidth + 'px'
-        card.style.minWidth = card.offsetWidth + 'px'
-        card.style.minHeight = card.offsetHeight + 'px'
-      } else {
-        card.style.maxWidth = null
-        card.style.minWidth = null
-        card.style.minHeight = null
-      }
+      card.style.maxWidth = card.offsetWidth + 'px'
+      card.style.minWidth = card.offsetWidth + 'px'
+      card.style.minHeight = card.offsetHeight + 'px'
     },
-    onEdited (newValue) {
+    onBlur () {
+      // delete empty textchunks on blur
+      if (!this.oldText && !this.text) {
+        this.$emit('deleted', this.chunk)
+      }
+
+      // clear styles set in onFocus()
+      const card = this.$refs.card.$el
+      card.style.maxWidth = null
+      card.style.minWidth = null
+      card.style.minHeight = null
+    },
+    onChange (newValue) {
       if (!newValue)
         this.$emit('deleted', this.chunk)
 

@@ -2,12 +2,13 @@
 .markdown-field
   template(v-if="editing")
     //- textarea for editing markdown
-    v-textarea(:value="text" @blur="onEditingComplete" @input="onInput"
+    v-textarea(:value="text" @input="onInput"
+               @focus="onFocus" @blur="onBlur"
                auto-grow autofocus clearable hide-details)
   template(v-else)
     //- rendered markdown
     a.markdown-body(v-if="text" :id="markdownId"
-                    v-html="markdown" @click="onEdit")
+                    v-html="markdown" @click="focus()")
 </template>
 
 <script>
@@ -20,7 +21,8 @@ export default {
   data () {
     return {
       editing: false,
-      text: ''
+      text: '',
+      initialText: this.value
     }
   },
   computed: {
@@ -46,9 +48,6 @@ export default {
   watch: {
     value () {
       this.text = this.value
-    },
-    editing () {
-      this.$emit('editing', this.editing)
     }
   },
   mounted () {
@@ -80,25 +79,30 @@ export default {
                            (this.text.charAt(pos) === ' ' ? 'X' : ' ') +
                            this.text.substring(pos + 1)
       this.onInput(this.text)
-      this.emitChanges()
+      this.onChange(this.text)
     },
     focus () {
-      this.onEdit()
+      this.editing = true // triggers autofocus
+    },
+    onFocus () {
+      this.editing = true
+      this.initialText = this.text
+      this.$emit('focus')
+    },
+    onBlur () {
+      this.editing = false
+
+      if (this.initialText != this.text)
+        this.onChange(this.text)
+
+      this.$emit('blur')
     },
     onInput (newText) {
       this.text = newText
       this.$emit('input', newText)
     },
-    onEdit () {
-      this.editing = true
-    },
-    onEditingComplete () {
-      this.emitChanges()
-      this.editing = false
-    },
-    emitChanges () {
-      if (this.text !== this.value)
-        this.$emit('changed', this.text)
+    onChange (newText) {
+      this.$emit('change', newText)
     }
   }
 }
