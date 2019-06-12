@@ -46,6 +46,7 @@ class DataChunk(models.Model):
 class Topic(DataChunk):
     objects = InheritanceManager()
     pinned = models.BooleanField(default=False)
+    private = models.BooleanField(default=False)
 
     due = models.DateField(blank=True, null=True)
     ready = models.DateField(blank=True, null=True)
