@@ -37,6 +37,7 @@ export default {
       this.$refs['mdfield'].focus()
     },
     onFocus () {
+      this.editing = true
       this.oldText = this.text
 
       // When editing already filled chunks, keep the card width identical
@@ -47,6 +48,8 @@ export default {
       card.style.minHeight = card.offsetHeight + 'px'
     },
     onBlur () {
+      this.editing = false
+
       // delete empty textchunks on blur
       if (!this.oldText && !this.text) {
         this.$emit('deleted', this.chunk)
