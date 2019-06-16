@@ -25,6 +25,11 @@ export default new Router({
       path: '/edit/:id',
       name: 'edit',
       component: () => import('./pages/edit/Edit.vue')
+    },
+    {
+      path: '/settings',
+      name: 'settings',
+      component: () => import('./pages/settings/Settings.vue')
     }
   ]
 })
