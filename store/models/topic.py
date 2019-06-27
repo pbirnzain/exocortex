@@ -64,7 +64,7 @@ class Topic(DataChunk):
             score += ("importance", self.importance)
 
         if self.pinned:
-            score += ("pinned", 100)
+            score += ("pinned", 200)
 
         if self.complete:
             score += ("archived", -40)
@@ -83,7 +83,7 @@ class Topic(DataChunk):
             due_in_days = (self.due - timezone.now().date()).days
 
             if due_in_days <= 0:
-                score += ("is overdue", 200)
+                score += ("is overdue", 100)
             elif due_in_days <= warn_days_before:
                 progress = (warn_days_before+1-due_in_days)/warn_days_before
                 score += ("due soon", int(10 + 80*progress))
