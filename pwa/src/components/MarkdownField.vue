@@ -124,9 +124,10 @@ export default {
       padding: 0
       margin: 0
 
-.markdown-body
-  ul li
-    i
-      margin-right: 8px
-      transform: translateY(4px)
+  // to align the rewritten checkboxes; use only within this component
+  .markdown-body
+    ul li
+      i
+        margin-right: 8px
+        transform: translateY(4px)
 </style>
