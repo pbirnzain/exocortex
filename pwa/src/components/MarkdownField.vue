@@ -83,11 +83,11 @@ export default {
     },
     focus () {
       this.editing = true // triggers autofocus
+      this.$emit('focus')
     },
     onFocus () {
       this.editing = true
       this.initialText = this.text
-      this.$emit('focus')
     },
     onBlur () {
       this.editing = false
