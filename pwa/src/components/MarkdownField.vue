@@ -4,7 +4,8 @@
     //- textarea for editing markdown
     v-textarea(:value="text" @input="onInput"
                @focus="onFocus" @blur="onBlur"
-               auto-grow autofocus clearable hide-details)
+               auto-grow autofocus hide-details
+               :append-icon="appendIcon" @click:append="onAppendIconClick")
   template(v-else)
     //- rendered markdown
     a.markdown-body(v-if="text" :id="markdownId"
@@ -22,7 +23,8 @@ export default {
     return {
       editing: false,
       text: '',
-      initialText: this.value
+      initialText: this.value,
+      undoText: null
     }
   },
   computed: {
@@ -43,6 +45,15 @@ export default {
     },
     markdownId () {
       return `md-${this._uid}`
+    },
+    appendAction () {
+      if (this.initialText && !this.text)
+        return 'undo'
+      if (this.text)
+        return 'clear'
+    },
+    appendIcon () {
+      return this.appendAction
     }
   },
   watch: {
@@ -64,11 +75,11 @@ export default {
         checkbox.removeAttribute('disabled')
         checkbox.onclick = (event) => {
           event.stopPropagation()
-          this.toggleCheckbox(idx)
+          this.onToggleCheckbox(idx)
         }
       }
     },
-    toggleCheckbox (idx) {
+    onToggleCheckbox (idx) {
       // FIXME POC; surely there is some unhandled corner case
       let pos = 0
       for (var i = 0; i < idx + 1; i++) {
@@ -103,7 +114,20 @@ export default {
     },
     onChange (newText) {
       this.$emit('change', newText)
-    }
+    },
+    onAppendIconClick () {
+      if (this.appendAction == 'undo')
+        this.onUndo()
+      else if (this.appendAction == 'clear')
+        this.onClear()
+    },
+    onClear () {
+      this.undoText = this.text
+      this.onInput('')
+    },
+    onUndo () {
+      this.onInput(this.undoText)
+    },
   }
 }
 </script>
