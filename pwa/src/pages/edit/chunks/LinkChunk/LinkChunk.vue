@@ -1,6 +1,6 @@
 <template lang="pug">
   v-card.links.markdown-body(v-if="links")
-    h1 References
+    h1 {{ $t('references') }}
     template(v-for="link of links")
       individual-link(:link="link")
 </template>
@@ -30,3 +30,10 @@ export default {
   }
 }
 </script>
+<i18n lang="yaml">
+en:
+  references: References
+
+de:
+  references: Referenzen
+</i18n>

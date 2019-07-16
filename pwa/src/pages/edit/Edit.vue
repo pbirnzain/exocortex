@@ -9,17 +9,27 @@
         v-text-field(ref="tf" :autofocus="true" single-line full-width hide-details
           :value="selectedTopic.title" @change="onTitleChanged" data-e2e="topicTitle")
 
-        //v-btn(icon disabled)
-          v-icon(data-e2e="editCreatePhoto") add_a_photo
-        v-btn(icon @click="onCreateNote")
-          v-icon(data-e2e="editCreateNote") note_add
-        v-btn(@click.stop="showLinkDialog = true" icon)
-          v-icon(data-e2e="editCreateLink") link
         v-dialog(v-model="showLinkDialog" lazy max-width="600px" @keydown="onDialogKeydown")
           create-link-card(ref="linkCard" :topic="selectedTopic"
           @link-created="onLink" @link-to-new="onLinkToNew")
-        v-btn(icon @click="onTopicDeleted")
+
+        v-btn.desktop-only(icon @click="onCreateNote")
+          v-icon(data-e2e="editCreateNote") note_add
+        v-btn.desktop-only(@click.stop="showLinkDialog = true" icon)
+          v-icon(data-e2e="editCreateLink") link
+        v-btn.desktop-only(icon @click="onTopicDeleted")
           v-icon(data-e2e="editDelete") delete
+
+        v-menu.mobile-only(content-class="filter-menu")
+          a(slot="activator")
+            v-icon more_horiz
+          v-list
+            v-list-tile(@click="onCreateNote")
+              v-list-tile-title(v-text="$t('create_note')")
+            v-list-tile(@click="showLinkDialog = true")
+              v-list-tile-title(v-text="$t('create_link')")
+            v-list-tile(@click="onTopicDeleted")
+              v-list-tile-title(v-text="$t('delete')")
 
     template(v-if="selectedTopicLoaded")
       .e-content.e-container.vertical(v-if="selectedTopic" :class="{fullsize: !selectedTopic}")
@@ -37,7 +47,7 @@
 
 <script>
 import Vue from 'vue'
-import { VDialog } from 'vuetify/lib'
+import { VDialog, VMenu, VList, VListTile, VListTileTitle } from 'vuetify/lib'
 import Chunks from './chunks/Chunks'
 import TopicMetadataChunk from './chunks/TopicMetadataChunk'
 import LinkChunk from './chunks/LinkChunk/LinkChunk'
@@ -46,7 +56,7 @@ import EmptyState from '@/components/EmptyState'
 
 export default {
   components: {
-    VDialog,
+    VDialog, VMenu, VList, VListTile, VListTileTitle,
     Chunks,
     TopicMetadataChunk,
     LinkChunk,
@@ -165,3 +175,14 @@ export default {
   .e-content
     margin-top: 4px // to make more space for box-shadow of toolbar
 </style>
+<i18n lang="yaml">
+en:
+  create_note: 'Add Text'
+  create_link: 'Add Reference'
+  delete: 'Delete'
+
+de:
+  create_note: 'Text hinzufügen'
+  create_link: 'Referenz hinzufügen'
+  delete: 'Löschen'
+</i18n>

@@ -13,7 +13,7 @@
         a(@click="onClearSearchText")
           v-icon clear
       v-menu(content-class="filter-menu")
-        a(@click="showFilters = true" slot="activator")
+        a(slot="activator")
           v-icon filter_list
         v-list
           v-list-tile(v-for="filter in filters" :key="filter"
@@ -45,8 +45,7 @@ export default {
   },
   data () {
     return {
-      showSearchInput: !!this.$store.state.search.searchText,
-      showFilters: false
+      showSearchInput: !!this.$store.state.search.searchText
     }
   },
   computed: {
