@@ -22,7 +22,7 @@
 
         v-menu.mobile-only(content-class="filter-menu")
           a(slot="activator")
-            v-icon more_horiz
+            v-icon more_vert
           v-list
             v-list-tile(@click="onCreateNote")
               v-list-tile-title(v-text="$t('create_note')")
