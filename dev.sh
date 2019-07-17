@@ -1,3 +1,4 @@
+#!/bin/bash
 
 if [ "$1" == "e2e" ]; then
   ./manage.py runserver --settings exocortex.settings_test &
@@ -19,7 +20,9 @@ elif [ "$1" == "serve" ]; then
   kill %1 # kill server
 else
   if [ "$1" == "" ]; then
-    echo "Commands: $0 serve, $0 e2e"
+    echo "Commands:"
+    echo "$0 serve"
+    echo "$0 e2e"
   else
     echo "$1: unknown command"
   fi
