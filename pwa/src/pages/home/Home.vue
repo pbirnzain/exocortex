@@ -87,11 +87,11 @@ export default {
 {
   "en": {
     "nourgent": {
-      "tagline": "No urgent tasks.",
+      "tagline": "No urgent topics.",
       "message": "Go do something fun!"
     },
     "nofilter": {
-      "tagline": "No tasks found.",
+      "tagline": "No topics found.",
       "message": "Try using a different filter, search text, or add new topics."
     }
   },
