@@ -47,10 +47,10 @@ export default {
       return `md-${this._uid}`
     },
     appendAction () {
-      if (this.initialText && !this.text)
-        return 'undo'
       if (this.text)
         return 'clear'
+      if (this.undoText)
+        return 'undo'
     },
     appendIcon () {
       return this.appendAction
