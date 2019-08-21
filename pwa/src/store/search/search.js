@@ -66,15 +66,25 @@ const searchModule = {
       }
 
       result = result.sort((a, b) => {
+        // show topics with higher score first
         if (a.score.sum < b.score.sum) {
           return 1
         } else if (a.score.sum > b.score.sum) {
           return -1
         }
 
+        // if the score is equal, show the topics that have been waiting
+        // longer first (or will be ready sooner)
         if (a.ready < b.ready) {
           return -1
         } else if (a.ready > b.ready) {
+          return 1
+        }
+
+        // finally, show older topics first.
+        if (a.added < b.added) {
+          return -1
+        } else if (a.added > b.added) {
           return 1
         } else {
           return 0
