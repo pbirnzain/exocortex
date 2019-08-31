@@ -22,24 +22,27 @@ const searchModule = {
       })
       return filtered
     },
-    pinnedTopics (state, getters, rootState) {
-      return getters.matchingTopics.filter(topic => topic.pinned)
+    activeTopics (state, getters) {
+      return getters.matchingTopics.filter(topic => !topic.complete)
     },
-    urgentTopics (state, getters, rootState) {
-      return getters.matchingTopics.filter(topic => topic.score.sum >= 15)
+    pinnedTopics (state, getters) {
+      return getters.activeTopics.filter(topic => topic.pinned)
+    },
+    urgentTopics (state, getters) {
+      return getters.activeTopics.filter(topic => topic.score.sum >= 15)
     },
     readyTopics (state, getters) {
-      return getters.matchingTopics.filter(topic => topic.ready &&
+      return getters.activeTopics.filter(topic => topic.ready &&
         topic.score.sum > 0 && !topic.complete)
     },
     blockedTopics (state, getters) {
-      return getters.matchingTopics.filter(topic => topic.ready && topic.score.sum < 0 && !topic.complete)
+      return getters.activeTopics.filter(topic => topic.ready && topic.score.sum < 0 && !topic.complete)
     },
     infoTopics (state, getters) {
-      return getters.matchingTopics.filter(topic => !topic.ready && !topic.complete)
+      return getters.activeTopics.filter(topic => !topic.ready && !topic.complete)
     },
     openTopics (state, getters) {
-      return getters.matchingTopics.filter(topic => !topic.complete)
+      return getters.activeTopics.filter(topic => !topic.complete)
     },
     archivedTopics (state, getters) {
       return getters.matchingTopics.filter(topic => topic.complete)
