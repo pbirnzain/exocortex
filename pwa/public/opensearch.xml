@@ -4,7 +4,10 @@
   <Description>ExoCortex Topic Title Search</Description>
   <InputEncoding>utf-8</InputEncoding>
   <Image width="16" height="16" type="image/x-icon">favicon.ico</Image>
-  <Url type="text/html" template="https://exocortex.digividual.at/#/search">
+  <Url type="text/html" template="https://exocortex.digividual.at/search">
     <Param name="text" value="{searchTerms}"/>
   </Url>
+  <Url type="application/opensearchdescription+xml"
+     rel="self"
+     template="https://exocortex.digividual.at/opensearch.xml" />
 </OpenSearchDescription>
