@@ -2,9 +2,9 @@
   .topic-list
     v-list(v-if="topics.length > 0")
       v-list-tile(v-for="topic in topics" :key="topic.id" @click="onClick(topic)"
-                  :color="color(topic)" data-e2e="topicListTile")
+                  data-e2e="topicListTile")
         v-list-tile-content
-          v-list-tile-title(v-text="topic.title")
+          v-list-tile-title(v-text="topic.title" :style="{ color: color(topic) }")
         v-list-tile-action(v-if="icon(topic)")
           v-icon(:color="color(topic)") {{ icon(topic) }}
     slot(v-if="topics.length === 0")
@@ -36,16 +36,12 @@ export default {
         return 'schedule'
     },
     color (topic) {
-      // if (topic.score.reasons['is overdue'])
-      //   return 'error'
-      // if (topic.score.sum > 50)
-      //   return 'warning'
       if (topic.score.reasons['is overdue'])
-        return 'error'
+        return '#E00'
       if (topic.complete)
-        return 'success'
+        return '#090'
       if (topic.score.reasons['blocked'])
-        return '#AAA'
+        return '#888'
     }
   }
 }
