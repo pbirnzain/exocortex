@@ -6,6 +6,7 @@ import Search from './pages/Search.vue'
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
   routes: [
     {
       path: '/',
@@ -36,6 +37,12 @@ export default new Router({
       path: '/settings',
       name: 'settings',
       component: () => import('./pages/settings/Settings.vue')
+    },
+    {
+      path: '*', // or '/index.html'
+      beforeEnter: (to, from, next) => {
+        next('/')
+      }
     }
   ]
 })
