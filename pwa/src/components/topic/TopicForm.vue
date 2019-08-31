@@ -7,15 +7,6 @@
       span(v-for="(value, reason, idx) in template.score.reasons",
            :key="idx") {{reason}}: {{value}}
 
-    .modifiers
-      v-checkbox(v-model="template.pinned" @change="onChange" hide-details
-                 :label="$t('topic.pinned')" :disabled="disabled")
-      v-checkbox(v-model="template.complete" @change="onChange" hide-details
-                 :label="$t('topic.archived')" :disabled="disabled")
-      v-slider(v-model="template.importance" always-dirty thumb-label
-               hide-details :label="$t('topic.importance') + ':'" :min="-5" :max="5"
-               @change="onChange")
-
     .dates
       .input-fields
         v-text-field(v-model="template.due" :label="$t('topic.dueDate')" @blur="onChange"
@@ -51,6 +42,15 @@
       v-date-picker(v-model="template.due" scrollable @change="onChange")
     v-dialog(v-model="showReadyPicker" lazy width="290px" :disabled="disabled")
       v-date-picker(v-model="template.ready" @change="onChange" scrollable)
+
+    .modifiers
+      v-checkbox(v-model="template.pinned" @change="onChange" hide-details
+                 :label="$t('topic.pinned')" :disabled="disabled")
+      v-checkbox(v-model="template.complete" @change="onChange" hide-details
+                 :label="$t('topic.archived')" :disabled="disabled")
+      v-slider(v-model="template.importance" always-dirty thumb-label
+               hide-details :label="$t('topic.importance') + ':'" :min="-5" :max="5"
+               @change="onChange")
 </template>
 
 <script>
@@ -150,7 +150,8 @@ export default {
     display: flex
     flex-wrap: wrap
 
-    margin-top: -16px
+    margin-top: 8px
+    margin-right: -16px
 
     > *
       margin-right: 16px
