@@ -142,7 +142,7 @@ export default {
     padding: 0
 
     *
-      height: 100%
+      margin: auto 0
 
     .v-input__slot, .v-input__control
       padding: 0
