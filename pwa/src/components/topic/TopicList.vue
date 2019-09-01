@@ -4,30 +4,20 @@
       v-list-tile(v-for="topic in topics" :key="topic.id" @click="onClick(topic)"
                   data-e2e="topicListTile")
         v-list-tile-content
-          v-list-tile-title(v-text="topic.title" :style="{ color: color(topic) }")
-        v-list-tile-action(v-if="icon(topic)")
-          v-icon(:color="color(topic)") {{ icon(topic) }}
+          v-list-tile-title(v-text="topic.title" :class="getColor(topic) ? getColor(topic) + '--text' : ''")
+        v-list-tile-action(v-if="getIcon(topic)")
+          v-icon(:color="getColor(topic)") {{ getIcon(topic) }}
     slot(v-if="topics.length === 0")
 </template>
 
 <script>
-import { VList, VDivider, VListTile, VListTileContent, VListTileTitle, VListTileAction } from 'vuetify/lib'
-
 export default {
   props: ['topics'],
-  components: {
-    VList,
-    VDivider,
-    VListTile,
-    VListTileContent,
-    VListTileTitle,
-    VListTileAction
-  },
   methods: {
     onClick (topic) {
       this.$emit('topic-selected', topic)
     },
-    icon (topic) {
+    getIcon (topic) {
       if (topic.score.reasons['is overdue'])
         return 'warning'
       if (topic.pinned)
@@ -35,13 +25,13 @@ export default {
       if (topic.score.sum > 50)
         return 'schedule'
     },
-    color (topic) {
+    getColor (topic) {
       if (topic.score.reasons['is overdue'])
-        return '#E00'
+        return 'overdue'
       if (topic.complete)
-        return '#090'
+        return 'complete'
       if (topic.score.reasons['blocked'])
-        return '#888'
+        return 'inactive'
     }
   }
 }
