@@ -44,13 +44,14 @@
       v-date-picker(v-model="template.ready" @change="onChange" scrollable)
 
     .modifiers
-      v-checkbox(v-model="template.pinned" @change="onChange" hide-details
-                 :label="$t('topic.pinned')" :disabled="disabled")
-      v-checkbox(v-model="template.complete" @change="onChange" hide-details
-                 :label="$t('topic.archived')" :disabled="disabled")
       v-slider(v-model="template.importance" always-dirty thumb-label
-               hide-details :label="$t('topic.importance') + ':'" :min="-5" :max="5"
-               @change="onChange")
+         hide-details :label="$t('topic.importance') + ':'" :min="-5" :max="5"
+         @change="onChange")
+      .flags
+        v-checkbox(v-model="template.pinned" @change="onChange" hide-details
+                   :label="$t('topic.pinned')" :disabled="disabled")
+        v-checkbox(v-model="template.complete" @change="onChange" hide-details
+                   :label="$t('topic.archived')" :disabled="disabled")
 </template>
 
 <script>
@@ -156,12 +157,23 @@ export default {
     > *
       margin-right: 16px
 
+    .flags
+      flex-grow: 1
+      display: flex
+      flex-direction: row
+
+      > :not(:last-child)
+        margin-right: 8px
+
   .dates
     display: flex
 
     .input-fields
       flex-grow: 1
       margin-right: 16px
+
+      & > :first-child
+        margin-top: 0
 
       .date
         flex-grow: 1
