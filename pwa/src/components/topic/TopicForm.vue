@@ -2,10 +2,6 @@
   .topic-form
     v-text-field(v-if="!hideTitle" v-model="template.title",
                  @change="onChange" ref="title" label="title" :disabled="disabled")
-    .score-reasons(v-if="template.score && template.score.sum")
-      span.sum Urgency: {{ template.score.sum }}
-      span(v-for="(value, reason, idx) in template.score.reasons",
-           :key="idx") {{reason}}: {{value}}
 
     .dates
       .input-fields
@@ -127,20 +123,6 @@ export default {
 </script>
 
 <style lang="sass">
-.score-reasons
-  position: absolute
-  bottom: -16px
-  right: 2px
-  transform: translateY(-100%)
-
-  font-size: 11px
-  color: rgba(0,0,0,0.29)
-
-  .sum
-    padding-right: 12px
-
-  > *:not(first-child)
-    padding-right: 4px
 
 @media(max-width: 600px)
   .topic .dates .input-fields
@@ -196,4 +178,7 @@ export default {
       button
         margin-top: 18px
         margin-bottom: 2px
+
+      .due button
+        margin-top: 12px
 </style>
