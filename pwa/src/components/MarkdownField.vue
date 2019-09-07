@@ -137,11 +137,14 @@ export default {
 
 .markdown-field
   .v-input
-    height: 100%
     margin: 0
     padding: 0
 
-    *
+    // this is to make the field grow vertically, if it's root node was grown
+    &, .v-input__slot, .v-input__control, .v-text-field__slot, textarea
+      height: 100%
+
+    .v-input__append-inner
       margin: auto 0
 
     .v-input__slot, .v-input__control
