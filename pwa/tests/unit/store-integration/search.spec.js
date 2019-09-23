@@ -5,7 +5,7 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-function createMockTopicModule () {
+function createMockTopicsModule () {
   return {
     namespaced: true,
     getters: {
@@ -22,7 +22,7 @@ describe('search module', () => {
   beforeEach(() => {
     store = new Vuex.Store({
       modules: {
-        topics: createMockTopicModule(),
+        topics: createMockTopicsModule(),
         search: { state: createMockState(), ...searchModule }
       }
     })
