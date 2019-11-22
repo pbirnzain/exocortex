@@ -24,7 +24,8 @@ module.exports = {
   pwa: {
     workboxOptions: {
       skipWaiting: true,
-      navigateFallback: '/'
+      navigateFallback: '/',
+      navigateFallbackBlacklist: [/login/, /logout/, /api/, /admin/]
     }
   },
   pluginOptions: {
