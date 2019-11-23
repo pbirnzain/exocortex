@@ -3,13 +3,21 @@ from channels.generic.websocket import JsonWebsocketConsumer
 
 
 class UpdateConsumer(JsonWebsocketConsumer):
+    user_update_group = None
+
     def connect(self):
-        self.user_update_group = f'updates_{self.scope["user"]}'
-        async_to_sync(self.channel_layer.group_add)(self.user_update_group, self.channel_name)
-        self.accept()
+        user = self.scope["user"]
+        if user.is_authenticated:
+            # join the updates feed of the connecting user
+            self.user_update_group = f'updates_{user}'
+            async_to_sync(self.channel_layer.group_add)(self.user_update_group, self.channel_name)
+            self.accept()
+        else:
+            self.close()
 
     def disconnect(self, close_code):
-        async_to_sync(self.channel_layer.group_discard)(self.user_update_group, self.channel_name)
+        if self.user_update_group:
+            async_to_sync(self.channel_layer.group_discard)(self.user_update_group, self.channel_name)
 
     def receive_json(self, text_data):
         print("received via websock:", text_data)
