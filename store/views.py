@@ -10,7 +10,8 @@ from store.serializers import TopicSerializer, TextChunkSerializer, LinkSerializ
 class WebsocketUpdateMixin:
     def _send_update(self, message):
         channel_layer = get_channel_layer()
-        async_to_sync(channel_layer.group_send)('updates', message)
+        user_update_group = f'updates_{self.request.user}'
+        async_to_sync(channel_layer.group_send)(user_update_group, message)
 
     def update(self, *args, **kwargs):
         ret = super().update(*args, **kwargs)
@@ -32,12 +33,11 @@ class WebsocketUpdateMixin:
 
     def destroy(self, *args, **kwargs):
         ret = super().destroy(*args, **kwargs)
-        channel_layer = get_channel_layer()
         message = {
             'type': 'entity_deleted',
             'message': (self.entity_name, kwargs['pk'])
         }
-        async_to_sync(channel_layer.group_send)('updates', message)
+        self._send_update(message)
         return ret
 
 

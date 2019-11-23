@@ -1,18 +1,17 @@
-import json
-
 from asgiref.sync import async_to_sync
-from channels.generic.websocket import WebsocketConsumer
+from channels.generic.websocket import JsonWebsocketConsumer
 
 
-class UpdateConsumer(WebsocketConsumer):
+class UpdateConsumer(JsonWebsocketConsumer):
     def connect(self):
-        async_to_sync(self.channel_layer.group_add)('updates', self.channel_name)
+        self.user_update_group = f'updates_{self.scope["user"]}'
+        async_to_sync(self.channel_layer.group_add)(self.user_update_group, self.channel_name)
         self.accept()
 
     def disconnect(self, close_code):
-        async_to_sync(self.channel_layer.group_discard)('updates', self.channel_name)
+        async_to_sync(self.channel_layer.group_discard)(self.user_update_group, self.channel_name)
 
-    def receive(self, text_data):
+    def receive_json(self, text_data):
         print("received via websock:", text_data)
 
     def entity_changed(self, event):
@@ -21,7 +20,7 @@ class UpdateConsumer(WebsocketConsumer):
             'type': f'{entity_name}_updated',
             'payload': payload
         }
-        self.send(text_data=json.dumps(frame))
+        self.send_json(frame)
 
     def entity_deleted(self, event):
         entity_name, id = event['message']
@@ -29,4 +28,4 @@ class UpdateConsumer(WebsocketConsumer):
             'type': f'{entity_name}_deleted',
             'payload': id,
         }
-        self.send(text_data=json.dumps(frame))
+        self.send_json(frame)
